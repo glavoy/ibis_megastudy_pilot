@@ -1,0 +1,536 @@
+<?xml version = '1.0' encoding = 'utf-8'?>
+<survey>
+
+
+	<question type = 'automatic' fieldname = 'starttime' fieldtype = 'datetime'>
+	</question>
+
+
+	<question type = 'text' fieldname = 'subjid' fieldtype = 'text'>
+		<text>Subjid</text>
+		<maxCharacters>5</maxCharacters>
+	</question>
+
+
+	<question type = 'date' fieldname = 'vdate' fieldtype = 'date'>
+		<text>Visit Date</text>
+	</question>
+
+
+	<question type = 'text' fieldname = 'screening_id' fieldtype = 'text'>
+		<text>Screening ID</text>
+		<maxCharacters>5</maxCharacters>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'client_sex' fieldtype = 'integer'>
+		<text>Client's Sex</text>
+		<responses>
+			<response value = '1'>Male</response>
+			<response value = '2'>Female</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'health_facility' fieldtype = 'integer'>
+		<text>Health facility name</text>
+		<responses>
+			<response value = '1'>Homa Bay Teaching and Referral Hospital</response>
+			<response value = '2'>Rachuonyo District Hospital</response>
+			<response value = '3'>Suba District Hospital</response>
+			<response value = '4'>Ndhiwa District Hospital</response>
+			<response value = '99'>Other</response>
+		</responses>
+	</question>
+
+
+	<question type = 'text' fieldname = 'health_facility_oth' fieldtype = 'text'>
+		<text>Specify other health facility</text>
+		<maxCharacters>80</maxCharacters>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'hiv_testing_site' fieldtype = 'integer'>
+		<text>HIV testing site</text>
+		<responses>
+			<response value = '1'>OPD</response>
+			<response value = '2'>ANC/MCH</response>
+			<response value = '3'>DICE/Key Pops</response>
+			<response value = '99'>Other</response>
+		</responses>
+	</question>
+
+
+	<question type = 'text' fieldname = 'hiv_testing_site_oth' fieldtype = 'text'>
+		<text>Specify other HIV testing site</text>
+		<maxCharacters>80</maxCharacters>
+	</question>
+
+
+	<question type = 'text' fieldname = 'staff_member' fieldtype = 'text'>
+		<text>Staff member name</text>
+		<maxCharacters>80</maxCharacters>
+	</question>
+
+
+	<question type = 'text' fieldname = 'county' fieldtype = 'text'>
+		<text>County</text>
+		<maxCharacters>80</maxCharacters>
+	</question>
+
+
+	<question type = 'text' fieldname = 'subcounty' fieldtype = 'text'>
+		<text>Subcounty</text>
+		<maxCharacters>80</maxCharacters>
+	</question>
+
+
+	<question type = 'text' fieldname = 'village' fieldtype = 'text'>
+		<text>Village</text>
+		<maxCharacters>80</maxCharacters>
+	</question>
+
+
+	<question type = 'text' fieldname = 'respondants_age' fieldtype = 'text_integer'>
+		<text>Respondent's Age</text>
+		<maxCharacters>3</maxCharacters>
+		<numeric_check>
+			<values minvalue ='10' maxvalue='110' other_values = '10' message = 'Number must be between 10 and 110!'></values>
+		</numeric_check>
+		<dont_know>-7</dont_know>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'age_check' fieldtype = 'integer'>
+		<text>Is the respondent => 15 years?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'stay_3_months' fieldtype = 'integer'>
+		<text>Planning to stay for at least 3 months?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'negative_hiv' fieldtype = 'integer'>
+		<text>Did the respondent get a negative rapid HIV test result today?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'mobile_phone' fieldtype = 'integer'>
+		<text>Do you have daily access to a mobile phone?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'reading_language' fieldtype = 'integer'>
+		<text>Comfortable reading messages in Dholuo, Swahili, or English?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'multiple_partners' fieldtype = 'integer'>
+		<text>More than one sexual partner in past 6 months?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'new_partner' fieldtype = 'integer'>
+		<text>Had a new sexual partner in past 6 months?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'unprotected_sex' fieldtype = 'integer'>
+		<text>Had sex without a condom in past 6 months?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'hiv_positive_partner' fieldtype = 'integer'>
+		<text>Had a sexual partner known to be HIV-positive in past 6 months?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'sti_history' fieldtype = 'integer'>
+		<text>Diagnosed/treated for STI in past 6 months?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'tb_history' fieldtype = 'integer'>
+		<text>Diagnosed/treated for TB in past 6 months?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'sex_for_compensation' fieldtype = 'integer'>
+		<text>Received compensation/gifts in exchange for sex in past 6 months?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'paid_for_sex' fieldtype = 'integer'>
+		<text>Paid or given gifts for sex in past 6 months?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'dice_clinic' fieldtype = 'integer'>
+		<text>Seen in DICE clinic in past 6 months?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'on_prep' fieldtype = 'integer'>
+		<text>Currently on PrEP or PrEP-eligible?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'on_pep' fieldtype = 'integer'>
+		<text>Recently initiated PEP or deemed PEP-eligible?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'recent_hiv_exposure' fieldtype = 'integer'>
+		<text>Had recent HIV exposure risk?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'eligibility_check' fieldtype = 'integer'>
+		<text>Eligible for the study?</text>
+		<responses>
+			<response value = '1'>Eligible, accepts enrollment</response>
+			<response value = '2'>Eligible, declines enrollment</response>
+			<response value = '3'>Ineligible</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'decline_reason' fieldtype = 'integer'>
+		<text>Reason for declining enrollment</text>
+		<responses>
+			<response value = '1'>Time barred</response>
+			<response value = '2'>Stigma issues</response>
+			<response value = '3'>Needs family approval</response>
+			<response value = '4'>Too ill</response>
+			<response value = '5'>Not interested</response>
+			<response value = '6'>Declines to answer</response>
+			<response value = '7'>Other</response>
+		</responses>
+	</question>
+
+
+	<question type = 'text' fieldname = 'decline_reason_oth' fieldtype = 'text'>
+		<text>Specify other reason for declining</text>
+		<maxCharacters>80</maxCharacters>
+	</question>
+
+
+	<question type = 'text' fieldname = 'age' fieldtype = 'text_integer'>
+		<text>What is your age?</text>
+		<maxCharacters>3</maxCharacters>
+		<numeric_check>
+			<values minvalue ='10' maxvalue='110' other_values = '10' message = 'Number must be between 10 and 110!'></values>
+		</numeric_check>
+	</question>
+
+
+	<question type = 'text' fieldname = 'mobile_number' fieldtype = 'text_integer'>
+		<text>What is your mobile phone number?</text>
+		<maxCharacters>10</maxCharacters>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'phone_ownership' fieldtype = 'integer'>
+		<text>Is this your mobile phone, or someone else's in your household?</text>
+		<responses>
+			<response value = '1'>PARTICIPANT'S PHONE</response>
+			<response value = '2'>SOMEONE IN HOUSEHOLD'S PHONE</response>
+			<response value = '97'>OTHER</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'education_level' fieldtype = 'integer'>
+		<text>What is the highest level of school you have attended?</text>
+		<responses>
+			<response value = '0'>NO SCHOOL</response>
+			<response value = '1'>PRIMARY</response>
+			<response value = '2'>O-LEVEL - INCOMPLETE</response>
+			<response value = '3'>O-LEVEL - COMPLETE</response>
+			<response value = '4'>A-LEVEL - INCOMPLETE</response>
+			<response value = '5'>A-LEVEL - COMPLETE</response>
+			<response value = '6'>TERTIARY</response>
+			<response value = '7'>UNIVERSITY</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'marital_status' fieldtype = 'integer'>
+		<text>What is your current marital status?</text>
+		<responses>
+			<response value = '1'>MARRIED, LIVING TOGETHER</response>
+			<response value = '2'>MARRIED, NOT LIVING TOGETHER</response>
+			<response value = '3'>NOT MARRIED, LIVING TOGETHER</response>
+			<response value = '4'>DIVORCED/SEPARATED</response>
+			<response value = '5'>WIDOWED</response>
+			<response value = '6'>NEVER MARRIED AND NOT LIVING TOGETHER</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'pregnancy_status' fieldtype = 'integer'>
+		<text>If SEX = female -- Are you currently pregnant or breastfeeding?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'time_to_hospital' fieldtype = 'integer'>
+		<text>How much time does it take you to get to this HIV testing venue (health centre) from your home?</text>
+		<responses>
+			<response value = '1'>LESS THAN 30 MINUTES</response>
+			<response value = '2'>BETWEEN 30 MINUTES AND 1 HOUR</response>
+			<response value = '3'>BETWEEN 1 AND 2 HOURS</response>
+			<response value = '4'>OVER 2 HOURS</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'occupation' fieldtype = 'integer'>
+		<text>What is your primary occupation?</text>
+		<responses>
+			<response value = '1'>Farmer, or related activities</response>
+			<response value = '2'>Fisher industry</response>
+			<response value = '3'>Market vendor</response>
+			<response value = '4'>Bar owner or worker</response>
+			<response value = '5'>Transport trucker, matatu, boda, special hire, etc.</response>
+			<response value = '6'>Hotel or Restaurant or tourism worker</response>
+			<response value = '7'>Education</response>
+			<response value = '8'>Government worker, military, police, security</response>
+			<response value = '9'>Housewife or Household worker</response>
+			<response value = '10'>Healthcare</response>
+			<response value = '11'>Labor, such as construction, factory, mining</response>
+			<response value = '12'>Commercial sex worker</response>
+			<response value = '13'>Office job</response>
+			<response value = '14'>No job including retired, disabled</response>
+			<response value = '97'>Other</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'preferred_language' fieldtype = 'integer'>
+		<text>What is your preferred language to read in?</text>
+		<responses>
+			<response value = '1'>DHOLUO</response>
+			<response value = '2'>SWAHILI</response>
+			<response value = '3'>ENGLISH</response>
+			<response value = '4'>RUNYONKOLE</response>
+			<response value = '5'>LUGANDA</response>
+			<response value = '97'>OTHER</response>
+			<response value = '7'>NONE</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'reading_ability' fieldtype = 'integer'>
+		<text>Can you read and understand a text message easily, with difficulty, or not at all?</text>
+		<responses>
+			<response value = '1'>EASILY</response>
+			<response value = '2'>WITH DIFFICULTY</response>
+			<response value = '3'>NOT AT ALL</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'drink_alcohol' fieldtype = 'integer'>
+		<text>Do you drink alcohol at least once per week?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'hiv_risk' fieldtype = 'integer'>
+		<text>Do you think your chances of getting HIV/AIDS in the coming year are high, moderate, low, or no risk at all?</text>
+		<responses>
+			<response value = '1'>HIGH</response>
+			<response value = '2'>MODERATE</response>
+			<response value = '3'>LOW</response>
+			<response value = '4'>NO RISK AT ALL</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'hiv_test_history' fieldtype = 'integer'>
+		<text>Have you ever taken an HIV test before your test today?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'last_hiv_test' fieldtype = 'integer'>
+		<text>When was the most recent time you took a test for HIV not including today's test?</text>
+		<responses>
+			<response value = '1'>LESS THAN 3 MONTHS AGO</response>
+			<response value = '2'>LESS THAN 6 MONTHS AGO</response>
+			<response value = '3'>ABOUT 6-12 MONTHS AGO</response>
+			<response value = '4'>12-24 MONTHS AGO</response>
+			<response value = '5'>MORE THAN 2 YEARS AGO</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'heard_about_art' fieldtype = 'integer'>
+		<text>Have you heard about antiretroviral therapy (ART), the medicines for treating HIV?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'heard_about_prep' fieldtype = 'integer'>
+		<text>Have you heard about PrEP (Pre-exposure prophylaxis): an HIV medication that is taken to prevent people from getting HIV?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'currently_taking_prep' fieldtype = 'integer'>
+		<text>Are you currently taking PrEP (HIV medication to prevent you from getting HIV)?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'hiv_test_likelihood' fieldtype = 'integer'>
+		<text>How likely are you to go for an HIV test again sometime in the next 6 months?</text>
+		<responses>
+			<response value = '1'>VERY LIKELY</response>
+			<response value = '2'>SOMEWHAT LIKELY</response>
+			<response value = '3'>NOT SURE</response>
+			<response value = '4'>UNLIKELY</response>
+			<response value = '5'>VERY UNLIKEY</response>
+			<response value = '6'>REFUSE TO ANSWER</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'motivation_hiv_test' fieldtype = 'integer'>
+		<text>What do you think your main motivation might be for getting another HIV test in the future</text>
+		<responses>
+			<response value = '1'>STAYING HEALTHY/HIV-</response>
+			<response value = '2'>PREVENTING MY SEXUAL PARTNERS FROM BECOMING HIV INFECTED</response>
+			<response value = '3'>FEARFUL OF GETTING SICK</response>
+			<response value = '4'>OTHER</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'arm' fieldtype = 'integer'>
+		<text>Randomization arm</text>
+		<responses>
+			<response value = '1'>Risk assessment</response>
+			<response value = '2'>U=U messaging</response>
+			<response value = '3'>Healthy living</response>
+			<response value = '4'>Community benefits</response>
+			<response value = '5'>Fresh start effect</response>
+			<response value = '6'>Education-based #1</response>
+			<response value = '7'>Education-based #2 (gamification)</response>
+			<response value = '8'>Default appointment</response>
+			<response value = '9'>Reserved for you</response>
+			<response value = '10'>Social norms</response>
+			<response value = '11'>Empowerment</response>
+		</responses>
+	</question>
+
+
+	<question type = 'text' fieldname = 'comments' fieldtype = 'text'>
+		<text>Record any special comments/info/problems (Optional)</text>
+		<maxCharacters>255</maxCharacters>
+		<na>-6</na>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'swver' fieldtype = 'text'>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'stoptime' fieldtype = 'datetime'>
+	</question>
+
+
+	<question type = 'information' fieldname = 'end_of_questions' fieldtype = 'n/a'>
+		<text>Press the 'Next' button to save the data.</text >
+	</question>
+
+
+</survey>
