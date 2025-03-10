@@ -101,6 +101,18 @@
   <ItemGroup>
     <Compile Include="App_Public.vb" />
     <Compile Include="AutomaticVariables.vb" />
+    <Compile Include="LeaveNote.Designer.vb">
+      <DependentUpon>LeaveNote.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LeaveNote.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Randomization.Designer.vb">
+      <DependentUpon>Randomization.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Randomization.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -131,8 +143,20 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="QuestionInfoArray_Functions.vb" />
+    <Compile Include="SelectFormToEdit.Designer.vb">
+      <DependentUpon>SelectFormToEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SelectFormToEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="LeaveNote.resx">
+      <DependentUpon>LeaveNote.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Randomization.resx">
+      <DependentUpon>Randomization.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NewSurvey.resx">
       <DependentUpon>NewSurvey.vb</DependentUpon>
     </EmbeddedResource>
@@ -144,6 +168,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectFormToEdit.resx">
+      <DependentUpon>SelectFormToEdit.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -28,13 +28,26 @@ Module AutomaticVariables
 
 
                 Case Is = "subjid"
-                    If ModifyingSurvey = True Then
-                        CurrentAutoValue = SUBJID
+
+                    Dim studyid As String = GetValue("subjid")
+                    If ModifyingSurvey = True And studyid <> "-9" Then
+                        CurrentAutoValue = studyid
+                        SUBJID = studyid
                     Else
-                        CurrentAutoValue = SUBJID
-                        'Dim tabletnum As String = GetValue("tabletnum")
-                        'CurrentAutoValue = Microsoft.VisualBasic.Left(SUBJID, 11) & "-" & GetLineNum(Microsoft.VisualBasic.Left(SUBJID, 11), tabletnum)
-                        'SUBJID = CurrentAutoValue
+                        Dim tabletnum As String = GetValue("tabletnum")
+                        Dim countrycode As String = GetValue("countrycode")
+                        Dim clinic As String = GetValue("health_facility")
+                        Dim hhid As String = ""
+                        Select Case Len(tabletnum)
+                            Case Is = 1
+                                hhid = "IBIS" & countrycode & clinic & "999" & tabletnum
+                            Case Is = 2
+                                hhid = "IBIS" & countrycode & clinic & "99" & tabletnum
+                            Case Is = 3
+                                hhid = "IBIS" & countrycode & clinic & "9" & tabletnum
+                        End Select
+                        CurrentAutoValue = hhid & "-" & GetIBISEnrollmentLineNum(hhid, tabletnum)
+                        SUBJID = CurrentAutoValue
                     End If
 
 
@@ -69,6 +82,86 @@ Module AutomaticVariables
                         End If
                     Else
                         CurrentAutoValue = Now().ToString()
+                    End If
+
+                Case Is = "screening_id"
+                    Dim screening_id As String = GetValue("screening_id")
+                    If ModifyingSurvey = True And screening_id <> "-9" Then
+                        CurrentAutoValue = screening_id
+                    Else
+                        Dim tabletnum As String = GetValue("tabletnum")
+                        Dim countrycode As String = GetValue("countrycode")
+                        Dim clinic As String = GetValue("health_facility")
+                        Dim hhid As String = ""
+                        Select Case Len(tabletnum)
+                            Case Is = 1
+                                hhid = "SCRN" & countrycode & clinic & "999" & tabletnum
+                            Case Is = 2
+                                hhid = "SCRN" & countrycode & clinic & "99" & tabletnum
+                            Case Is = 3
+                                hhid = "SCRN" & countrycode & clinic & "9" & tabletnum
+                        End Select
+                        CurrentAutoValue = hhid & "-" & GetIBISLineNum(hhid, tabletnum)
+                    End If
+
+
+                Case Is = "eligibility_check1"
+                    Dim age_check As Integer = CInt(GetValue("age_check"))
+                    Dim stay_3_months As Integer = CInt(GetValue("stay_3_months"))
+                    Dim negative_hiv As Integer = CInt(GetValue("negative_hiv"))
+                    Dim mobile_phone As Integer = CInt(GetValue("mobile_phone"))
+                    Dim reading_language As Integer = CInt(GetValue("reading_language"))
+
+
+                    CurrentAutoValue = 1
+                    If age_check = 2 Or stay_3_months = 2 Or negative_hiv = 2 Or mobile_phone = 2 Or reading_language = 2 Then
+                        CurrentAutoValue = 0
+                    End If
+
+                Case Is = "eligibility_check2"
+                    Dim eligibility_check1 As Integer = CInt(GetValue("eligibility_check1"))
+                    Dim multiple_partners As Integer = CInt(GetValue("multiple_partners"))
+                    Dim new_partner As Integer = CInt(GetValue("new_partner"))
+                    Dim unprotected_sex As Integer = CInt(GetValue("unprotected_sex"))
+                    Dim hiv_positive_partner As Integer = CInt(GetValue("hiv_positive_partner"))
+                    Dim sti_history As Integer = CInt(GetValue("sti_history"))
+                    Dim tb_history As Integer = CInt(GetValue("tb_history"))
+                    Dim sex_for_compensation As Integer = CInt(GetValue("sex_for_compensation"))
+                    Dim paid_for_sex As Integer = CInt(GetValue("paid_for_sex"))
+                    Dim dice_clinic As Integer = CInt(GetValue("dice_clinic"))
+                    Dim on_prep As Integer = CInt(GetValue("on_prep"))
+                    Dim on_pep As Integer = CInt(GetValue("on_pep"))
+                    Dim recent_hiv_exposure As Integer = CInt(GetValue("recent_hiv_exposure"))
+
+                    CurrentAutoValue = 0
+                    If eligibility_check1 = 1 And (multiple_partners = 1 Or new_partner = 1 Or unprotected_sex = 1 Or hiv_positive_partner = 1 Or sti_history = 1 Or tb_history = 1 Or sex_for_compensation = 1 Or paid_for_sex = 1 Or dice_clinic = 1 Or on_prep = 1 Or on_pep = 1 Or recent_hiv_exposure = 1) Then
+                        CurrentAutoValue = 1
+                    End If
+
+                Case Is = "uniqueid"
+                    If ModifyingSurvey = True Then
+                        CurrentAutoValue = GetValue("uniqueid")
+                    Else
+                        CurrentAutoValue = Guid.NewGuid().ToString()
+                    End If
+
+                Case Is = "arm"
+                    If ModifyingSurvey = True Then
+                        CurrentAutoValue = GetValue("arm")
+                    Else
+                        Dim clinic As Integer = CInt(GetValue("health_facility"))
+                        CurrentAutoValue = GetNextRandArm(clinic)
+                        RandArmID = CurrentAutoValue
+                    End If
+
+                Case Is = "arm_text"
+                    If ModifyingSurvey = True Then
+                        CurrentAutoValue = GetValue("arm_text")
+                    Else
+                        Dim clinic As Integer = CInt(GetValue("health_facility"))
+                        Dim arm As Integer = CInt(GetValue("arm"))
+                        CurrentAutoValue = GetNextRandArmText(clinic, arm)
+                        RandArmText = CurrentAutoValue
                     End If
 
 

@@ -6,20 +6,23 @@
 	</question>
 
 
-	<question type = 'text' fieldname = 'subjid' fieldtype = 'text'>
-		<text>Subjid</text>
-		<maxCharacters>5</maxCharacters>
-	</question>
-
-
 	<question type = 'date' fieldname = 'vdate' fieldtype = 'date'>
 		<text>Visit Date</text>
 	</question>
 
 
-	<question type = 'text' fieldname = 'screening_id' fieldtype = 'text'>
-		<text>Screening ID</text>
-		<maxCharacters>5</maxCharacters>
+	<question type = 'radio' fieldname = 'countrycode' fieldtype = 'integer'>
+		<text>Select The country/region</text>
+		<responses>
+			<response value = '1'>Uganda</response>
+			<response value = '2'>Kenya</response>
+		</responses>
+	</question>
+
+
+	<question type = 'text' fieldname = 'tabletnum' fieldtype = 'text_integer'>
+		<text>Please enter the tablet number of the tablet you are using</text>
+		<maxCharacters>2</maxCharacters>
 	</question>
 
 
@@ -35,10 +38,14 @@
 	<question type = 'radio' fieldname = 'health_facility' fieldtype = 'integer'>
 		<text>Health facility name</text>
 		<responses>
-			<response value = '1'>Homa Bay Teaching and Referral Hospital</response>
-			<response value = '2'>Rachuonyo District Hospital</response>
-			<response value = '3'>Suba District Hospital</response>
-			<response value = '4'>Ndhiwa District Hospital</response>
+			<response value = '11'>Bushenyi HCIV</response>
+			<response value = '12'>Ishaka Adventist Hospital(Bushenyi)</response>
+			<response value = '13'>Ishongororo HCIV (Ibanda)</response>
+			<response value = '14'>Ruhoko HCIV (Ibanda)</response>
+			<response value = '21'>Homa Bay Teaching and Referral Hospital</response>
+			<response value = '22'>Rachuonyo District Hospital</response>
+			<response value = '23'>Suba District Hospital</response>
+			<response value = '24'>Ndhiwa District Hospital</response>
 			<response value = '99'>Other</response>
 		</responses>
 	</question>
@@ -47,6 +54,21 @@
 	<question type = 'text' fieldname = 'health_facility_oth' fieldtype = 'text'>
 		<text>Specify other health facility</text>
 		<maxCharacters>80</maxCharacters>
+		<preskip>
+			<skip fieldname='health_facility' condition = '&lt;&gt;' response='99' response_type='fixed' skiptofieldname ='screening_id'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'screening_id' fieldtype = 'text'>
+		<maxCharacters>15</maxCharacters>
+	</question>
+
+
+	<question type = 'information' fieldname = 'ibisid_info' fieldtype = 'n/a'>
+		<text>Please record the IBIS Screening ID for this participant:
+
+[[screening_id]]</text>
 	</question>
 
 
@@ -64,6 +86,9 @@
 	<question type = 'text' fieldname = 'hiv_testing_site_oth' fieldtype = 'text'>
 		<text>Specify other HIV testing site</text>
 		<maxCharacters>80</maxCharacters>
+		<preskip>
+			<skip fieldname='hiv_testing_site' condition = '&lt;&gt;' response='99' response_type='fixed' skiptofieldname ='staff_member'></skip>
+		</preskip>
 	</question>
 
 
@@ -93,7 +118,7 @@
 
 	<question type = 'text' fieldname = 'respondants_age' fieldtype = 'text_integer'>
 		<text>Respondent's Age</text>
-		<maxCharacters>3</maxCharacters>
+		<maxCharacters>2</maxCharacters>
 		<numeric_check>
 			<values minvalue ='10' maxvalue='110' other_values = '10' message = 'Number must be between 10 and 110!'></values>
 		</numeric_check>
@@ -146,12 +171,27 @@
 	</question>
 
 
+	<question type = 'automatic' fieldname = 'eligibility_check1' fieldtype = 'integer'>
+	</question>
+
+
+	<question type = 'information' fieldname = 'eligibility_info' fieldtype = 'n/a'>
+		<text>This Participant is not Eligible enrollment</text>
+		<preskip>
+			<skip fieldname='eligibility_check1' condition = '&lt;&gt;' response='0' response_type='fixed' skiptofieldname ='multiple_partners'></skip>
+		</preskip>
+	</question>
+
+
 	<question type = 'radio' fieldname = 'multiple_partners' fieldtype = 'integer'>
 		<text>More than one sexual partner in past 6 months?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
+		<preskip>
+			<skip fieldname='eligibility_check1' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='comments'></skip>
+		</preskip>
 	</question>
 
 
@@ -254,6 +294,10 @@
 	</question>
 
 
+	<question type = 'automatic' fieldname = 'eligibility_check2' fieldtype = 'integer'>
+	</question>
+
+
 	<question type = 'radio' fieldname = 'eligibility_check' fieldtype = 'integer'>
 		<text>Eligible for the study?</text>
 		<responses>
@@ -261,6 +305,10 @@
 			<response value = '2'>Eligible, declines enrollment</response>
 			<response value = '3'>Ineligible</response>
 		</responses>
+		<postskip>
+			<skip fieldname='eligibility_check' condition = '=' response='1' response_type='fixed' skiptofieldname ='subjid'></skip>
+			<skip fieldname='eligibility_check' condition = '=' response='3' response_type='fixed' skiptofieldname ='comments'></skip>
+		</postskip>
 	</question>
 
 
@@ -273,7 +321,7 @@
 			<response value = '4'>Too ill</response>
 			<response value = '5'>Not interested</response>
 			<response value = '6'>Declines to answer</response>
-			<response value = '7'>Other</response>
+			<response value = '97'>Other</response>
 		</responses>
 	</question>
 
@@ -281,6 +329,9 @@
 	<question type = 'text' fieldname = 'decline_reason_oth' fieldtype = 'text'>
 		<text>Specify other reason for declining</text>
 		<maxCharacters>80</maxCharacters>
+		<preskip>
+			<skip fieldname='decline_reason' condition = '&lt;&gt;' response='99' response_type='fixed' skiptofieldname ='comments'></skip>
+		</preskip>
 	</question>
 
 
@@ -290,6 +341,21 @@
 		<numeric_check>
 			<values minvalue ='10' maxvalue='110' other_values = '10' message = 'Number must be between 10 and 110!'></values>
 		</numeric_check>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'subjid' fieldtype = 'text'>
+		<maxCharacters>20</maxCharacters>
+		<preskip>
+			<skip fieldname='eligibility_check' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='comments'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'ibisstudy_info' fieldtype = 'n/a'>
+		<text>Please record the IBIS Study ID for this participant (Enter on the enrollment Log):
+
+[[subjid]]</text>
 	</question>
 
 
@@ -343,6 +409,9 @@
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
+		<preskip>
+			<skip fieldname='client_sex' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='time_to_hospital'></skip>
+		</preskip>
 	</question>
 
 
@@ -487,7 +556,7 @@
 	<question type = 'radio' fieldname = 'motivation_hiv_test' fieldtype = 'integer'>
 		<text>What do you think your main motivation might be for getting another HIV test in the future</text>
 		<responses>
-			<response value = '1'>STAYING HEALTHY/HIV-</response>
+			<response value = '1'>STAYING HEALTHY/HIV-(Negative)</response>
 			<response value = '2'>PREVENTING MY SEXUAL PARTNERS FROM BECOMING HIV INFECTED</response>
 			<response value = '3'>FEARFUL OF GETTING SICK</response>
 			<response value = '4'>OTHER</response>
@@ -495,21 +564,21 @@
 	</question>
 
 
-	<question type = 'radio' fieldname = 'arm' fieldtype = 'integer'>
-		<text>Randomization arm</text>
-		<responses>
-			<response value = '1'>Risk assessment</response>
-			<response value = '2'>U=U messaging</response>
-			<response value = '3'>Healthy living</response>
-			<response value = '4'>Community benefits</response>
-			<response value = '5'>Fresh start effect</response>
-			<response value = '6'>Education-based #1</response>
-			<response value = '7'>Education-based #2 (gamification)</response>
-			<response value = '8'>Default appointment</response>
-			<response value = '9'>Reserved for you</response>
-			<response value = '10'>Social norms</response>
-			<response value = '11'>Empowerment</response>
-		</responses>
+	<question type = 'automatic' fieldname = 'arm' fieldtype = 'integer'>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'arm_text' fieldtype = 'text'>
+	</question>
+
+
+	<question type = 'button' fieldname = 'arm_text_demo' fieldtype = 'n/a'>
+		<text>Click the button to Display Randomization Spin Wheel</text>
+	</question>
+
+
+	<question type = 'information' fieldname = 'arminfo' fieldtype = 'n/a'>
+		<text>Randomization arm is: [[arm_text]]</text>
 	</question>
 
 
@@ -517,6 +586,10 @@
 		<text>Record any special comments/info/problems (Optional)</text>
 		<maxCharacters>255</maxCharacters>
 		<na>-6</na>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'uniqueid' fieldtype = 'text'>
 	</question>
 
 

@@ -24,6 +24,7 @@ Public Class NewSurvey
 
     'Array of QuestionInfo Structures
     Public QuestionInfoArray() As QuestionInfo      'Array of QuestionInfo structures to hold all the question information throughout the survey
+    Public QuestionInfoArray_orig() As QuestionInfo 'Array of QuestionInfo structures to hold the original responses so we can compare to the new one
 
     'Total number of questions in the questionnaire
     Public NumQuestions As Integer         'This is the total number of questions in the questionnaire
@@ -106,13 +107,22 @@ Public Class NewSurvey
     'Form loading........
     Private Sub NewSurvey_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Try
+            Dim ShowPreviousResponses As Boolean = False
             'initialize the array to hold the question information
             'if we are modifying an existing survey.....
             If ModifyingSurvey = True Then
                 GetResponsesFromPreviousSurvey()
+                ShowPreviousResponses = True
             Else    'new survey
                 InitializeQuestionArray()
+                ShowPreviousResponses = True
             End If
+
+            'set Current and Previous question to 0 and create the first question
+            PreviousQuestion = -1
+            CurrentQuestion = 0
+            QuestionInfoArray(CurrentQuestion).PrevQues = PreviousQuestion
+            CreateQuestion(CurrentQuestion, ShowPreviousResponses)
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -277,6 +287,7 @@ Public Class NewSurvey
 
             'redimension the array with the number of questions
             ReDim QuestionInfoArray(NumQuestions - 1)
+            ReDim QuestionInfoArray_orig(NumQuestions - 1)
 
             'populate the array of questioninfo with question number, field name, question type, default value, etc
             Dim nodeList As Xml.XmlNodeList
@@ -331,7 +342,11 @@ Public Class NewSurvey
             Dim VDATE_US As String = ""
             'need to use this because queries in MS access can only use dates in m/d/yy format
             If InStr(PrimaryKey, "vdate") > 0 Then
-                VDATE_US = DateTime.ParseExact(VDATE, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy HH:mm:ss")
+                If Len(VDATE) > 10 Then
+                    VDATE_US = DateTime.ParseExact(VDATE, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy HH:mm:ss")
+                Else
+                    VDATE_US = DateTime.ParseExact(VDATE, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy HH:mm:ss")
+                End If
             End If
 
             Select Case PrimaryKey
@@ -339,6 +354,8 @@ Public Class NewSurvey
                     strSQL += " FROM " & Survey & " WHERE subjid = '" & SUBJID & "'"
                 Case "subjid,vdate"
                     strSQL += " FROM " & Survey & " WHERE subjid = '" & SUBJID & "' and vdate = #" & VDATE_US & "# order by vdate desc"
+                Case "screening_id,vdate"
+                    strSQL += " FROM " & Survey & " WHERE screening_id = '" & SUBJID & "'"
             End Select
 
             'get the data from the database
@@ -375,7 +392,8 @@ Public Class NewSurvey
                 Next
             Next
             ConnectionString.Close()
-
+            'copy the data from QuestionInfoArray to QuestionInfoArray_orig
+            Array.Copy(QuestionInfoArray, QuestionInfoArray_orig, QuestionInfoArray.Length)
 
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -753,28 +771,125 @@ Public Class NewSurvey
 
                 ConnectionString.Close()
                 MsgBox("The data has been saved!")
+
+                ' Load the evatar video
+                ' Call the function to get the correct video
+                If GetValue("eligibility_check") = 1 And RandArmText <> "Default appointment" Then
+                    MsgBox("A short Video will be displayed shortly for this participant")
+
+                    Dim video_name As String = getRandVideo(GetValue("client_sex"), GetValue("respondants_age"), RandArmText, GetValue("preferred_language"))
+                    Dim videoPath As String = "C:\IBIS_pilot\rand_video\" & video_name
+                    Process.Start(New ProcessStartInfo(videoPath) With {.UseShellExecute = True})
+                    'Process.Start("wmplayer.exe", "/play C:\IBIS_pilot\rand_video\video1.mp4")
+                End If
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
     End Sub
 
+    Private Function getRandVideo(sex As Integer, age As Integer, randarmtext As String, pref_lang As Integer)
+        Dim video_path As String = "-9"
+        Try
+            Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
+            Dim section As ConnectionStringsSection = DirectCast(config.GetSection("connectionStrings"), ConnectionStringsSection)
+            Dim ConnectionString As New OleDbConnection(section.ConnectionStrings("ConnString").ConnectionString)
+            ConnectionString.Open()
+            Dim strSQL As String = "Select video_name from videolistpath where arm = '" & randarmtext & "';"
 
+            If randarmtext = "Social norms" Then
+                Dim age_cat As Integer = 0
+                If age <= 30 Then
+                    age_cat = 1
+                ElseIf age > 30 Then
+                    age_cat = 2
+                End If
+                strSQL = "Select video_name from videolistpath where arm = '" & randarmtext & "' and sexcode =" & sex & " and agecategory =" & age_cat
+            End If
+
+            Dim da As New OleDbDataAdapter(strSQL, ConnectionString)
+            Dim ds As New DataSet
+            da.Fill(ds)
+            Dim dt As DataTable = ds.Tables(0)
+            ConnectionString.Close()
+
+
+            For Each row As DataRow In dt.Rows
+                If Not IsDBNull(row("video_name")) Then
+                    ' Set the result
+                    video_path = row("video_name")
+                End If
+            Next
+
+            'TODO Updatr this section once we have the correct list of videos
+            If pref_lang = 1 Then
+                video_path &= ".mp4"
+            ElseIf pref_lang = 2 Then
+                video_path &= ".mp4"
+            ElseIf pref_lang = 3 Then
+                video_path &= ".mp4"
+            Else
+                video_path &= ".mp4"
+            End If
+            Return video_path
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Function
 
 
     'modify the existing data in the household info table
     Private Sub ModifyData(ByVal tablename As String)
         Try
+            'this section checks to see if any changes were made to the questionnaire
+            Dim i As Integer
+            Dim ChangesMade As Boolean = False
+            'Compare the new responses with the old ones to see if any changes were made
+            For i = 0 To QuestionInfoArray.GetUpperBound(0)
+                If QuestionInfoArray(i).Value <> QuestionInfoArray_orig(i).Value And QuestionInfoArray(i).QuesType <> "date" Then
+                    ChangesMade = True
+                    Exit For
+                    If QuestionInfoArray(i).QuesType = "date" And QuestionInfoArray(i).Value <> Microsoft.VisualBasic.Left(QuestionInfoArray_orig(i).Value, 10) Then
+                        ChangesMade = True
+                        Exit For
+                    End If
+                End If
+            Next
 
+            'if changes were made, record the changes
+            If ChangesMade = True Then
+                LeaveNote.ShowDialog()
+                LeaveNote.Dispose()
+            Else
+                MsgBox("No changes were made to the data.")
+                Exit Sub
+            End If
 
-            Dim ConnectionString As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
+            If CancelledLeaveNote = True Then
+                If MessageBox.Show("S T O P!" & vbNewLine & vbNewLine & "Any changes you have made will not be saved!" & vbNewLine & vbNewLine &
+            "Are you sure you want to close this form without saving the changes you have made?", "End Interview?", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+                    Me.Close()
+                    Me.Dispose()
+                    Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
+                    Exit Sub
+                End If
+            Else
+                ' Set lastmod variable to current time
+                SetLastMod()
+            End If
+
+            Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
+            Dim section As ConnectionStringsSection = DirectCast(config.GetSection("connectionStrings"), ConnectionStringsSection)
+            Dim ConnectionString As New OleDbConnection(section.ConnectionStrings("ConnString").ConnectionString)
             ConnectionString.Open()
 
             Dim strSQL As String = ""
             Dim strSaveDataToText As String = ""
+            Dim uniqueid As String = GetValue("uniqueid")
 
             ' Get the primary key for the table
-            Dim PKstrSQL As String = "select primarykey from primary_keys where tablename = '" & Survey & "'"
+            Dim PKstrSQL As String = "select primarykey from crfs where tablename = '" & Survey & "'"
             Dim daPK As New OleDbDataAdapter(PKstrSQL, ConnectionString)
             Dim dsPK As New DataSet
             daPK.Fill(dsPK)
@@ -786,7 +901,11 @@ Public Class NewSurvey
             Dim VDATE_US As String = ""
             'need to use this because queries in MS access can only use dates in m/d/yy format
             If InStr(PrimaryKey, "vdate") > 0 Then
-                VDATE_US = DateTime.ParseExact(VDATE, "d/M/yyyy", CultureInfo.InvariantCulture).ToString("M/d/yyyy")
+                If Len(VDATE) > 10 Then
+                    VDATE_US = DateTime.ParseExact(VDATE, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy HH:mm:ss")
+                Else
+                    VDATE_US = DateTime.ParseExact(VDATE, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy HH:mm:ss")
+                End If
             End If
 
 
@@ -829,14 +948,15 @@ Public Class NewSurvey
                 End If
             Next
 
+            If Len(uniqueid) = 0 Or uniqueid = "-9" Then
+                ConnectionString.Close()
+                MsgBox("Error Creating the Update Statement. Call the data team for guidance!")
+                Exit Sub
+            Else
 
-            'complete the SQL statement with the appropriate where clause
-            Select Case PrimaryKey
-                Case "subjid"
-                    strSQL += " where subjid = '" & SUBJID & "'"
-                Case "subjid,vdate"
-                    strSQL += " where subjid = '" & SUBJID & "' and vdate = #" & VDATE_US & "#"
-            End Select
+                strSQL += " where uniqueid = '" & uniqueid & "'"
+            End If
+
 
             'Write to Text File
             strSaveDataToText = """" & Now() & """" & vbNewLine & strSQL
@@ -850,9 +970,6 @@ Public Class NewSurvey
             Dim cmd = New OleDbCommand(strSQL, ConnectionString)
             cmd.ExecuteNonQuery()
             cmd.Dispose()
-
-
-
 
 
 
@@ -886,12 +1003,21 @@ Public Class NewSurvey
                 Next
 
                 'complete the SQL statement with the appropriate where clause
-                Select Case PrimaryKey
-                    Case "subjid"
-                        strSQL += " where subjid = '" & SUBJID & "'"
-                    Case "subjid,vdate"
-                        strSQL += " where subjid = '" & SUBJID & "' and vdate = #" & VDATE_US & "#"
-                End Select
+                'Select Case PrimaryKey
+                '    Case "subjid"
+                '        strSQL += " where subjid = '" & SUBJID & "'"
+                '    Case "subjid,vdate", "opal_id,vdate"
+                '        strSQL += " where subjid = '" & SUBJID & "' and vdate = #" & VDATE_US & "#"
+                'End Select
+
+                If Len(uniqueid) = 0 Or uniqueid = "-9" Then
+                    ConnectionString.Close()
+                    MsgBox("Error Creating the Update Statement. Call the data team for guidance!")
+                    Exit Sub
+                Else
+
+                    strSQL += " where uniqueid = '" & uniqueid & "'"
+                End If
 
                 'Write to Text File
                 strSaveDataToText = """" & Now() & """" & vbNewLine & strSQL
@@ -906,7 +1032,6 @@ Public Class NewSurvey
                 cmd2.ExecuteNonQuery()
                 cmd2.Dispose()
             End If
-
 
             ConnectionString.Close()
             MsgBox("The data hase been saved!")
@@ -1038,23 +1163,30 @@ Public Class NewSurvey
 
 
 
-            ''test to see if it is a valid age for the Head of the Household
-            'If IsValidResponse = True Then
-            '    If QuestionInfoArray(CurrentQuestion).FieldName = "ageyrs" And VDATE = 1 Then
-            '        'Get the current value from the textbox
-            '        For Each aControl In Me.Controls
-            '            Select Case TypeName(aControl)
-            '                Case "TextBox"
-            '                    CurrentValue = aControl.Text
-            '            End Select
-            '        Next
+            ''test to see if phonenumber is duplicate
+            If IsValidResponse = True Then
+                If QuestionInfoArray(CurrentQuestion).FieldName = "mobile_number" And ModifyingSurvey = False Then
+                    'Get the current value from the textbox
+                    For Each aControl In Me.Controls
+                        Select Case TypeName(aControl)
+                            Case "TextBox"
+                                CurrentValue = aControl.Text
+                        End Select
+                    Next
 
-            '        If CurrentValue < HOH_AGE Then
-            '            IsValidResponse = False
-            '            MsgBox("The age cannot be less than " & HOH_AGE & " for the Head of the Household!", vbCritical, "Invalid age")
-            '        End If
-            '    End If
-            'End If
+                    Dim strSQL As String = "select mobile_number from " & Survey & " where mobile_number = " & CInt(CurrentValue)
+                    Dim ConnectionString As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
+                    Dim da As New OleDbDataAdapter(strSQL, ConnectionString)
+                    Dim ds As New DataSet
+                    da.Fill(ds)
+                    If ds.Tables(0).Rows.Count > 0 Then
+                        IsValidResponse = False
+                        MsgBox("This mobile phone number has already been assigned to another participant.", vbCritical, "Duplicate Phone number!")
+                        Exit Function
+                    End If
+                    ConnectionString.Close()
+                End If
+            End If
 
 
 
@@ -1145,6 +1277,102 @@ Public Class NewSurvey
             End If
 
 
+            ' ensure age is > 15 yrs
+            If IsValidResponse = True Then
+                If QuestionInfoArray(CurrentQuestion).FieldName = "age_check" Then
+                    For Each aControl In Me.Controls
+                        Select Case TypeName(aControl)
+                            Case "GroupBox"
+                                For Each aGroupControl In CType(aControl, GroupBox).Controls
+                                    'Radio buttons
+                                    If TypeOf aGroupControl Is RadioButton Then
+                                        If CType(aGroupControl, RadioButton).Checked Then
+
+                                            CurrentValue = aGroupControl.tag
+                                        End If
+                                    End If
+                                Next
+                        End Select
+                    Next
+
+
+                    Dim age As Integer = CInt(GetValue("respondants_age"))
+
+                    If age >= 15 And CurrentValue = 2 Then
+                        IsValidResponse = False
+                        MsgBox("The Participant's age is greater than 15 years, kindly select the correct response", vbCritical, "Invalid Response")
+                    ElseIf age < 15 And CurrentValue = 1 Then
+                        IsValidResponse = False
+                        MsgBox("The Participant's age is less than 15 years, kindly select the correct response", vbCritical, "Invalid Response")
+                    End If
+                End If
+            End If
+
+
+            ' ensure correct health facility is selected
+            If IsValidResponse = True Then
+                If QuestionInfoArray(CurrentQuestion).FieldName = "health_facility" Then
+                    For Each aControl In Me.Controls
+                        Select Case TypeName(aControl)
+                            Case "GroupBox"
+                                For Each aGroupControl In CType(aControl, GroupBox).Controls
+                                    'Radio buttons
+                                    If TypeOf aGroupControl Is RadioButton Then
+                                        If CType(aGroupControl, RadioButton).Checked Then
+
+                                            CurrentValue = aGroupControl.tag
+                                        End If
+                                    End If
+                                Next
+                        End Select
+                    Next
+
+
+                    Dim country As Integer = CInt(GetValue("countrycode"))
+
+                    If country = 1 And CurrentValue > 14 And CurrentValue <> 99 Then
+                        IsValidResponse = False
+                        MsgBox("Select the correct Health Facility", vbCritical, "Invalid Response")
+                    ElseIf country = 2 And CurrentValue < 21 And CurrentValue <> 99 Then
+                        IsValidResponse = False
+                        MsgBox("Select the correct Health Facility", vbCritical, "Invalid Response")
+                    End If
+                End If
+            End If
+
+
+            ' ensure correct health facility is selected
+            If IsValidResponse = True Then
+                If QuestionInfoArray(CurrentQuestion).FieldName = "preferred_language" Then
+                    For Each aControl In Me.Controls
+                        Select Case TypeName(aControl)
+                            Case "GroupBox"
+                                For Each aGroupControl In CType(aControl, GroupBox).Controls
+                                    'Radio buttons
+                                    If TypeOf aGroupControl Is RadioButton Then
+                                        If CType(aGroupControl, RadioButton).Checked Then
+
+                                            CurrentValue = aGroupControl.tag
+                                        End If
+                                    End If
+                                Next
+                        End Select
+                    Next
+
+
+                    Dim country As Integer = CInt(GetValue("countrycode"))
+
+                    If country = 1 And CurrentValue < 4 And CurrentValue <> 97 Then
+                        IsValidResponse = False
+                        MsgBox("Select the correct Preferred Language", vbCritical, "Invalid Response")
+                    ElseIf country = 2 And CurrentValue > 3 And CurrentValue <> 97 Then
+                        IsValidResponse = False
+                        MsgBox("Select the correct Preferred Language", vbCritical, "Invalid Response")
+                    End If
+                End If
+            End If
+
+
             'check to make sure 24 hour times are correct
             If IsValidResponse = True Then
                 Select Case QuestionInfoArray(CurrentQuestion).FieldName
@@ -1194,6 +1422,38 @@ Public Class NewSurvey
                             Exit Function
                         End If
                 End Select
+            End If
+
+
+            ' ensure age is > 15 yrs
+            If IsValidResponse = True Then
+                If QuestionInfoArray(CurrentQuestion).FieldName = "eligibility_check" Then
+                    For Each aControl In Me.Controls
+                        Select Case TypeName(aControl)
+                            Case "GroupBox"
+                                For Each aGroupControl In CType(aControl, GroupBox).Controls
+                                    'Radio buttons
+                                    If TypeOf aGroupControl Is RadioButton Then
+                                        If CType(aGroupControl, RadioButton).Checked Then
+
+                                            CurrentValue = aGroupControl.tag
+                                        End If
+                                    End If
+                                Next
+                        End Select
+                    Next
+
+
+                    Dim eligibility_check2 As Integer = CInt(GetValue("eligibility_check2"))
+
+                    If eligibility_check2 = 1 And CurrentValue = 3 Then
+                        IsValidResponse = False
+                        MsgBox("This Participant is eligible for enrolment, has he/she declined enrollment?, If yes, select the correct response", vbCritical, "Invalid Response")
+                    ElseIf eligibility_check2 <> 1 And CurrentValue = 1 Then
+                        IsValidResponse = False
+                        MsgBox("The Participant is not eligible for enrollment, kindly double check your previous responses", vbCritical, "Invalid Response")
+                    End If
+                End If
             End If
 
 
@@ -1557,6 +1817,8 @@ Public Class NewSurvey
                     AddTextBox(myNode, surveyControls, ShowPreviousResponse)
                 Case "date"
                     AddCalendar(myNode, surveyControls, ShowPreviousResponse)
+                Case "button"
+                    AddButton(myNode, surveyControls, ShowPreviousResponse)
                 Case "information"
                     AddInformation(myNode, surveyControls)
                 Case "automatic"
@@ -1604,6 +1866,106 @@ Public Class NewSurvey
 
 
 
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+
+    '**********************************************************************************
+    ' This sub adds a Button to the response
+    ' with the text for the survey question.
+    '**********************************************************************************
+    Public Sub AddButton(ByVal inNode As XmlNode,
+    ByVal inControls As Control.ControlCollection,
+    ByVal ShowPreviousResponse As Boolean)
+
+        Try
+            ' Create a new control.
+            ' Set up some properties
+            Dim newButton As New Button With {
+            .Text = inNode.SelectSingleNode("text").InnerText,
+            .Name = inNode.Attributes("fieldname").Value,
+            .Width = 300,
+            .Height = 60
+        }
+
+            'Put the question text in the label
+            lblQuestion.Text = "Click the button to Display Randomization Spin Wheel"
+
+
+            'Add the Textbox to the form
+            newButton.Location = ResponseLocation
+            newButton.Font = New Font("Arial", 14)
+            inControls.Add(newButton)
+            newButton.Focus()
+
+
+            'Add handlers for keyup event event so we can enable the "Next" button
+            AddHandler newButton.Click, AddressOf ButtonHandlerClick
+
+            If ShowPreviousResponse = True Then
+
+                'Dim ConnectionString As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
+                'ConnectionString.Open()
+
+                'Dim CurSONETID As String = GetValue(QuestionInfoArray(CurrentQuestion).FieldName)
+
+                'If CurSONETID = "-99" Then
+                '    newButton.Height = 150
+                '    newButton.Width = 400
+                '    newButton.TextAlign = ContentAlignment.MiddleLeft
+                '    newButton.Text = "Person was not found by searching" & vbNewLine & vbNewLine &
+                '                 "Click here to search again. Or click 'Next' for manual entry"
+                'Else
+                '    Dim strSQL As String = "select participantsname, hhid, linenum, sex, ageyrs from bl_hhmembers where hhid + '-' + CStr(linenum)  = '" & CurSONETID & "' order by hhid;"
+                '    Dim da As New OleDbDataAdapter(strSQL, ConnectionString)
+                '    Dim ds As New DataSet
+                '    da.Fill(ds)
+                '    Dim dt As DataTable
+                '    dt = ds.Tables(0)
+
+                '    For Each row As DataRow In dt.Rows
+                '        newButton.Height = 150
+                '        newButton.Width = 400
+                '        newButton.TextAlign = ContentAlignment.MiddleLeft
+                '        newButton.Text = "Name: " & row.Item("participantsname") & vbNewLine &
+                '                    "SONETID: " & row.Item("hhid") & "-" & row.Item("linenum") & vbNewLine &
+                '                    "Age: " & row.Item("ageyrs") & vbNewLine &
+                '                    "Sex: " & IIf(row.Item("sex") = 1, "Male", "Female") & vbNewLine & vbNewLine &
+                '                    "Click here to search again."
+                '    Next
+
+                '    ConnectionString.Close()
+                'End If
+                Button_Next.Enabled = True
+            Else
+
+                Button_Next.Enabled = False
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+
+    '**********************************************************************************
+    ' Event handler for Button click event
+    '**********************************************************************************
+    Private Sub ButtonHandlerClick(ByVal sender As Object, ByVal e As EventArgs)
+        Try
+            ' Verify that the type of control triggering this event is a text box
+            If TypeOf sender Is Button Then
+
+
+                Randomization_wheelspin.ShowDialog()
+                Randomization_wheelspin.Dispose()
+
+                Button_Next.Enabled = True
+                Button_Next_Click(Nothing, Nothing)
+
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -2216,6 +2578,25 @@ Public Class NewSurvey
         End Try
     End Sub
 
+    Function GetMaxLengthByFieldName(ByVal FieldName As String) As Integer
+        Dim MaxLength As Integer = 1 ' Default MaxLength
+
+        Select Case FieldName
+            Case "tabletnum", "pinitials", "respondants_age"
+                MaxLength = 2
+            Case "hhnum"
+                MaxLength = 3
+            Case "phone1", "phone2", "phone3", "mobile_number"
+                MaxLength = 10
+            Case "barcode", "barcode2", "collection_time"
+                MaxLength = 5
+            Case "orphan_moyr", "orphan_fayr", "tbeveryear", "tbyear", "datehivtestyr"
+                MaxLength = 4
+                ' Add more cases as needed
+        End Select
+
+        Return MaxLength
+    End Function
 
 
 
@@ -2227,6 +2608,19 @@ Public Class NewSurvey
         Try
             ' Verify that the type of control triggering this event is indeed a Radio Button.
             If TypeOf sender Is TextBox Then
+
+                Dim currentFieldName As String = QuestionInfoArray(CurrentQuestion).FieldName
+                Dim MaxLength As Integer = GetMaxLengthByFieldName(currentFieldName)
+
+                If Len(CType(sender, TextBox).Text) > MaxLength - 1 Then
+                    ' Move to next question if user hits "Enter"
+                    Select Case e.KeyChar
+                        Case ChrW(Keys.Return)
+                            Button_Next_Click(Nothing, Nothing)
+                            e.Handled = True
+                            Exit Sub
+                    End Select
+                End If
 
                 'Check the question type - if it is integer only allow 0 - 9 characters
                 If QuestionInfoArray(CurrentQuestion).FieldType = "integer" Or QuestionInfoArray(CurrentQuestion).FieldType = "text_integer" Or QuestionInfoArray(CurrentQuestion).FieldType = "text_id" Or QuestionInfoArray(CurrentQuestion).FieldType = "phone_num" Then
