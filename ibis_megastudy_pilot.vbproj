@@ -107,16 +107,16 @@
     <Compile Include="LeaveNote.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="My Project\Resources1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Randomization.Designer.vb">
       <DependentUpon>Randomization.vb</DependentUpon>
     </Compile>
     <Compile Include="Randomization.vb">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="NewSurvey.Designer.vb">
       <DependentUpon>NewSurvey.vb</DependentUpon>
@@ -188,10 +188,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="images\spin-12315_128.gif" />
     <None Include="xml\baseline.xml" />
     <None Include="images\eye.png" />
     <None Include="images\done.jpg" />
     <None Include="images\na.png" />
+    <None Include="images\lucky-spin.png" />
     <Content Include="images\next.png" />
     <None Include="images\notdone.png" />
     <Content Include="images\previous.png" />

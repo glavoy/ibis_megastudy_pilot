@@ -38,7 +38,11 @@ Public Class NewSurvey
     'XML document which has all the questionnaire information
     Public xr As New Xml.XmlDocument
 
+    'Declare a flag to track the image state()
+    Private isSpinning As Boolean = False
 
+    ' Counter for button clicks
+    Private clickCount As Integer = 0
 
     'setting for the dynamic controls
     Private Const GroupBoxHeight As Integer = 300
@@ -1806,6 +1810,8 @@ Public Class NewSurvey
                 Button_Previous.Enabled = False
             End If
 
+            PictureBoxArm.Visible = False
+            LabelArm.Visible = False
             ' Determine what "type" of control should be created based on the question-type attribute
             ' in the xml file and pass the information to create the appropriate control
             Select Case myNode.Attributes("type").Value
@@ -1880,69 +1886,46 @@ Public Class NewSurvey
     ByVal inControls As Control.ControlCollection,
     ByVal ShowPreviousResponse As Boolean)
 
+
         Try
-            ' Create a new control.
-            ' Set up some properties
-            Dim newButton As New Button With {
-            .Text = inNode.SelectSingleNode("text").InnerText,
-            .Name = inNode.Attributes("fieldname").Value,
-            .Width = 300,
-            .Height = 60
-        }
+            If QuestionInfoArray(CurrentQuestion).FieldName = "arm_text_demo" Then
+                PictureBoxArm.Visible = True
+                ' Create a new control.
+                ' Set up some properties
+                Dim newButton As New Button With {
+                .Text = "Click here to Spin Randomization Wheel",
+                .Name = inNode.Attributes("fieldname").Value,
+                .Width = 300,
+                .Height = 60
+            }
 
-            'Put the question text in the label
-            lblQuestion.Text = "Click the button to Display Randomization Spin Wheel"
-
-
-            'Add the Textbox to the form
-            newButton.Location = ResponseLocation
-            newButton.Font = New Font("Arial", 14)
-            inControls.Add(newButton)
-            newButton.Focus()
+                'Put the question text in the label
+                lblQuestion.Text = "Click the button to Spin Randomization Wheel" & vbNewLine & "Note - it only works once!"
 
 
-            'Add handlers for keyup event event so we can enable the "Next" button
-            AddHandler newButton.Click, AddressOf ButtonHandlerClick
+                'Add the Textbox to the form
+                newButton.Location = New Point(150, 400)
+                newButton.Font = New Font("Arial", 14)
+                inControls.Add(newButton)
+                newButton.Focus()
 
-            If ShowPreviousResponse = True Then
+                'Not showing gif
+                isSpinning = False
 
-                'Dim ConnectionString As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
-                'ConnectionString.Open()
+                'Add handlers for keyup event event so we can enable the "Next" button
+                AddHandler newButton.Click, AddressOf ButtonHandlerClick
 
-                'Dim CurSONETID As String = GetValue(QuestionInfoArray(CurrentQuestion).FieldName)
+                If ShowPreviousResponse = True Then
 
-                'If CurSONETID = "-99" Then
-                '    newButton.Height = 150
-                '    newButton.Width = 400
-                '    newButton.TextAlign = ContentAlignment.MiddleLeft
-                '    newButton.Text = "Person was not found by searching" & vbNewLine & vbNewLine &
-                '                 "Click here to search again. Or click 'Next' for manual entry"
-                'Else
-                '    Dim strSQL As String = "select participantsname, hhid, linenum, sex, ageyrs from bl_hhmembers where hhid + '-' + CStr(linenum)  = '" & CurSONETID & "' order by hhid;"
-                '    Dim da As New OleDbDataAdapter(strSQL, ConnectionString)
-                '    Dim ds As New DataSet
-                '    da.Fill(ds)
-                '    Dim dt As DataTable
-                '    dt = ds.Tables(0)
 
-                '    For Each row As DataRow In dt.Rows
-                '        newButton.Height = 150
-                '        newButton.Width = 400
-                '        newButton.TextAlign = ContentAlignment.MiddleLeft
-                '        newButton.Text = "Name: " & row.Item("participantsname") & vbNewLine &
-                '                    "SONETID: " & row.Item("hhid") & "-" & row.Item("linenum") & vbNewLine &
-                '                    "Age: " & row.Item("ageyrs") & vbNewLine &
-                '                    "Sex: " & IIf(row.Item("sex") = 1, "Male", "Female") & vbNewLine & vbNewLine &
-                '                    "Click here to search again."
-                '    Next
+                    Button_Next.Enabled = True
+                Else
 
-                '    ConnectionString.Close()
-                'End If
-                Button_Next.Enabled = True
-            Else
-
-                Button_Next.Enabled = False
+                    Button_Next.Enabled = False
+                End If
             End If
+
+
 
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -1954,21 +1937,44 @@ Public Class NewSurvey
     ' Event handler for Button click event
     '**********************************************************************************
     Private Sub ButtonHandlerClick(ByVal sender As Object, ByVal e As EventArgs)
+
+        Dim normalImage As Image = My.Resources.lucky_spin ' Change to your actual resource/image
+        Dim spinningImage As Image = My.Resources.spin_12315_128 ' Change to your actual resource/image
+
+
         Try
-            ' Verify that the type of control triggering this event is a text box
+            ' Verify that the type of control triggering this event is a button
             If TypeOf sender Is Button Then
+                ' Toggle flag
+                isSpinning = Not isSpinning
+                clickCount += 1
 
+                ' Update PictureBox image based on the flag
+                If isSpinning Then
+                    PictureBoxArm.Image = spinningImage
+                    DirectCast(sender, Button).Text = "Stop"
+                    Button_Next.Enabled = False
+                Else
+                    PictureBoxArm.Image = normalImage
+                    DirectCast(sender, Button).Text = "Click the button to Spin Randomization Wheel"
+                    Button_Next.Enabled = True
+                    If clickCount > 1 Then
+                        LabelArm.Visible = True
+                        LabelArm.Text = "Randomization Arm: " & RandArmText
+                    End If
+                End If
 
-                Randomization_wheelspin.ShowDialog()
-                Randomization_wheelspin.Dispose()
-
-                Button_Next.Enabled = True
-                Button_Next_Click(Nothing, Nothing)
-
+                ' Enable the next button
+                'Button_Next.Enabled = True
+                'Button_Next_Click(Nothing, Nothing)
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
+
+
+
+
     End Sub
 
 
