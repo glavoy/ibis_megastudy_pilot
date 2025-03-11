@@ -57,16 +57,17 @@ Partial Class Main_Menu
         Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HouseholdMemberToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ButtonBaseline = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(380, 147)
+        Me.Label1.Location = New System.Drawing.Point(338, 118)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(496, 55)
+        Me.Label1.Size = New System.Drawing.Size(416, 46)
         Me.Label1.TabIndex = 14
         Me.Label1.Text = "IBIS MegaStudy Pilot"
         '
@@ -168,10 +169,10 @@ Partial Class Main_Menu
         'ButtonQuit
         '
         Me.ButtonQuit.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonQuit.Location = New System.Drawing.Point(15, 32)
-        Me.ButtonQuit.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.ButtonQuit.Location = New System.Drawing.Point(13, 26)
+        Me.ButtonQuit.Margin = New System.Windows.Forms.Padding(4)
         Me.ButtonQuit.Name = "ButtonQuit"
-        Me.ButtonQuit.Size = New System.Drawing.Size(111, 71)
+        Me.ButtonQuit.Size = New System.Drawing.Size(99, 57)
         Me.ButtonQuit.TabIndex = 26
         Me.ButtonQuit.Text = "Quit"
         Me.ButtonQuit.UseVisualStyleBackColor = True
@@ -186,55 +187,55 @@ Partial Class Main_Menu
         'HouseholdSurveyToolStripMenuItem
         '
         Me.HouseholdSurveyToolStripMenuItem.Name = "HouseholdSurveyToolStripMenuItem"
-        Me.HouseholdSurveyToolStripMenuItem.Size = New System.Drawing.Size(281, 34)
+        Me.HouseholdSurveyToolStripMenuItem.Size = New System.Drawing.Size(232, 26)
         Me.HouseholdSurveyToolStripMenuItem.Text = "Household Survey"
         '
         'HouseholsdMemberToolStripMenuItem
         '
         Me.HouseholsdMemberToolStripMenuItem.Name = "HouseholsdMemberToolStripMenuItem"
-        Me.HouseholsdMemberToolStripMenuItem.Size = New System.Drawing.Size(281, 34)
+        Me.HouseholsdMemberToolStripMenuItem.Size = New System.Drawing.Size(232, 26)
         Me.HouseholsdMemberToolStripMenuItem.Text = "Household Member"
         '
         'MovedOutToolStripMenuItem1
         '
         Me.MovedOutToolStripMenuItem1.Name = "MovedOutToolStripMenuItem1"
-        Me.MovedOutToolStripMenuItem1.Size = New System.Drawing.Size(281, 34)
+        Me.MovedOutToolStripMenuItem1.Size = New System.Drawing.Size(232, 26)
         Me.MovedOutToolStripMenuItem1.Text = "Moved Out"
         '
         'FollowupSurveyToolStripMenuItem
         '
         Me.FollowupSurveyToolStripMenuItem.Name = "FollowupSurveyToolStripMenuItem"
-        Me.FollowupSurveyToolStripMenuItem.Size = New System.Drawing.Size(281, 34)
+        Me.FollowupSurveyToolStripMenuItem.Size = New System.Drawing.Size(232, 26)
         Me.FollowupSurveyToolStripMenuItem.Text = "Followup Survey"
         '
         'HIVSurveyToolStripMenuItem1
         '
         Me.HIVSurveyToolStripMenuItem1.Name = "HIVSurveyToolStripMenuItem1"
-        Me.HIVSurveyToolStripMenuItem1.Size = New System.Drawing.Size(281, 34)
+        Me.HIVSurveyToolStripMenuItem1.Size = New System.Drawing.Size(232, 26)
         Me.HIVSurveyToolStripMenuItem1.Text = "HIV Survey"
         '
         'LabRequisitionFormToolStripMenuItem1
         '
         Me.LabRequisitionFormToolStripMenuItem1.Name = "LabRequisitionFormToolStripMenuItem1"
-        Me.LabRequisitionFormToolStripMenuItem1.Size = New System.Drawing.Size(281, 34)
+        Me.LabRequisitionFormToolStripMenuItem1.Size = New System.Drawing.Size(232, 26)
         Me.LabRequisitionFormToolStripMenuItem1.Text = "Lab Requisition Form"
         '
         'RepeatTesterFormToolStripMenuItem1
         '
         Me.RepeatTesterFormToolStripMenuItem1.Name = "RepeatTesterFormToolStripMenuItem1"
-        Me.RepeatTesterFormToolStripMenuItem1.Size = New System.Drawing.Size(281, 34)
+        Me.RepeatTesterFormToolStripMenuItem1.Size = New System.Drawing.Size(232, 26)
         Me.RepeatTesterFormToolStripMenuItem1.Text = "Repeat Tester Form"
         '
         'TBSurveyToolStripMenuItem1
         '
         Me.TBSurveyToolStripMenuItem1.Name = "TBSurveyToolStripMenuItem1"
-        Me.TBSurveyToolStripMenuItem1.Size = New System.Drawing.Size(281, 34)
+        Me.TBSurveyToolStripMenuItem1.Size = New System.Drawing.Size(232, 26)
         Me.TBSurveyToolStripMenuItem1.Text = "TB Survey"
         '
         'SputumSurveyToolStripMenuItem1
         '
         Me.SputumSurveyToolStripMenuItem1.Name = "SputumSurveyToolStripMenuItem1"
-        Me.SputumSurveyToolStripMenuItem1.Size = New System.Drawing.Size(281, 34)
+        Me.SputumSurveyToolStripMenuItem1.Size = New System.Drawing.Size(232, 26)
         Me.SputumSurveyToolStripMenuItem1.Text = "Sputum Survey"
         '
         'DeleteToolStripMenuItem
@@ -247,33 +248,44 @@ Partial Class Main_Menu
         'HouseholdMemberToolStripMenuItem
         '
         Me.HouseholdMemberToolStripMenuItem.Name = "HouseholdMemberToolStripMenuItem"
-        Me.HouseholdMemberToolStripMenuItem.Size = New System.Drawing.Size(273, 34)
+        Me.HouseholdMemberToolStripMenuItem.Size = New System.Drawing.Size(224, 26)
         Me.HouseholdMemberToolStripMenuItem.Text = "Household Member"
         '
         'ButtonBaseline
         '
         Me.ButtonBaseline.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonBaseline.Location = New System.Drawing.Point(457, 292)
-        Me.ButtonBaseline.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.ButtonBaseline.Location = New System.Drawing.Point(406, 234)
+        Me.ButtonBaseline.Margin = New System.Windows.Forms.Padding(4)
         Me.ButtonBaseline.Name = "ButtonBaseline"
-        Me.ButtonBaseline.Size = New System.Drawing.Size(296, 161)
+        Me.ButtonBaseline.Size = New System.Drawing.Size(263, 129)
         Me.ButtonBaseline.TabIndex = 23
         Me.ButtonBaseline.Text = "Do Screening and Baseline Survey"
         Me.ButtonBaseline.UseVisualStyleBackColor = True
         '
+        'Button1
+        '
+        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.Location = New System.Drawing.Point(406, 401)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(263, 127)
+        Me.Button1.TabIndex = 27
+        Me.Button1.Text = "Edit Screening and Baseline Survey"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'Main_Menu
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1427, 1202)
+        Me.ClientSize = New System.Drawing.Size(1268, 962)
         Me.ControlBox = False
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.ButtonBaseline)
         Me.Controls.Add(Me.ButtonQuit)
         Me.Controls.Add(Me.Label1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "Main_Menu"
-        Me.Text = "--"
+        Me.Text = "`"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -313,4 +325,5 @@ Partial Class Main_Menu
     Friend WithEvents DeleteToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HouseholdMemberToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ButtonBaseline As Button
+    Friend WithEvents Button1 As Button
 End Class
