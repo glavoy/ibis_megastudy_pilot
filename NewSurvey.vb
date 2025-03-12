@@ -3,7 +3,11 @@ Imports System.Data.OleDb
 Imports System.Configuration
 Imports System.Runtime.InteropServices
 Imports System.Globalization
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar
+'Imports AxWMPLib
+
+Imports LibVLCSharp.Shared
+Imports LibVLCSharp.WinForms
+
 
 Public Class NewSurvey
     ReadOnly MaxResponses As Integer = 120   'Maximium number of responses to a question (for a radio button or checkbox)
@@ -43,6 +47,9 @@ Public Class NewSurvey
 
     ' Counter for button clicks
     Private clickCount As Integer = 0
+
+    'Add a media player
+    'Private mediaPlayer As AxWindowsMediaPlayer
 
     'setting for the dynamic controls
     Private Const GroupBoxHeight As Integer = 300
@@ -127,6 +134,9 @@ Public Class NewSurvey
             CurrentQuestion = 0
             QuestionInfoArray(CurrentQuestion).PrevQues = PreviousQuestion
             CreateQuestion(CurrentQuestion, ShowPreviousResponses)
+
+            'Fro VLC
+            Core.Initialize()
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -776,16 +786,16 @@ Public Class NewSurvey
                 ConnectionString.Close()
                 MsgBox("The data has been saved!")
 
-                ' Load the evatar video
-                ' Call the function to get the correct video
-                If GetValue("eligibility_check") = 1 And RandArmText <> "Default appointment" Then
-                    MsgBox("A short Video will be displayed shortly for this participant")
+                '' Load the evatar video
+                '' Call the function to get the correct video
+                'If GetValue("eligibility_check") = 1 And RandArmText <> "Default appointment" Then
+                '    MsgBox("A short Video will be displayed shortly for this participant")
 
-                    Dim video_name As String = getRandVideo(GetValue("client_sex"), GetValue("respondants_age"), RandArmText, GetValue("preferred_language"))
-                    Dim videoPath As String = "C:\IBIS_pilot\rand_video\" & video_name
-                    Process.Start(New ProcessStartInfo(videoPath) With {.UseShellExecute = True})
-                    'Process.Start("wmplayer.exe", "/play C:\IBIS_pilot\rand_video\video1.mp4")
-                End If
+                '    Dim video_name As String = getRandVideo(GetValue("client_sex"), GetValue("respondants_age"), RandArmText, GetValue("preferred_language"))
+                '    Dim videoPath As String = "C:\IBIS_pilot\rand_video\" & video_name
+                '    Process.Start(New ProcessStartInfo(videoPath) With {.UseShellExecute = True})
+                '    'Process.Start("wmplayer.exe", "/play C:\IBIS_pilot\rand_video\video1.mp4")
+                'End If
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -838,6 +848,7 @@ Public Class NewSurvey
             Return video_path
         Catch ex As Exception
             MsgBox(ex.Message)
+            Return video_path  ' Return the default value in case of exception
         End Try
 
     End Function
@@ -1366,7 +1377,7 @@ Public Class NewSurvey
 
                     Dim country As Integer = CInt(GetValue("countrycode"))
 
-                    If country = 1 And CurrentValue < 4 And CurrentValue <> 97 Then
+                    If country = 1 And CurrentValue < 3 And CurrentValue <> 97 Then
                         IsValidResponse = False
                         MsgBox("Select the correct Preferred Language", vbCritical, "Invalid Response")
                     ElseIf country = 2 And CurrentValue > 3 And CurrentValue <> 97 Then
@@ -1888,6 +1899,7 @@ Public Class NewSurvey
 
 
         Try
+
             If QuestionInfoArray(CurrentQuestion).FieldName = "arm_text_demo" Then
                 PictureBoxArm.Visible = True
                 ' Create a new control.
@@ -2683,9 +2695,61 @@ Public Class NewSurvey
         End If
 
         Try
-            'Put the question text in the label
-            lblQuestion.Text = SubstituteFieldNames(inNode.SelectSingleNode("text").InnerText)
+            If QuestionInfoArray(CurrentQuestion).FieldName = "play_video" Then
+                lblQuestion.Text = "Arm: " & RandArmText
+
+                Dim video_name As String = ""
+                Dim videoPath As String = ""
+
+                ' Create videoView if it doesn't exist yet
+                Dim videoView As New VideoView()
+                videoView.Size = New Size(600, 400)
+                ' Optional: center the video view in the parent control
+                videoView.Location = New Point(20, 50)
+                inControls.Add(videoView)
+
+                ' Initialize LibVLC and media player
+                Dim libVLC As New LibVLC()
+                Dim mediaPlayer As New MediaPlayer(libVLC)
+
+                ' Connect media player to video view
+                videoView.MediaPlayer = mediaPlayer
+
+
+
+
+                ' Create only the replay button
+                Dim btnReplay As New Button()
+                btnReplay.Text = "Replay Video"
+                btnReplay.Size = New Size(120, 30)
+                btnReplay.Location = New Point(200, 480)
+                AddHandler btnReplay.Click, Sub(s, e)
+                                                mediaPlayer.Stop()
+                                                mediaPlayer.Play()
+                                            End Sub
+                inControls.Add(btnReplay)
+
+
+
+                ' Load the evatar video
+                ' Call the function to get the correct video
+                If GetValue("eligibility_check") = 1 And RandArmText <> "Default appointment" Then
+                    video_name = getRandVideo(GetValue("client_sex"), GetValue("respondants_age"), RandArmText, GetValue("preferred_language"))
+                    videoPath = "C:\IBIS_pilot\rand_video\" & video_name
+                End If
+
+
+                ' Create media and play it
+                Dim media As New Media(libVLC, New Uri(videoPath))
+                mediaPlayer.Media = media
+                mediaPlayer.Play()
+
+            Else
+                'Put the question text in the label
+                lblQuestion.Text = SubstituteFieldNames(inNode.SelectSingleNode("text").InnerText)
+            End If
             Button_Next.Focus()
+
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -2725,6 +2789,7 @@ Public Class NewSurvey
             SubstituteFieldNames = OriginalText
         Catch ex As Exception
             MessageBox.Show(ex.Message)
+            Return OriginalText
         End Try
     End Function
 
