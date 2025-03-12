@@ -128,7 +128,7 @@
     <Compile Include="LeaveNote.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="My Project\Resources1.Designer.vb">
+    <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -200,13 +200,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="images\spin-12315_128.gif" />
     <None Include="packages.config" />
     <None Include="xml\baseline.xml" />
     <None Include="images\eye.png" />
     <None Include="images\done.jpg" />
     <None Include="images\na.png" />
-    <None Include="images\lucky-spin.png" />
     <Content Include="images\next.png" />
     <None Include="images\notdone.png" />
     <Content Include="images\previous.png" />
@@ -223,17 +221,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="WMPLauncher">
-      <Guid>{5CB42160-CD7C-4806-9367-1C4A65153F4A}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="packages\VideoLAN.LibVLC.Windows.3.0.21\build\VideoLAN.LibVLC.Windows.targets" Condition="Exists('packages\VideoLAN.LibVLC.Windows.3.0.21\build\VideoLAN.LibVLC.Windows.targets')" />
