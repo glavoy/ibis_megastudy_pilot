@@ -34,6 +34,9 @@ Partial Class NewSurvey
         Me.ListBox_hh_members = New System.Windows.Forms.ListBox()
         Me.LabelPhone1 = New System.Windows.Forms.Label()
         Me.LabelPhone2 = New System.Windows.Forms.Label()
+        Me.PictureBoxArm = New System.Windows.Forms.PictureBox()
+        Me.LabelArm = New System.Windows.Forms.Label()
+        CType(Me.PictureBoxArm, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Button_Previous
@@ -169,12 +172,36 @@ Partial Class NewSurvey
         Me.LabelPhone2.Text = "Phone:"
         Me.LabelPhone2.Visible = False
         '
+        'PictureBoxArm
+        '
+        Me.PictureBoxArm.Image = CType(resources.GetObject("PictureBoxArm.Image"), System.Drawing.Image)
+        Me.PictureBoxArm.Location = New System.Drawing.Point(92, 77)
+        Me.PictureBoxArm.Name = "PictureBoxArm"
+        Me.PictureBoxArm.Size = New System.Drawing.Size(600, 370)
+        Me.PictureBoxArm.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBoxArm.TabIndex = 11
+        Me.PictureBoxArm.TabStop = False
+        '
+        'LabelArm
+        '
+        Me.LabelArm.AutoSize = True
+        Me.LabelArm.Font = New System.Drawing.Font("Arial", 20.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, CType(0, Byte))
+        Me.LabelArm.Location = New System.Drawing.Point(107, 606)
+        Me.LabelArm.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.LabelArm.Name = "LabelArm"
+        Me.LabelArm.Size = New System.Drawing.Size(193, 24)
+        Me.LabelArm.TabIndex = 12
+        Me.LabelArm.Text = "Randomization Arm"
+        Me.LabelArm.Visible = False
+        '
         'NewSurvey
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1371, 838)
         Me.ControlBox = False
+        Me.Controls.Add(Me.LabelArm)
+        Me.Controls.Add(Me.PictureBoxArm)
         Me.Controls.Add(Me.LabelPhone2)
         Me.Controls.Add(Me.LabelPhone1)
         Me.Controls.Add(Me.ListBox_hh_members)
@@ -191,6 +218,7 @@ Partial Class NewSurvey
         Me.Name = "NewSurvey"
         Me.Text = "--"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
+        CType(Me.PictureBoxArm, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -206,4 +234,6 @@ Partial Class NewSurvey
     Friend WithEvents ListBox_hh_members As System.Windows.Forms.ListBox
     Friend WithEvents LabelPhone1 As Label
     Friend WithEvents LabelPhone2 As Label
+    Friend WithEvents PictureBoxArm As PictureBox
+    Friend WithEvents LabelArm As Label
 End Class
