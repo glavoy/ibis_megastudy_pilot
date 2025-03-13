@@ -350,7 +350,7 @@
 	</question>
 
 
-	<question type = 'text' fieldname = 'mobile_number' fieldtype = 'text_integer'>
+	<question type = 'text' fieldname = 'mobile_number' fieldtype = 'phone_num'>
 		<text>What is your mobile phone number?</text>
 		<maxCharacters>10</maxCharacters>
 	</question>
@@ -452,6 +452,10 @@
 		</responses>
 	</question>
 
+
+	<question type = 'automatic' fieldname = 'preferred_language_text' fieldtype = 'text'>
+	</question>
+	
 
 	<question type = 'radio' fieldname = 'reading_ability' fieldtype = 'integer'>
 		<text>Can you read and understand a text message easily, with difficulty, or not at all?</text>

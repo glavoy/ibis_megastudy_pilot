@@ -1189,7 +1189,7 @@ Public Class NewSurvey
                         End Select
                     Next
 
-                    Dim strSQL As String = "select mobile_number from " & Survey & " where mobile_number = " & CInt(CurrentValue)
+                    Dim strSQL As String = "select mobile_number from " & Survey & " where mobile_number = '" & CurrentValue & "'"
                     Dim ConnectionString As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
                     Dim da As New OleDbDataAdapter(strSQL, ConnectionString)
                     Dim ds As New DataSet

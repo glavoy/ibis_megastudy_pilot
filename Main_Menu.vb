@@ -23,5 +23,10 @@
             MessageBox.Show(ex.Message)
         End Try
     End Sub
+
+    Private Sub ButtonSMSSchedule_Click(sender As Object, e As EventArgs) Handles ButtonSMSSchedule.Click
+        SMSSchedule.ShowDialog()
+        SMSSchedule.Dispose()
+    End Sub
 End Class
 

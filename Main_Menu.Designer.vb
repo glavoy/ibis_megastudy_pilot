@@ -58,6 +58,7 @@ Partial Class Main_Menu
         Me.HouseholdMemberToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ButtonBaseline = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.ButtonSMSSchedule = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label1
@@ -272,12 +273,23 @@ Partial Class Main_Menu
         Me.Button1.Text = "Edit Screening and Baseline Survey"
         Me.Button1.UseVisualStyleBackColor = True
         '
+        'ButtonSMSSchedule
+        '
+        Me.ButtonSMSSchedule.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonSMSSchedule.Location = New System.Drawing.Point(406, 645)
+        Me.ButtonSMSSchedule.Name = "ButtonSMSSchedule"
+        Me.ButtonSMSSchedule.Size = New System.Drawing.Size(263, 56)
+        Me.ButtonSMSSchedule.TabIndex = 28
+        Me.ButtonSMSSchedule.Text = "Show SMS schedule"
+        Me.ButtonSMSSchedule.UseVisualStyleBackColor = True
+        '
         'Main_Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1268, 962)
         Me.ControlBox = False
+        Me.Controls.Add(Me.ButtonSMSSchedule)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.ButtonBaseline)
         Me.Controls.Add(Me.ButtonQuit)
@@ -326,4 +338,5 @@ Partial Class Main_Menu
     Friend WithEvents HouseholdMemberToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ButtonBaseline As Button
     Friend WithEvents Button1 As Button
+    Friend WithEvents ButtonSMSSchedule As Button
 End Class

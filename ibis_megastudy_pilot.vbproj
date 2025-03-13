@@ -164,6 +164,12 @@
     <Compile Include="SelectFormToEdit.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="SMSSchedule.Designer.vb">
+      <DependentUpon>SMSSchedule.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SMSSchedule.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="LeaveNote.resx">

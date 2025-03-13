@@ -164,9 +164,28 @@ Module AutomaticVariables
                         RandArmText = CurrentAutoValue
                     End If
 
+                Case Is = "preferred_language_text"
+                    Dim preferred_language As String = GetValue("preferred_language")
+                    Select Case preferred_language
+                        Case Is = "1"
+                            CurrentAutoValue = "DHOLUO"
+                        Case Is = "2"
+                            CurrentAutoValue = "SWAHILI"
+                        Case Is = "3"
+                            CurrentAutoValue = "ENGLISH"
+                        Case Is = "4"
+                            CurrentAutoValue = "RUNYONKOLE"
+                        Case Is = "5"
+                            CurrentAutoValue = "LUGANDA"
+                        Case Is = "6"
+                            CurrentAutoValue = "OTHER"
+                        Case Is = "7"
+                            CurrentAutoValue = "NONE"
+                        Case Else
+                            CurrentAutoValue = "ENGLISH"
+                    End Select
 
             End Select
-
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
