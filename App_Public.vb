@@ -8,6 +8,8 @@ Module IBIS_Public
     Public Survey As String                                 'This is used to keep which survey we are doing - add household or household members
     Public SUBJID As String                                 'used to store the SUBJID
     Public VDATE As String = "01/01/1899"                   'used to store the Visit Date
+    Public Community As String                              'used to store the Community
+    Public Village As String                                'selected village - from MainMenu
     Public ModifyingSurvey As Boolean = False               'keeps track of wether or not we are doing a new survey or modifying an existing one
     Public CurrentAutoValue As String                       'the current auto value of an automatic varaible
     Public DontKnow_Value As String                         'stores the current "Don't Know' value for a question
@@ -19,6 +21,13 @@ Module IBIS_Public
     Public RandArmText As String = ""                       'Just to store the randomization arm text
     Public RandArmID As Integer = 0                         'Just to store the randomization arm number
     Public CancelledLeaveNote As Boolean = False            'determines whether clinican recorded changes or not
+    Public ParticipantsName As String
+    Public ParticipantsOtherName As String
+    Public ParticipantsAge As Integer
+    Public ParticipantsGender As String
+    Public ParticipantsPhone As Integer
+    Public Subcounty As String
+    Public County As String
 
     '*****************************************************
     ' Function to get the next line number

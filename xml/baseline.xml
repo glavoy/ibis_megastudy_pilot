@@ -6,11 +6,6 @@
 	</question>
 
 
-	<question type = 'date' fieldname = 'vdate' fieldtype = 'date'>
-		<text>Visit Date</text>
-	</question>
-
-
 	<question type = 'radio' fieldname = 'countrycode' fieldtype = 'integer'>
 		<text>Select The country/region</text>
 		<responses>
@@ -35,19 +30,33 @@
 	</question>
 
 
-	<question type = 'radio' fieldname = 'health_facility' fieldtype = 'integer'>
+	<question type = 'radio' fieldname = 'health_facility_ke' fieldtype = 'integer'>
 		<text>Health facility name</text>
 		<responses>
-			<response value = '11'>Bushenyi HCIV</response>
-			<response value = '12'>Ishaka Adventist Hospital(Bushenyi)</response>
-			<response value = '13'>Ishongororo HCIV (Ibanda)</response>
-			<response value = '14'>Ruhoko HCIV (Ibanda)</response>
 			<response value = '21'>Homa Bay Teaching and Referral Hospital</response>
 			<response value = '22'>Rachuonyo District Hospital</response>
 			<response value = '23'>Suba District Hospital</response>
 			<response value = '24'>Ndhiwa District Hospital</response>
 			<response value = '99'>Other</response>
 		</responses>
+		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='health_facility_ug'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'health_facility_ug' fieldtype = 'integer'>
+		<text>Health facility name</text>
+		<responses>
+			<response value = '11'>Bushenyi HCIV</response>
+			<response value = '12'>Ishaka Adventist Hospital(Bushenyi)</response>
+			<response value = '13'>Ishongororo HCIV (Ibanda)</response>
+			<response value = '14'>Ruhoko HCIV (Ibanda)</response>
+			<response value = '99'>Other</response>
+		</responses>
+		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='health_facility'></skip>
+		</preskip>
 	</question>
 
 
@@ -55,8 +64,25 @@
 		<text>Specify other health facility</text>
 		<maxCharacters>80</maxCharacters>
 		<preskip>
-			<skip fieldname='health_facility' condition = '&lt;&gt;' response='99' response_type='fixed' skiptofieldname ='screening_id'></skip>
+			<skip fieldname='health_facility_ke' condition = '&lt;&gt;' response='99' response_type='fixed' skiptofieldname ='health_facility'></skip>
 		</preskip>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'health_facility' fieldtype = 'integer'>
+	</question>
+
+
+	<question type = 'text' fieldname = 'participants_name' fieldtype = 'text'>
+		<text>Enter the Participants Name (First name, Last name)</text>
+		<maxCharacters>80</maxCharacters>
+	</question>
+
+
+	<question type = 'text' fieldname = 'nickname' fieldtype = 'text'>
+		<text>Enter the Participants Nick name or other Name</text>
+		<maxCharacters>80</maxCharacters>
+		<na>-6</na>
 	</question>
 
 
@@ -126,6 +152,11 @@
 	</question>
 
 
+	<question type = 'date' fieldname = 'birthdate' fieldtype = 'date'>
+		<text>Enter Date of birth</text>
+	</question>
+
+
 	<question type = 'radio' fieldname = 'age_check' fieldtype = 'integer'>
 		<text>Is the respondent => 15 years?</text>
 		<responses>
@@ -141,6 +172,9 @@
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
+		<preskip>
+			<skip fieldname='age_check' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='eligibility_check1'></skip>
+		</preskip>
 	</question>
 
 
@@ -150,6 +184,9 @@
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
+		<preskip>
+			<skip fieldname='stay_3_months' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='eligibility_check1'></skip>
+		</preskip>
 	</question>
 
 
@@ -159,6 +196,9 @@
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
+		<preskip>
+			<skip fieldname='negative_hiv' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='eligibility_check1'></skip>
+		</preskip>
 	</question>
 
 
@@ -168,6 +208,9 @@
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
+		<preskip>
+			<skip fieldname='mobile_phone' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='eligibility_check1'></skip>
+		</preskip>
 	</question>
 
 
@@ -176,7 +219,7 @@
 
 
 	<question type = 'information' fieldname = 'eligibility_info' fieldtype = 'n/a'>
-		<text>This Participant is not Eligible enrollment</text>
+		<text>This Participant is not Eligible enrolment</text>
 		<preskip>
 			<skip fieldname='eligibility_check1' condition = '&lt;&gt;' response='0' response_type='fixed' skiptofieldname ='multiple_partners'></skip>
 		</preskip>
@@ -299,21 +342,22 @@
 
 
 	<question type = 'radio' fieldname = 'eligibility_check' fieldtype = 'integer'>
-		<text>Eligible for the study?</text>
+		<text>Are you willing to participant in the IBIS study?</text>
 		<responses>
-			<response value = '1'>Eligible, accepts enrollment</response>
-			<response value = '2'>Eligible, declines enrollment</response>
-			<response value = '3'>Ineligible</response>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
 		</responses>
+		<preskip>
+			<skip fieldname='eligibility_check2' condition = '=' response='0' response_type='fixed' skiptofieldname ='eligible_info_screen'></skip>
+		</preskip>
 		<postskip>
-			<skip fieldname='eligibility_check' condition = '=' response='1' response_type='fixed' skiptofieldname ='subjid'></skip>
-			<skip fieldname='eligibility_check' condition = '=' response='3' response_type='fixed' skiptofieldname ='comments'></skip>
+			<skip fieldname='eligibility_check' condition = '=' response='1' response_type='fixed' skiptofieldname ='consent'></skip>
 		</postskip>
 	</question>
 
 
 	<question type = 'radio' fieldname = 'decline_reason' fieldtype = 'integer'>
-		<text>Reason for declining enrollment</text>
+		<text>Reason for declining enrolment</text>
 		<responses>
 			<response value = '1'>Time barred</response>
 			<response value = '2'>Stigma issues</response>
@@ -335,6 +379,26 @@
 	</question>
 
 
+	<question type = 'information' fieldname = 'eligible_info_screen' fieldtype = 'n/a'>
+		<text>This Participant is not Eligible enrolment</text>
+		<postskip>
+			<skip fieldname='eligibility_check2' condition = '=' response='0' response_type='fixed' skiptofieldname ='comments'></skip>
+		</postskip>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'consent' fieldtype = 'integer'>
+		<text>Did the participant consent to participate in IBIS Study?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+		<postskip>
+			<skip fieldname='consent' condition = '=' response='2' response_type='fixed' skiptofieldname ='comments'></skip>
+		</postskip>
+	</question>
+
+
 	<question type = 'automatic' fieldname = 'subjid' fieldtype = 'text'>
 		<maxCharacters>20</maxCharacters>
 		<preskip>
@@ -344,7 +408,7 @@
 
 
 	<question type = 'information' fieldname = 'ibisstudy_info' fieldtype = 'n/a'>
-		<text>Please record the IBIS Study ID for this participant (Enter on the enrollment Log):
+		<text>Please record the IBIS Study ID for this participant (Enter on the enrolment Log):
 
 [[subjid]]</text>
 	</question>
@@ -359,9 +423,9 @@
 	<question type = 'radio' fieldname = 'phone_ownership' fieldtype = 'integer'>
 		<text>Is this your mobile phone, or someone else's in your household?</text>
 		<responses>
-			<response value = '1'>PARTICIPANT'S PHONE</response>
-			<response value = '2'>SOMEONE IN HOUSEHOLD'S PHONE</response>
-			<response value = '97'>OTHER</response>
+			<response value = '1'>Participants Phone</response>
+			<response value = '2'>Someone In Household's Phone</response>
+			<response value = '97'>Other</response>
 		</responses>
 	</question>
 
@@ -369,14 +433,14 @@
 	<question type = 'radio' fieldname = 'education_level' fieldtype = 'integer'>
 		<text>What is the highest level of school you have attended?</text>
 		<responses>
-			<response value = '0'>NO SCHOOL</response>
-			<response value = '1'>PRIMARY</response>
-			<response value = '2'>O-LEVEL - INCOMPLETE</response>
-			<response value = '3'>O-LEVEL - COMPLETE</response>
-			<response value = '4'>A-LEVEL - INCOMPLETE</response>
-			<response value = '5'>A-LEVEL - COMPLETE</response>
-			<response value = '6'>TERTIARY</response>
-			<response value = '7'>UNIVERSITY</response>
+			<response value = '0'>No School</response>
+			<response value = '1'>Primary</response>
+			<response value = '2'>O-Level - Incomplete</response>
+			<response value = '3'>O-Level - Complete</response>
+			<response value = '4'>A-Level - Iincomplete</response>
+			<response value = '5'>A-Level - Complete</response>
+			<response value = '6'>Tertiary</response>
+			<response value = '7'>University</response>
 		</responses>
 	</question>
 
@@ -384,12 +448,12 @@
 	<question type = 'radio' fieldname = 'marital_status' fieldtype = 'integer'>
 		<text>What is your current marital status?</text>
 		<responses>
-			<response value = '1'>MARRIED, LIVING TOGETHER</response>
-			<response value = '2'>MARRIED, NOT LIVING TOGETHER</response>
-			<response value = '3'>NOT MARRIED, LIVING TOGETHER</response>
-			<response value = '4'>DIVORCED/SEPARATED</response>
-			<response value = '5'>WIDOWED</response>
-			<response value = '6'>NEVER MARRIED AND NOT LIVING TOGETHER</response>
+			<response value = '1'>Married, Living Together</response>
+			<response value = '2'>Married, Not Living Together</response>
+			<response value = '3'>Not Married, Living Together</response>
+			<response value = '4'>Divorced/Seperated</response>
+			<response value = '5'>Widowed</response>
+			<response value = '6'>Never Married and Not Living Together</response>
 		</responses>
 	</question>
 
@@ -409,10 +473,10 @@
 	<question type = 'radio' fieldname = 'time_to_hospital' fieldtype = 'integer'>
 		<text>How much time does it take you to get to this HIV testing venue (health centre) from your home?</text>
 		<responses>
-			<response value = '1'>LESS THAN 30 MINUTES</response>
-			<response value = '2'>BETWEEN 30 MINUTES AND 1 HOUR</response>
-			<response value = '3'>BETWEEN 1 AND 2 HOURS</response>
-			<response value = '4'>OVER 2 HOURS</response>
+			<response value = '1'>Less Than 30 Minutes</response>
+			<response value = '2'>Between 30 Minutes and 1 Hour</response>
+			<response value = '3'>Between 1 and 2 Hours</response>
+			<response value = '4'>Over 2 Hours</response>
 		</responses>
 	</question>
 
@@ -439,30 +503,49 @@
 	</question>
 
 
-	<question type = 'radio' fieldname = 'preferred_language' fieldtype = 'integer'>
+	<question type = 'radio' fieldname = 'preferred_language_ke' fieldtype = 'integer'>
 		<text>What is your preferred language to read in?</text>
 		<responses>
-			<response value = '1'>DHOLUO</response>
-			<response value = '2'>SWAHILI</response>
-			<response value = '3'>ENGLISH</response>
-			<response value = '4'>RUNYONKOLE</response>
-			<response value = '5'>LUGANDA</response>
-			<response value = '97'>OTHER</response>
-			<response value = '7'>NONE</response>
+			<response value = '1'>Dholuo</response>
+			<response value = '2'>Swahili</response>
+			<response value = '3'>English</response>
+			<response value = '7'>None</response>
 		</responses>
+		<preskip>
+			<skip fieldname='countrycode' condition = '=' response='1' response_type='fixed' skiptofieldname ='preferred_language_ug'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'preferred_language_ug' fieldtype = 'integer'>
+		<text>What is your preferred language to read in?</text>
+		<responses>
+			<response value = '4'>Runyonkole</response>
+			<response value = '5'>Luganda</response>
+			<response value = '97'>Other</response>
+			<response value = '7'>None</response>
+		</responses>
+		<preskip>
+			<skip fieldname='countrycode' condition = '=' response='2' response_type='fixed' skiptofieldname ='preferred_language_text'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'preferred_language' fieldtype = 'integer'>
 	</question>
 
 
 	<question type = 'automatic' fieldname = 'preferred_language_text' fieldtype = 'text'>
+		<maxCharacters>80</maxCharacters>
 	</question>
-	
+
 
 	<question type = 'radio' fieldname = 'reading_ability' fieldtype = 'integer'>
 		<text>Can you read and understand a text message easily, with difficulty, or not at all?</text>
 		<responses>
-			<response value = '1'>EASILY</response>
-			<response value = '2'>WITH DIFFICULTY</response>
-			<response value = '3'>NOT AT ALL</response>
+			<response value = '1'>Easily</response>
+			<response value = '2'>With Difficulty</response>
+			<response value = '3'>Not at All</response>
 		</responses>
 	</question>
 
@@ -479,10 +562,10 @@
 	<question type = 'radio' fieldname = 'hiv_risk' fieldtype = 'integer'>
 		<text>Do you think your chances of getting HIV/AIDS in the coming year are high, moderate, low, or no risk at all?</text>
 		<responses>
-			<response value = '1'>HIGH</response>
-			<response value = '2'>MODERATE</response>
-			<response value = '3'>LOW</response>
-			<response value = '4'>NO RISK AT ALL</response>
+			<response value = '1'>High</response>
+			<response value = '2'>Moderate</response>
+			<response value = '3'>Low</response>
+			<response value = '4'>No Risk at All</response>
 		</responses>
 	</question>
 
@@ -499,11 +582,11 @@
 	<question type = 'radio' fieldname = 'last_hiv_test' fieldtype = 'integer'>
 		<text>When was the most recent time you took a test for HIV not including today's test?</text>
 		<responses>
-			<response value = '1'>LESS THAN 3 MONTHS AGO</response>
-			<response value = '2'>LESS THAN 6 MONTHS AGO</response>
-			<response value = '3'>ABOUT 6-12 MONTHS AGO</response>
-			<response value = '4'>12-24 MONTHS AGO</response>
-			<response value = '5'>MORE THAN 2 YEARS AGO</response>
+			<response value = '1'>Less Than 3 Months Ago</response>
+			<response value = '2'>Less Than 6 Months Ago</response>
+			<response value = '3'>About 6-12 Months Ago</response>
+			<response value = '4'>12-24 Months Ago</response>
+			<response value = '5'>More Than 2 Years Ago</response>
 		</responses>
 	</question>
 
@@ -538,12 +621,12 @@
 	<question type = 'radio' fieldname = 'hiv_test_likelihood' fieldtype = 'integer'>
 		<text>How likely are you to go for an HIV test again sometime in the next 6 months?</text>
 		<responses>
-			<response value = '1'>VERY LIKELY</response>
-			<response value = '2'>SOMEWHAT LIKELY</response>
-			<response value = '3'>NOT SURE</response>
-			<response value = '4'>UNLIKELY</response>
-			<response value = '5'>VERY UNLIKEY</response>
-			<response value = '6'>REFUSE TO ANSWER</response>
+			<response value = '1'>Very Likely</response>
+			<response value = '2'>Somewhat Likely</response>
+			<response value = '3'>Not Sure</response>
+			<response value = '4'>Unlikely</response>
+			<response value = '5'>Very Unlikely</response>
+			<response value = '6'>Refused to Answer</response>
 		</responses>
 	</question>
 
@@ -551,10 +634,10 @@
 	<question type = 'radio' fieldname = 'motivation_hiv_test' fieldtype = 'integer'>
 		<text>What do you think your main motivation might be for getting another HIV test in the future</text>
 		<responses>
-			<response value = '1'>STAYING HEALTHY/HIV-</response>
-			<response value = '2'>PREVENTING MY SEXUAL PARTNERS FROM BECOMING HIV INFECTED</response>
-			<response value = '3'>FEARFUL OF GETTING SICK</response>
-			<response value = '4'>OTHER</response>
+			<response value = '1'>Staying Healthy/HIV-(Negative)</response>
+			<response value = '2'>Preventing my Sexual Partners from becoming HIV Infected</response>
+			<response value = '3'>Fearful of Getting Sick</response>
+			<response value = '4'>Other</response>
 		</responses>
 	</question>
 
@@ -577,8 +660,49 @@
 	</question>
 
 
+	<question type = 'information' fieldname = 'play_video_info' fieldtype = 'n/a'>
+		<text>Were about to play the intervention video to the participant</text>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'video_language' fieldtype = 'integer'>
+		<text>What is your Preferred Language for the video that we about to play</text>
+		<responses>
+			<response></response>
+		</responses>
+	</question>
+
+
 	<question type = 'information' fieldname = 'play_video' fieldtype = 'n/a'>
 		<text>Play the video</text>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'next_appt_3m' fieldtype = 'date'>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'next_appt_6m' fieldtype = 'date'>
+	</question>
+
+
+	<question type = 'information' fieldname = 'information_screen' fieldtype = 'n/a'>
+		<text>Participant ID: [[subjid]]
+Study arm: [[arminfo]]
+Thank you for your participation. 
+Please remember to come back here for another HIV test in 3 to 6 months from now. 
+We have scheduled an appointment date for you on [[next_appt_3m]]. 
+If that date doesn't work, you may return anytime between [[next_appt_3m]] to [[next_appt_3m]].
+I will write that on an appointment card for you to take with you.
+
+(Counselor instructions: If the default date does not work for the participant, they may choose a different date; write selected date on appointment card)</text>
+	</question>
+
+
+	<question type = 'information' fieldname = 'information_screen2' fieldtype = 'n/a'>
+		<text>Do you have any final questions for me?
+
+(Counselor instructions: thank the participant for their time and write down both the scheduled appointment date and the 3-6 month window on appointment card)</text>
 	</question>
 
 

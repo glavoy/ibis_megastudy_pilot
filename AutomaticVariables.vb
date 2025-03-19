@@ -7,6 +7,8 @@
 
 Imports System.Configuration
 Imports System.Data.OleDb
+Imports System.Globalization
+Imports System.Web.UI.WebControls.Expressions
 
 
 Module AutomaticVariables
@@ -165,7 +167,13 @@ Module AutomaticVariables
                     End If
 
                 Case Is = "preferred_language_text"
-                    Dim preferred_language As String = GetValue("preferred_language")
+                    Dim country As Integer = CInt(GetValue("countrycode"))
+
+                    Dim preferred_language As String = GetValue("preferred_language_ke")
+                    If country = 1 Then
+                        preferred_language = GetValue("preferred_language_ug")
+                    End If
+
                     Select Case preferred_language
                         Case Is = "1"
                             CurrentAutoValue = "DHOLUO"
@@ -184,6 +192,56 @@ Module AutomaticVariables
                         Case Else
                             CurrentAutoValue = "ENGLISH"
                     End Select
+
+                Case Is = "preferred_language"
+                    Dim country As Integer = CInt(GetValue("countrycode"))
+
+                    Dim preferred_language As String = GetValue("preferred_language_ke")
+                    If country = 1 Then
+                        preferred_language = GetValue("preferred_language_ug")
+                    End If
+
+                    CurrentAutoValue = preferred_language
+
+
+                Case Is = "health_facility"
+                    Dim country As Integer = CInt(GetValue("countrycode"))
+
+                    Dim health_facility As String = GetValue("health_facility_ke")
+                    If country = 1 Then
+                        health_facility = GetValue("health_facility_ug")
+                    End If
+                    CurrentAutoValue = CInt(health_facility)
+
+                Case Is = "next_appt_3m"
+
+                    VDATE = GetValue("starttime")
+                    Dim parsedDate As DateTime
+
+                    If ModifyingSurvey = True And Len(VDATE) > 10 Then
+                        parsedDate = DateTime.ParseExact(VDATE, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy HH:mm:ss")
+                    ElseIf Len(VDATE) > 10 Then
+                        parsedDate = DateTime.ParseExact(VDATE, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy HH:mm:ss")
+                    Else
+                        parsedDate = DateTime.ParseExact(VDATE, "dd/MM/yyyy", Globalization.CultureInfo.InvariantCulture)
+                    End If
+
+                    CurrentAutoValue = DateAdd(DateInterval.WeekOfYear, 3 * 4, parsedDate)
+
+                Case Is = "next_appt_6m"
+
+                    VDATE = GetValue("starttime")
+                    Dim parsedDate As DateTime
+
+                    If ModifyingSurvey = True And Len(VDATE) > 10 Then
+                        parsedDate = DateTime.ParseExact(VDATE, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy HH:mm:ss")
+                    ElseIf Len(VDATE) > 10 Then
+                        parsedDate = DateTime.ParseExact(VDATE, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy HH:mm:ss")
+                    Else
+                        parsedDate = DateTime.ParseExact(VDATE, "dd/MM/yyyy", Globalization.CultureInfo.InvariantCulture)
+                    End If
+
+                    CurrentAutoValue = DateAdd(DateInterval.WeekOfYear, 6 * 4, parsedDate)
 
             End Select
         Catch ex As Exception
