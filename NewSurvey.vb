@@ -1326,7 +1326,7 @@ Public Class NewSurvey
 
             ' ensure correct health facility is selected
             If IsValidResponse = True Then
-                If QuestionInfoArray(CurrentQuestion).FieldName = "health_facility" Then
+                If QuestionInfoArray(CurrentQuestion).FieldName = "health_facility_ke" Or QuestionInfoArray(CurrentQuestion).FieldName = "health_facility_ug" Then
                     For Each aControl In Me.Controls
                         Select Case TypeName(aControl)
                             Case "GroupBox"
@@ -1358,7 +1358,7 @@ Public Class NewSurvey
 
             ' ensure correct health facility is selected
             If IsValidResponse = True Then
-                If QuestionInfoArray(CurrentQuestion).FieldName = "preferred_language" Then
+                If QuestionInfoArray(CurrentQuestion).FieldName = "preferred_language_ke" Or QuestionInfoArray(CurrentQuestion).FieldName = "preferred_language_ug" Then
                     For Each aControl In Me.Controls
                         Select Case TypeName(aControl)
                             Case "GroupBox"
