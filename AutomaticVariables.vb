@@ -185,7 +185,7 @@ Module AutomaticVariables
                             CurrentAutoValue = "RUNYONKOLE"
                         Case Is = "5"
                             CurrentAutoValue = "LUGANDA"
-                        Case Is = "6"
+                        Case Is = "97"
                             CurrentAutoValue = "OTHER"
                         Case Is = "7"
                             CurrentAutoValue = "NONE"

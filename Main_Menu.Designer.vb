@@ -57,29 +57,30 @@ Partial Class Main_Menu
         Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HouseholdMemberToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ButtonBaseline = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.ButtonEditBaseline = New System.Windows.Forms.Button()
         Me.ButtonSMSSchedule = New System.Windows.Forms.Button()
-        Me.ComboBoxCommunity = New System.Windows.Forms.ComboBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.ComboBoxNames = New System.Windows.Forms.ComboBox()
-        Me.TextBoxFilter = New System.Windows.Forms.TextBox()
-        Me.TextBoxPhoneSearch = New System.Windows.Forms.TextBox()
-        Me.Label5 = New System.Windows.Forms.Label()
         Me.LabelSubjid = New System.Windows.Forms.Label()
         Me.LabelParticipants_name = New System.Windows.Forms.Label()
         Me.LabelNickname = New System.Windows.Forms.Label()
-        Me.LabelNationalId = New System.Windows.Forms.Label()
         Me.LabelPhone_number = New System.Windows.Forms.Label()
         Me.LabelAge = New System.Windows.Forms.Label()
         Me.LabelSex = New System.Windows.Forms.Label()
-        Me.LabelDOB = New System.Windows.Forms.Label()
         Me.LabelCounty = New System.Windows.Forms.Label()
         Me.LabelSubcounty = New System.Windows.Forms.Label()
         Me.LabelVillage = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.ButtonCannotFind = New System.Windows.Forms.Button()
+        Me.ButtonFoundParticipant = New System.Windows.Forms.Button()
+        Me.ComboBoxDayOfBirth = New System.Windows.Forms.ComboBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.ButtonSearchPhone = New System.Windows.Forms.Button()
+        Me.TextBoxFilter = New System.Windows.Forms.TextBox()
+        Me.TextBoxPhoneNumber = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
+        Me.ComboBoxName = New System.Windows.Forms.ComboBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
@@ -275,115 +276,46 @@ Partial Class Main_Menu
         '
         'ButtonBaseline
         '
-        Me.ButtonBaseline.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonBaseline.Location = New System.Drawing.Point(219, 392)
+        Me.ButtonBaseline.BackColor = System.Drawing.Color.LightGray
+        Me.ButtonBaseline.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.ButtonBaseline.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonBaseline.Location = New System.Drawing.Point(236, 390)
         Me.ButtonBaseline.Margin = New System.Windows.Forms.Padding(4)
         Me.ButtonBaseline.Name = "ButtonBaseline"
         Me.ButtonBaseline.Size = New System.Drawing.Size(263, 129)
         Me.ButtonBaseline.TabIndex = 23
         Me.ButtonBaseline.Text = "Do Screening and Baseline Survey"
-        Me.ButtonBaseline.UseVisualStyleBackColor = True
+        Me.ButtonBaseline.UseVisualStyleBackColor = False
         '
-        'Button1
+        'ButtonEditBaseline
         '
-        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.Location = New System.Drawing.Point(632, 392)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(263, 127)
-        Me.Button1.TabIndex = 27
-        Me.Button1.Text = "Edit Screening and Baseline Survey"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.ButtonEditBaseline.BackColor = System.Drawing.Color.LightGray
+        Me.ButtonEditBaseline.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.ButtonEditBaseline.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonEditBaseline.Location = New System.Drawing.Point(649, 390)
+        Me.ButtonEditBaseline.Name = "ButtonEditBaseline"
+        Me.ButtonEditBaseline.Size = New System.Drawing.Size(263, 127)
+        Me.ButtonEditBaseline.TabIndex = 27
+        Me.ButtonEditBaseline.Text = "Edit Screening and Baseline Survey"
+        Me.ButtonEditBaseline.UseVisualStyleBackColor = False
         '
         'ButtonSMSSchedule
         '
+        Me.ButtonSMSSchedule.BackColor = System.Drawing.Color.LightGray
+        Me.ButtonSMSSchedule.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonSMSSchedule.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonSMSSchedule.Location = New System.Drawing.Point(431, 583)
+        Me.ButtonSMSSchedule.Location = New System.Drawing.Point(448, 581)
         Me.ButtonSMSSchedule.Name = "ButtonSMSSchedule"
         Me.ButtonSMSSchedule.Size = New System.Drawing.Size(263, 56)
         Me.ButtonSMSSchedule.TabIndex = 28
         Me.ButtonSMSSchedule.Text = "Show SMS schedule"
-        Me.ButtonSMSSchedule.UseVisualStyleBackColor = True
-        '
-        'ComboBoxCommunity
-        '
-        Me.ComboBoxCommunity.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ComboBoxCommunity.FormattingEnabled = True
-        Me.ComboBoxCommunity.Items.AddRange(New Object() {"11:Bushenyi HCIV", "12:Ishaka Adventist Hospital(Bushenyi)", "13:Ishongororo HCIV (Ibanda)", "14:Ruhoko HCIV (Ibanda)", "21:Homa Bay Teaching and Referral Hospital", "22:Rachuonyo District Hospital", "23:Suba District Hospital", "24:Ndhiwa District Hospital"})
-        Me.ComboBoxCommunity.Location = New System.Drawing.Point(219, 142)
-        Me.ComboBoxCommunity.Name = "ComboBoxCommunity"
-        Me.ComboBoxCommunity.Size = New System.Drawing.Size(475, 33)
-        Me.ComboBoxCommunity.TabIndex = 29
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(22, 145)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(192, 25)
-        Me.Label2.TabIndex = 30
-        Me.Label2.Text = "Community or Clinic:"
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(22, 201)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(117, 25)
-        Me.Label3.TabIndex = 31
-        Me.Label3.Text = "Filter Name:"
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(22, 341)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(70, 25)
-        Me.Label4.TabIndex = 32
-        Me.Label4.Text = "Name:"
-        '
-        'ComboBoxNames
-        '
-        Me.ComboBoxNames.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ComboBoxNames.FormattingEnabled = True
-        Me.ComboBoxNames.Location = New System.Drawing.Point(219, 333)
-        Me.ComboBoxNames.Name = "ComboBoxNames"
-        Me.ComboBoxNames.Size = New System.Drawing.Size(475, 33)
-        Me.ComboBoxNames.TabIndex = 33
-        '
-        'TextBoxFilter
-        '
-        Me.TextBoxFilter.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBoxFilter.Location = New System.Drawing.Point(219, 203)
-        Me.TextBoxFilter.Name = "TextBoxFilter"
-        Me.TextBoxFilter.Size = New System.Drawing.Size(475, 30)
-        Me.TextBoxFilter.TabIndex = 34
-        '
-        'TextBoxPhoneSearch
-        '
-        Me.TextBoxPhoneSearch.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBoxPhoneSearch.Location = New System.Drawing.Point(219, 267)
-        Me.TextBoxPhoneSearch.Name = "TextBoxPhoneSearch"
-        Me.TextBoxPhoneSearch.Size = New System.Drawing.Size(475, 30)
-        Me.TextBoxPhoneSearch.TabIndex = 36
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(22, 265)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(149, 25)
-        Me.Label5.TabIndex = 35
-        Me.Label5.Text = "Phone Number:"
+        Me.ButtonSMSSchedule.UseVisualStyleBackColor = False
         '
         'LabelSubjid
         '
         Me.LabelSubjid.AutoSize = True
         Me.LabelSubjid.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelSubjid.Location = New System.Drawing.Point(731, 138)
+        Me.LabelSubjid.Location = New System.Drawing.Point(867, 121)
         Me.LabelSubjid.Name = "LabelSubjid"
         Me.LabelSubjid.Size = New System.Drawing.Size(107, 20)
         Me.LabelSubjid.TabIndex = 37
@@ -393,7 +325,7 @@ Partial Class Main_Menu
         '
         Me.LabelParticipants_name.AutoSize = True
         Me.LabelParticipants_name.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelParticipants_name.Location = New System.Drawing.Point(731, 159)
+        Me.LabelParticipants_name.Location = New System.Drawing.Point(867, 142)
         Me.LabelParticipants_name.Name = "LabelParticipants_name"
         Me.LabelParticipants_name.Size = New System.Drawing.Size(211, 20)
         Me.LabelParticipants_name.TabIndex = 38
@@ -403,27 +335,17 @@ Partial Class Main_Menu
         '
         Me.LabelNickname.AutoSize = True
         Me.LabelNickname.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelNickname.Location = New System.Drawing.Point(731, 179)
+        Me.LabelNickname.Location = New System.Drawing.Point(867, 162)
         Me.LabelNickname.Name = "LabelNickname"
         Me.LabelNickname.Size = New System.Drawing.Size(137, 20)
         Me.LabelNickname.TabIndex = 39
         Me.LabelNickname.Text = "LabelNickname"
         '
-        'LabelNationalId
-        '
-        Me.LabelNationalId.AutoSize = True
-        Me.LabelNationalId.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelNationalId.Location = New System.Drawing.Point(731, 326)
-        Me.LabelNationalId.Name = "LabelNationalId"
-        Me.LabelNationalId.Size = New System.Drawing.Size(139, 20)
-        Me.LabelNationalId.TabIndex = 40
-        Me.LabelNationalId.Text = "LabelNationalId"
-        '
         'LabelPhone_number
         '
         Me.LabelPhone_number.AutoSize = True
         Me.LabelPhone_number.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelPhone_number.Location = New System.Drawing.Point(730, 241)
+        Me.LabelPhone_number.Location = New System.Drawing.Point(866, 224)
         Me.LabelPhone_number.Name = "LabelPhone_number"
         Me.LabelPhone_number.Size = New System.Drawing.Size(179, 20)
         Me.LabelPhone_number.TabIndex = 41
@@ -433,7 +355,7 @@ Partial Class Main_Menu
         '
         Me.LabelAge.AutoSize = True
         Me.LabelAge.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelAge.Location = New System.Drawing.Point(730, 201)
+        Me.LabelAge.Location = New System.Drawing.Point(867, 182)
         Me.LabelAge.Name = "LabelAge"
         Me.LabelAge.Size = New System.Drawing.Size(87, 20)
         Me.LabelAge.TabIndex = 42
@@ -443,27 +365,17 @@ Partial Class Main_Menu
         '
         Me.LabelSex.AutoSize = True
         Me.LabelSex.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelSex.Location = New System.Drawing.Point(730, 221)
+        Me.LabelSex.Location = New System.Drawing.Point(866, 204)
         Me.LabelSex.Name = "LabelSex"
         Me.LabelSex.Size = New System.Drawing.Size(86, 20)
         Me.LabelSex.TabIndex = 43
         Me.LabelSex.Text = "LabelSex"
         '
-        'LabelDOB
-        '
-        Me.LabelDOB.AutoSize = True
-        Me.LabelDOB.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelDOB.Location = New System.Drawing.Point(731, 346)
-        Me.LabelDOB.Name = "LabelDOB"
-        Me.LabelDOB.Size = New System.Drawing.Size(96, 20)
-        Me.LabelDOB.TabIndex = 44
-        Me.LabelDOB.Text = "LabelDOB"
-        '
         'LabelCounty
         '
         Me.LabelCounty.AutoSize = True
         Me.LabelCounty.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelCounty.Location = New System.Drawing.Point(731, 264)
+        Me.LabelCounty.Location = New System.Drawing.Point(865, 244)
         Me.LabelCounty.Name = "LabelCounty"
         Me.LabelCounty.Size = New System.Drawing.Size(113, 20)
         Me.LabelCounty.TabIndex = 45
@@ -473,7 +385,7 @@ Partial Class Main_Menu
         '
         Me.LabelSubcounty.AutoSize = True
         Me.LabelSubcounty.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelSubcounty.Location = New System.Drawing.Point(731, 284)
+        Me.LabelSubcounty.Location = New System.Drawing.Point(865, 264)
         Me.LabelSubcounty.Name = "LabelSubcounty"
         Me.LabelSubcounty.Size = New System.Drawing.Size(142, 20)
         Me.LabelSubcounty.TabIndex = 46
@@ -483,7 +395,7 @@ Partial Class Main_Menu
         '
         Me.LabelVillage.AutoSize = True
         Me.LabelVillage.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelVillage.Location = New System.Drawing.Point(730, 306)
+        Me.LabelVillage.Location = New System.Drawing.Point(865, 284)
         Me.LabelVillage.Name = "LabelVillage"
         Me.LabelVillage.Size = New System.Drawing.Size(112, 20)
         Me.LabelVillage.TabIndex = 47
@@ -493,51 +405,156 @@ Partial Class Main_Menu
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(731, 109)
+        Me.Label6.Location = New System.Drawing.Point(867, 92)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(245, 20)
         Me.Label6.TabIndex = 48
         Me.Label6.Text = "Selected Participant Details"
         '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.ButtonCannotFind)
+        Me.GroupBox1.Controls.Add(Me.ButtonFoundParticipant)
+        Me.GroupBox1.Controls.Add(Me.ComboBoxDayOfBirth)
+        Me.GroupBox1.Controls.Add(Me.Label2)
+        Me.GroupBox1.Controls.Add(Me.ButtonSearchPhone)
+        Me.GroupBox1.Controls.Add(Me.TextBoxFilter)
+        Me.GroupBox1.Controls.Add(Me.TextBoxPhoneNumber)
+        Me.GroupBox1.Controls.Add(Me.Label7)
+        Me.GroupBox1.Controls.Add(Me.ComboBoxName)
+        Me.GroupBox1.Controls.Add(Me.Label8)
+        Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Location = New System.Drawing.Point(13, 86)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(846, 295)
+        Me.GroupBox1.TabIndex = 50
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Pre-screening"
+        '
+        'ButtonCannotFind
+        '
+        Me.ButtonCannotFind.BackColor = System.Drawing.Color.LightGray
+        Me.ButtonCannotFind.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.ButtonCannotFind.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonCannotFind.Location = New System.Drawing.Point(339, 208)
+        Me.ButtonCannotFind.Name = "ButtonCannotFind"
+        Me.ButtonCannotFind.Size = New System.Drawing.Size(263, 66)
+        Me.ButtonCannotFind.TabIndex = 160
+        Me.ButtonCannotFind.Text = "Cannot Find Participant"
+        Me.ButtonCannotFind.UseVisualStyleBackColor = False
+        '
+        'ButtonFoundParticipant
+        '
+        Me.ButtonFoundParticipant.BackColor = System.Drawing.Color.LightGray
+        Me.ButtonFoundParticipant.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.ButtonFoundParticipant.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonFoundParticipant.Location = New System.Drawing.Point(44, 208)
+        Me.ButtonFoundParticipant.Name = "ButtonFoundParticipant"
+        Me.ButtonFoundParticipant.Size = New System.Drawing.Size(263, 66)
+        Me.ButtonFoundParticipant.TabIndex = 51
+        Me.ButtonFoundParticipant.Text = "Found Participant"
+        Me.ButtonFoundParticipant.UseVisualStyleBackColor = False
+        '
+        'ComboBoxDayOfBirth
+        '
+        Me.ComboBoxDayOfBirth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBoxDayOfBirth.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ComboBoxDayOfBirth.FormattingEnabled = True
+        Me.ComboBoxDayOfBirth.Location = New System.Drawing.Point(243, 38)
+        Me.ComboBoxDayOfBirth.Margin = New System.Windows.Forms.Padding(3, 1, 3, 1)
+        Me.ComboBoxDayOfBirth.Name = "ComboBoxDayOfBirth"
+        Me.ComboBoxDayOfBirth.Size = New System.Drawing.Size(137, 31)
+        Me.ComboBoxDayOfBirth.TabIndex = 159
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(36, 41)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(191, 28)
+        Me.Label2.TabIndex = 158
+        Me.Label2.Text = "Select Day of birth"
+        '
+        'ButtonSearchPhone
+        '
+        Me.ButtonSearchPhone.BackColor = System.Drawing.Color.LightGray
+        Me.ButtonSearchPhone.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.ButtonSearchPhone.Font = New System.Drawing.Font("Segoe UI", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonSearchPhone.Location = New System.Drawing.Point(636, 70)
+        Me.ButtonSearchPhone.Name = "ButtonSearchPhone"
+        Me.ButtonSearchPhone.Size = New System.Drawing.Size(189, 42)
+        Me.ButtonSearchPhone.TabIndex = 157
+        Me.ButtonSearchPhone.Text = "Search by phone number"
+        Me.ButtonSearchPhone.UseVisualStyleBackColor = False
+        '
+        'TextBoxFilter
+        '
+        Me.TextBoxFilter.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBoxFilter.Location = New System.Drawing.Point(146, 88)
+        Me.TextBoxFilter.Name = "TextBoxFilter"
+        Me.TextBoxFilter.Size = New System.Drawing.Size(347, 30)
+        Me.TextBoxFilter.TabIndex = 154
+        '
+        'TextBoxPhoneNumber
+        '
+        Me.TextBoxPhoneNumber.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBoxPhoneNumber.Location = New System.Drawing.Point(636, 30)
+        Me.TextBoxPhoneNumber.Name = "TextBoxPhoneNumber"
+        Me.TextBoxPhoneNumber.Size = New System.Drawing.Size(189, 34)
+        Me.TextBoxPhoneNumber.TabIndex = 156
+        '
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(215, 109)
+        Me.Label7.Font = New System.Drawing.Font("Segoe UI", 9.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Location = New System.Drawing.Point(40, 95)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(340, 20)
-        Me.Label7.TabIndex = 49
-        Me.Label7.Text = "Prescreen Before Enrolling Participant:"
+        Me.Label7.Size = New System.Drawing.Size(91, 20)
+        Me.Label7.TabIndex = 155
+        Me.Label7.Text = "Filter name"
+        '
+        'ComboBoxName
+        '
+        Me.ComboBoxName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBoxName.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ComboBoxName.FormattingEnabled = True
+        Me.ComboBoxName.Location = New System.Drawing.Point(146, 122)
+        Me.ComboBoxName.Margin = New System.Windows.Forms.Padding(3, 1, 3, 1)
+        Me.ComboBoxName.Name = "ComboBoxName"
+        Me.ComboBoxName.Size = New System.Drawing.Size(435, 36)
+        Me.ComboBoxName.TabIndex = 152
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(38, 124)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(73, 28)
+        Me.Label8.TabIndex = 153
+        Me.Label8.Text = "Name:"
         '
         'Main_Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.Silver
         Me.ClientSize = New System.Drawing.Size(1268, 962)
         Me.ControlBox = False
-        Me.Controls.Add(Me.Label7)
+        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.LabelVillage)
         Me.Controls.Add(Me.LabelSubcounty)
         Me.Controls.Add(Me.LabelCounty)
-        Me.Controls.Add(Me.LabelDOB)
         Me.Controls.Add(Me.LabelSex)
         Me.Controls.Add(Me.LabelAge)
         Me.Controls.Add(Me.LabelPhone_number)
-        Me.Controls.Add(Me.LabelNationalId)
         Me.Controls.Add(Me.LabelNickname)
         Me.Controls.Add(Me.LabelParticipants_name)
         Me.Controls.Add(Me.LabelSubjid)
-        Me.Controls.Add(Me.TextBoxPhoneSearch)
-        Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.TextBoxFilter)
-        Me.Controls.Add(Me.ComboBoxNames)
-        Me.Controls.Add(Me.Label4)
-        Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.ComboBoxCommunity)
         Me.Controls.Add(Me.ButtonSMSSchedule)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.ButtonEditBaseline)
         Me.Controls.Add(Me.ButtonBaseline)
         Me.Controls.Add(Me.ButtonQuit)
         Me.Controls.Add(Me.Label1)
@@ -546,6 +563,8 @@ Partial Class Main_Menu
         Me.Name = "Main_Menu"
         Me.Text = "`"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -584,27 +603,27 @@ Partial Class Main_Menu
     Friend WithEvents DeleteToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HouseholdMemberToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ButtonBaseline As Button
-    Friend WithEvents Button1 As Button
+    Friend WithEvents ButtonEditBaseline As Button
     Friend WithEvents ButtonSMSSchedule As Button
-    Friend WithEvents ComboBoxCommunity As ComboBox
-    Friend WithEvents Label2 As Label
-    Friend WithEvents Label3 As Label
-    Friend WithEvents Label4 As Label
-    Friend WithEvents ComboBoxNames As ComboBox
-    Friend WithEvents TextBoxFilter As TextBox
-    Friend WithEvents TextBoxPhoneSearch As TextBox
-    Friend WithEvents Label5 As Label
     Friend WithEvents LabelSubjid As Label
     Friend WithEvents LabelParticipants_name As Label
     Friend WithEvents LabelNickname As Label
-    Friend WithEvents LabelNationalId As Label
     Friend WithEvents LabelPhone_number As Label
     Friend WithEvents LabelAge As Label
     Friend WithEvents LabelSex As Label
-    Friend WithEvents LabelDOB As Label
     Friend WithEvents LabelCounty As Label
     Friend WithEvents LabelSubcounty As Label
     Friend WithEvents LabelVillage As Label
     Friend WithEvents Label6 As Label
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents ButtonSearchPhone As Button
+    Friend WithEvents TextBoxPhoneNumber As TextBox
     Friend WithEvents Label7 As Label
+    Friend WithEvents TextBoxFilter As TextBox
+    Friend WithEvents Label8 As Label
+    Friend WithEvents ComboBoxName As ComboBox
+    Friend WithEvents Label2 As Label
+    Friend WithEvents ComboBoxDayOfBirth As ComboBox
+    Friend WithEvents ButtonCannotFind As Button
+    Friend WithEvents ButtonFoundParticipant As Button
 End Class

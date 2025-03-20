@@ -11,6 +11,7 @@ Public Class SMSSchedule
     Private dataTable As DataTable
 
     Public Sub New()
+        InitializeComponent()
         ' Initialize components manually
         SetupComponents()
 
