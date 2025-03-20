@@ -71,8 +71,8 @@ Partial Class Main_Menu
         Me.Label6 = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.ButtonCannotFind = New System.Windows.Forms.Button()
-        Me.ButtonFoundParticipant = New System.Windows.Forms.Button()
-        Me.ComboBoxDayOfBirth = New System.Windows.Forms.ComboBox()
+        Me.ButtonFollowupSurvey = New System.Windows.Forms.Button()
+        Me.ComboBoxMonthOfBirth = New System.Windows.Forms.ComboBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.ButtonSearchPhone = New System.Windows.Forms.Button()
         Me.TextBoxFilter = New System.Windows.Forms.TextBox()
@@ -279,7 +279,7 @@ Partial Class Main_Menu
         Me.ButtonBaseline.BackColor = System.Drawing.Color.LightGray
         Me.ButtonBaseline.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonBaseline.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonBaseline.Location = New System.Drawing.Point(236, 390)
+        Me.ButtonBaseline.Location = New System.Drawing.Point(89, 396)
         Me.ButtonBaseline.Margin = New System.Windows.Forms.Padding(4)
         Me.ButtonBaseline.Name = "ButtonBaseline"
         Me.ButtonBaseline.Size = New System.Drawing.Size(263, 129)
@@ -292,7 +292,7 @@ Partial Class Main_Menu
         Me.ButtonEditBaseline.BackColor = System.Drawing.Color.LightGray
         Me.ButtonEditBaseline.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonEditBaseline.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonEditBaseline.Location = New System.Drawing.Point(649, 390)
+        Me.ButtonEditBaseline.Location = New System.Drawing.Point(502, 396)
         Me.ButtonEditBaseline.Name = "ButtonEditBaseline"
         Me.ButtonEditBaseline.Size = New System.Drawing.Size(263, 127)
         Me.ButtonEditBaseline.TabIndex = 27
@@ -304,7 +304,7 @@ Partial Class Main_Menu
         Me.ButtonSMSSchedule.BackColor = System.Drawing.Color.LightGray
         Me.ButtonSMSSchedule.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonSMSSchedule.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonSMSSchedule.Location = New System.Drawing.Point(448, 581)
+        Me.ButtonSMSSchedule.Location = New System.Drawing.Point(292, 596)
         Me.ButtonSMSSchedule.Name = "ButtonSMSSchedule"
         Me.ButtonSMSSchedule.Size = New System.Drawing.Size(263, 56)
         Me.ButtonSMSSchedule.TabIndex = 28
@@ -414,8 +414,7 @@ Partial Class Main_Menu
         'GroupBox1
         '
         Me.GroupBox1.Controls.Add(Me.ButtonCannotFind)
-        Me.GroupBox1.Controls.Add(Me.ButtonFoundParticipant)
-        Me.GroupBox1.Controls.Add(Me.ComboBoxDayOfBirth)
+        Me.GroupBox1.Controls.Add(Me.ComboBoxMonthOfBirth)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.ButtonSearchPhone)
         Me.GroupBox1.Controls.Add(Me.TextBoxFilter)
@@ -436,35 +435,36 @@ Partial Class Main_Menu
         Me.ButtonCannotFind.BackColor = System.Drawing.Color.LightGray
         Me.ButtonCannotFind.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonCannotFind.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonCannotFind.Location = New System.Drawing.Point(339, 208)
+        Me.ButtonCannotFind.Location = New System.Drawing.Point(251, 198)
         Me.ButtonCannotFind.Name = "ButtonCannotFind"
         Me.ButtonCannotFind.Size = New System.Drawing.Size(263, 66)
         Me.ButtonCannotFind.TabIndex = 160
         Me.ButtonCannotFind.Text = "Cannot Find Participant"
         Me.ButtonCannotFind.UseVisualStyleBackColor = False
         '
-        'ButtonFoundParticipant
+        'ButtonFollowupSurvey
         '
-        Me.ButtonFoundParticipant.BackColor = System.Drawing.Color.LightGray
-        Me.ButtonFoundParticipant.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.ButtonFoundParticipant.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonFoundParticipant.Location = New System.Drawing.Point(44, 208)
-        Me.ButtonFoundParticipant.Name = "ButtonFoundParticipant"
-        Me.ButtonFoundParticipant.Size = New System.Drawing.Size(263, 66)
-        Me.ButtonFoundParticipant.TabIndex = 51
-        Me.ButtonFoundParticipant.Text = "Found Participant"
-        Me.ButtonFoundParticipant.UseVisualStyleBackColor = False
+        Me.ButtonFollowupSurvey.BackColor = System.Drawing.Color.LightGray
+        Me.ButtonFollowupSurvey.Enabled = False
+        Me.ButtonFollowupSurvey.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.ButtonFollowupSurvey.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonFollowupSurvey.Location = New System.Drawing.Point(292, 731)
+        Me.ButtonFollowupSurvey.Name = "ButtonFollowupSurvey"
+        Me.ButtonFollowupSurvey.Size = New System.Drawing.Size(263, 110)
+        Me.ButtonFollowupSurvey.TabIndex = 51
+        Me.ButtonFollowupSurvey.Text = "Followup Survey"
+        Me.ButtonFollowupSurvey.UseVisualStyleBackColor = False
         '
-        'ComboBoxDayOfBirth
+        'ComboBoxMonthOfBirth
         '
-        Me.ComboBoxDayOfBirth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBoxDayOfBirth.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ComboBoxDayOfBirth.FormattingEnabled = True
-        Me.ComboBoxDayOfBirth.Location = New System.Drawing.Point(243, 38)
-        Me.ComboBoxDayOfBirth.Margin = New System.Windows.Forms.Padding(3, 1, 3, 1)
-        Me.ComboBoxDayOfBirth.Name = "ComboBoxDayOfBirth"
-        Me.ComboBoxDayOfBirth.Size = New System.Drawing.Size(137, 31)
-        Me.ComboBoxDayOfBirth.TabIndex = 159
+        Me.ComboBoxMonthOfBirth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBoxMonthOfBirth.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ComboBoxMonthOfBirth.FormattingEnabled = True
+        Me.ComboBoxMonthOfBirth.Location = New System.Drawing.Point(279, 38)
+        Me.ComboBoxMonthOfBirth.Margin = New System.Windows.Forms.Padding(3, 1, 3, 1)
+        Me.ComboBoxMonthOfBirth.Name = "ComboBoxMonthOfBirth"
+        Me.ComboBoxMonthOfBirth.Size = New System.Drawing.Size(197, 31)
+        Me.ComboBoxMonthOfBirth.TabIndex = 159
         '
         'Label2
         '
@@ -472,9 +472,9 @@ Partial Class Main_Menu
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(36, 41)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(191, 28)
+        Me.Label2.Size = New System.Drawing.Size(217, 28)
         Me.Label2.TabIndex = 158
-        Me.Label2.Text = "Select Day of birth"
+        Me.Label2.Text = "Select Month of birth"
         '
         'ButtonSearchPhone
         '
@@ -543,6 +543,7 @@ Partial Class Main_Menu
         Me.ClientSize = New System.Drawing.Size(1268, 962)
         Me.ControlBox = False
         Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.ButtonFollowupSurvey)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.LabelVillage)
         Me.Controls.Add(Me.LabelSubcounty)
@@ -623,7 +624,7 @@ Partial Class Main_Menu
     Friend WithEvents Label8 As Label
     Friend WithEvents ComboBoxName As ComboBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents ComboBoxDayOfBirth As ComboBox
+    Friend WithEvents ComboBoxMonthOfBirth As ComboBox
     Friend WithEvents ButtonCannotFind As Button
-    Friend WithEvents ButtonFoundParticipant As Button
+    Friend WithEvents ButtonFollowupSurvey As Button
 End Class

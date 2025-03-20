@@ -100,7 +100,7 @@ Module IBIS_Public
             Dim section As ConnectionStringsSection = DirectCast(config.GetSection("connectionStrings"), ConnectionStringsSection)
             Dim ConnectionString As New OleDbConnection(section.ConnectionStrings("ConnString").ConnectionString)
             ConnectionString.Open()
-            Dim strSQL As String = "Select arm from baseline where eligibility_check = 1 and health_facility = " & clinic_code & " order by vdate desc;"
+            Dim strSQL As String = "Select arm from baseline where eligibility_check = 1 and health_facility = " & clinic_code & " order by starttime desc;"
 
             Dim da As New OleDbDataAdapter(strSQL, ConnectionString)
             Dim ds As New DataSet

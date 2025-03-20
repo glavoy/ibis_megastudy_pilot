@@ -10,14 +10,39 @@ Public Class Main_Menu
     Private TextBoxFilter_IsPlaceholder As Boolean = True
     Private TextBoxPhoneNumber_IsPlaceholder As Boolean = True
 
+
+
     Private Sub Main_Menu_Load(sender As Object, e As EventArgs) Handles Me.Load
         ' Setup day of birth combo box
-        ComboBoxDayOfBirth.Items.Add("SELECT DAY")
-        For i As Integer = 1 To 31
-            ComboBoxDayOfBirth.Items.Add(i)
+        ' Setup month of birth combo box
+        ComboBoxMonthOfBirth.Items.Clear()
+        ComboBoxMonthOfBirth.Items.Add("SELECT MONTH")
+
+
+        ' Create a list of month names with their corresponding numbers
+        Dim monthNames As New List(Of KeyValuePair(Of Integer, String))
+        monthNames.Add(New KeyValuePair(Of Integer, String)(1, "January"))
+        monthNames.Add(New KeyValuePair(Of Integer, String)(2, "February"))
+        monthNames.Add(New KeyValuePair(Of Integer, String)(3, "March"))
+        monthNames.Add(New KeyValuePair(Of Integer, String)(4, "April"))
+        monthNames.Add(New KeyValuePair(Of Integer, String)(5, "May"))
+        monthNames.Add(New KeyValuePair(Of Integer, String)(6, "June"))
+        monthNames.Add(New KeyValuePair(Of Integer, String)(7, "July"))
+        monthNames.Add(New KeyValuePair(Of Integer, String)(8, "August"))
+        monthNames.Add(New KeyValuePair(Of Integer, String)(9, "September"))
+        monthNames.Add(New KeyValuePair(Of Integer, String)(10, "October"))
+        monthNames.Add(New KeyValuePair(Of Integer, String)(11, "November"))
+        monthNames.Add(New KeyValuePair(Of Integer, String)(12, "December"))
+
+        ' Add month names to the ComboBox
+        For Each monthItem In monthNames
+            ComboBoxMonthOfBirth.Items.Add(monthItem)
         Next
-        ComboBoxDayOfBirth.SelectedIndex = 0
-        ComboBoxDayOfBirth.DropDownStyle = ComboBoxStyle.DropDownList
+        ' Set default selection and style
+        ComboBoxMonthOfBirth.SelectedIndex = 0
+        ComboBoxMonthOfBirth.DropDownStyle = ComboBoxStyle.DropDownList
+        ComboBoxMonthOfBirth.DisplayMember = "Value"
+        ComboBoxMonthOfBirth.ValueMember = "Key"
 
         ' Load all participants from database
         LoadAllParticipants()
@@ -28,9 +53,6 @@ Public Class Main_Menu
         ' Set ComboBoxName to DropDownList style for consistency
         ComboBoxName.DropDownStyle = ComboBoxStyle.DropDownList
 
-        ' Set default button text
-        ButtonFoundParticipant.Text = "USE PARTICIPANT"
-
         ' Setup placeholder text for TextBoxFilter
         TextBoxFilter.Text = "TYPE NAME TO SEARCH"
         TextBoxFilter.ForeColor = Color.Gray
@@ -40,13 +62,13 @@ Public Class Main_Menu
         TextBoxPhoneNumber.Text = "ENTER PHONE NUMBER"
         TextBoxPhoneNumber.ForeColor = Color.Gray
         TextBoxPhoneNumber.Font = New Font(TextBoxPhoneNumber.Font, FontStyle.Italic)
-        ButtonFoundParticipant.Text = "USE PARTICIPANT"
+        ButtonFollowupSurvey.Text = "Follow-up Survey"
 
         Dim originalFont = TextBoxPhoneNumber.Parent.Font  ' Use parent font as reference
         Dim smallerFont = New Font(originalFont.FontFamily, originalFont.Size - 2, FontStyle.Italic)
         TextBoxPhoneNumber.Font = smallerFont
 
-
+        HideLabels()
 
     End Sub
 
@@ -163,7 +185,7 @@ Public Class Main_Menu
     End Sub
 
 
-    Private Sub ComboBoxDayOfBirth_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBoxDayOfBirth.SelectedIndexChanged
+    Private Sub ComboBoxMonthOfBirth_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBoxMonthOfBirth.SelectedIndexChanged
         PopulateNameComboBox()
     End Sub
 
@@ -179,20 +201,20 @@ Public Class Main_Menu
         ' Get filter text (already in uppercase from TextBoxFilter_TextChanged)
         Dim filterText As String = TextBoxFilter.Text
 
-        ' Get selected day (if any)
-        Dim selectedDay As Integer = -1
-        If ComboBoxDayOfBirth.SelectedIndex > 0 Then
-            selectedDay = CInt(ComboBoxDayOfBirth.SelectedItem)
+        Dim selectedMonth As Integer = -1
+        If ComboBoxMonthOfBirth.SelectedIndex > 0 Then
+            Dim monthItem As KeyValuePair(Of Integer, String) = DirectCast(ComboBoxMonthOfBirth.SelectedItem, KeyValuePair(Of Integer, String))
+            selectedMonth = monthItem.Key
         End If
 
         ' If day is selected, we need to query the database for day-specific filtering
-        If selectedDay > 0 Then
+        If selectedMonth > 0 Then
             Using connection As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
                 ' Update query to include subjid
-                Dim query As String = "SELECT participants_name, subjid FROM baseline WHERE UCASE(participants_name) LIKE ? AND day_of_birth = ? ORDER BY participants_name"
+                Dim query As String = "SELECT participants_name, subjid FROM baseline WHERE UCASE(participants_name) LIKE ? AND month_of_birth = ? ORDER BY participants_name"
                 Using command As New OleDbCommand(query, connection)
                     command.Parameters.AddWithValue("?", "%" & filterText & "%")
-                    command.Parameters.AddWithValue("?", selectedDay)
+                    command.Parameters.AddWithValue("?", selectedMonth)
 
                     connection.Open()
                     Dim reader As OleDbDataReader = command.ExecuteReader()
@@ -237,8 +259,8 @@ Public Class Main_Menu
 
         ' Get selected day (if any)
         Dim selectedDay As Integer = -1
-        If ComboBoxDayOfBirth.SelectedIndex > 0 Then ' Skip "Select day" item
-            selectedDay = CInt(ComboBoxDayOfBirth.SelectedItem)
+        If ComboBoxMonthOfBirth.SelectedIndex > 0 Then ' Skip "Select day" item
+            selectedDay = CInt(ComboBoxMonthOfBirth.SelectedItem)
         End If
 
         ' Query to get filtered participants
@@ -293,14 +315,18 @@ Public Class Main_Menu
             If allSubjectIDs.ContainsKey(selectedName) Then
                 SUBJID = allSubjectIDs(selectedName)
                 LoadParticipantDetails()
+                ShowLabels()
+                ButtonBaseline.Enabled = False
             End If
 
             ' Update the button text with the selected name in uppercase
-            ButtonFoundParticipant.Text = "USE" & vbNewLine & selectedName
+            ButtonFollowupSurvey.Text = "Follow-up Survey for:" & vbNewLine & selectedName
         Else
             ' Reset button text and SUBJID if "SELECT NAME" is selected
-            ButtonFoundParticipant.Text = "USE PARTICIPANT"
+            ButtonFollowupSurvey.Text = "Follow-up Survey"
             SUBJID = ""
+            HideLabels()
+            ButtonBaseline.Enabled = True
         End If
     End Sub
 
@@ -315,41 +341,47 @@ Public Class Main_Menu
 
 
     Private Sub ButtonBaseline_Click(sender As Object, e As EventArgs) Handles ButtonBaseline.Click
-        Try
-            Dim response As Integer
-            Dim enterfu As Integer
-            If Len(SUBJID) > 10 Then
-                response = MsgBox("The Participant that is currently selected is " & ParticipantsName & vbCrLf & "Do you want to edit the baseline previous entry?", vbYesNo, "New Participant")
-                If response = vbNo Then
-                    enterfu = MsgBox("The Participant that is currently selected is " & ParticipantsName & vbCrLf & "Do you want to do the Follow up Visit?", vbYesNo, "Follow up Visit")
-                    If enterfu = vbNo Then
-                        Survey = "baseline"
-                        NewSurvey.ShowDialog()
-                        NewSurvey.Dispose()
-                    Else
-                        'load the follow-up survey
-                    End If
+        'Try
+        '    Dim response As Integer
+        '    Dim enterfu As Integer
+        '    If Len(SUBJID) > 10 Then
+        '        response = MsgBox("The Participant that is currently selected is " & ParticipantsName & vbCrLf & "Do you want to edit the baseline previous entry?", vbYesNo, "New Participant")
+        '        If response = vbNo Then
+        '            enterfu = MsgBox("The Participant that is currently selected is " & ParticipantsName & vbCrLf & "Do you want to do the Follow up Visit?", vbYesNo, "Follow up Visit")
+        '            If enterfu = vbNo Then
+        '                Survey = "baseline"
+        '                NewSurvey.ShowDialog()
+        '                NewSurvey.Dispose()
+        '            Else
+        '                'load the follow-up survey
+        '            End If
 
-                Else
-                    Survey = "baseline"
-                    ModifyingSurvey = True
-                    NewSurvey.ShowDialog()
-                    NewSurvey.Dispose()
-                End If
-            Else
-                response = MsgBox("You have not prescreened the participant, Do you want to proceed without prescreening?" & vbCrLf & "Note that this may cause duplicate enrollment", vbYesNo, "New Participant")
-                If response = vbYes Then
-                    Survey = "baseline"
-                    NewSurvey.ShowDialog()
-                    NewSurvey.Dispose()
-                End If
+        '        Else
+        '            Survey = "baseline"
+        '            ModifyingSurvey = True
+        '            NewSurvey.ShowDialog()
+        '            NewSurvey.Dispose()
+        '        End If
+        '    Else
+        '        response = MsgBox("You have not prescreened the participant, Do you want to proceed without prescreening?" & vbCrLf & "Note that this may cause duplicate enrollment", vbYesNo, "New Participant")
+        '        If response = vbYes Then
+        '            Survey = "baseline"
+        '            NewSurvey.ShowDialog()
+        '            NewSurvey.Dispose()
+        '        End If
 
-            End If
+        '    End If
 
 
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
+        'Catch ex As Exception
+        '    MessageBox.Show(ex.Message)
+        'End Try
+
+
+        ModifyingSurvey = False
+        Survey = "baseline"
+        NewSurvey.ShowDialog()
+        NewSurvey.Dispose()
     End Sub
 
 
@@ -462,6 +494,125 @@ Public Class Main_Menu
         LabelSubcounty.Visible = False
         LabelVillage.Visible = False
     End Sub
+
+    Private Sub ButtonCannotFind_Click(sender As Object, e As EventArgs) Handles ButtonCannotFind.Click
+        ' Reset the form to its initial state, similar to Form_Load
+
+        ' Reset ComboBoxes to initial state
+        ComboBoxMonthOfBirth.SelectedIndex = 0
+        ComboBoxName.SelectedIndex = 0
+
+        ' Reset TextBoxes to placeholder state
+        ' Reset TextBoxFilter
+        TextBoxFilter.Text = "TYPE NAME TO SEARCH"
+        TextBoxFilter.ForeColor = Color.Gray
+        TextBoxFilter.Font = New Font(TextBoxFilter.Font, FontStyle.Italic)
+        TextBoxFilter_IsPlaceholder = True
+
+        ' Reset TextBoxPhoneNumber
+        TextBoxPhoneNumber.Text = "ENTER PHONE NUMBER"
+        TextBoxPhoneNumber.ForeColor = Color.Gray
+        Dim originalFont = TextBoxPhoneNumber.Parent.Font
+        Dim smallerFont = New Font(originalFont.FontFamily, originalFont.Size - 2, FontStyle.Italic)
+        TextBoxPhoneNumber.Font = smallerFont
+        TextBoxPhoneNumber_IsPlaceholder = True
+
+        ' Reset button text and variables as requested
+        ButtonFollowupSurvey.Text = "Follow-up Survey"
+        SUBJID = ""
+
+        ' Hide labels
+        HideLabels()
+
+        ' Enable baseline button
+        ButtonBaseline.Enabled = True
+    End Sub
+
+    Private Sub ButtonSearchPhone_Click(sender As Object, e As EventArgs) Handles ButtonSearchPhone.Click
+        Dim phoneNumber As String = TextBoxPhoneNumber.Text.Trim()
+
+        ' Ensure phone number is entered before searching
+        If phoneNumber = "" Then
+            MessageBox.Show("Please enter a phone number.", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        ' Call the search function
+        SearchByPhoneNumber(phoneNumber)
+    End Sub
+
+
+
+    Private Sub SearchByPhoneNumber(phoneNumber As String)
+        ' Validate phone number format
+        If Not IsValidPhoneNumber(phoneNumber) Then
+            MessageBox.Show("Invalid phone number format. Phone number should be 10 digits and start with 0.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        Try
+            Using connection As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
+                connection.Open()
+
+                ' Query to search by phone number
+                Dim query As String = "SELECT subjid, health_facility, participants_name, NickName, " &
+                                     "respondants_age, client_sex, county, subcounty, village, mobile_number " &
+                                     "FROM baseline WHERE mobile_number = ?"
+
+                Using command As New OleDbCommand(query, connection)
+                    command.Parameters.AddWithValue("?", phoneNumber)
+
+                    Using reader As OleDbDataReader = command.ExecuteReader()
+                        If reader.Read() Then
+                            ' Participant found - update the global variables
+                            SUBJID = reader("subjid").ToString()
+                            Community = reader("health_facility").ToString()
+                            ParticipantsName = reader("participants_name").ToString()
+                            ParticipantsOtherName = reader("NickName").ToString()
+                            ParticipantsAge = reader("respondants_age").ToString()
+                            ParticipantsGender = reader("client_sex").ToString()
+                            County = reader("county").ToString()
+                            Subcounty = reader("subcounty").ToString()
+                            Village = reader("village").ToString()
+
+                            ' Populate Labels
+                            LabelSubjid.Text = "SUBJID: " & SUBJID
+                            LabelParticipants_name.Text = "Participants Name: " & ParticipantsName
+                            LabelNickname.Text = "Other Names: " & ParticipantsOtherName
+                            LabelAge.Text = "Age: " & ParticipantsAge
+                            LabelSex.Text = "Gender: " & If(ParticipantsGender = "1", "Male", "Female")
+                            LabelCounty.Text = "County: " & County
+                            LabelSubcounty.Text = "Sub County: " & Subcounty
+                            LabelVillage.Text = "Village: " & Village
+
+                            ' Handle NULL values for phone number
+                            Dim phone1 As String = If(IsDBNull(reader("mobile_number")), "N/A", reader("mobile_number").ToString())
+                            LabelPhone_number.Text = "Phone Number: " & phone1
+
+                            ' Show the labels
+                            ShowLabels()
+
+                            ' Update the button text with the found name
+                            ButtonFollowupSurvey.Text = "Follow-up Survey for:" & vbNewLine & ParticipantsName
+
+                            ' Disable baseline button since we've found a participant
+                            ButtonBaseline.Enabled = False
+                        Else
+                            ' No participant found with that phone number
+                            MessageBox.Show("No participant found with the phone number: " & phoneNumber, "No Results", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        End If
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error searching for participant: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Function IsValidPhoneNumber(phoneNumber As String) As Boolean
+        ' Check if the phone number is exactly 10 digits and starts with 0
+        Return phoneNumber.Length = 10 AndAlso phoneNumber.StartsWith("0") AndAlso IsNumeric(phoneNumber)
+    End Function
 
 
 End Class

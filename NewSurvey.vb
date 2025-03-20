@@ -1899,6 +1899,8 @@ Public Class NewSurvey
 
 
         Try
+            Dim normalImage As Image = My.Resources.lucky_spin ' Change to your actual resource/image
+            Dim spinningImage As Image = My.Resources.spin_12315_128 ' Change to your actual resource/image
 
             If QuestionInfoArray(CurrentQuestion).FieldName = "arm_text_demo" Then
                 PictureBoxArm.Visible = True
@@ -1928,9 +1930,11 @@ Public Class NewSurvey
                 AddHandler newButton.Click, AddressOf ButtonHandlerClick
 
                 If ShowPreviousResponse = True Then
-
-
+                    PictureBoxArm.Image = normalImage
+                    LabelArm.Visible = True
+                    LabelArm.Text = "Randomization Arm: " & RandArmText
                     Button_Next.Enabled = True
+                    newButton.Enabled = False
                 Else
 
                     Button_Next.Enabled = False
@@ -1973,6 +1977,7 @@ Public Class NewSurvey
                     If clickCount > 1 Then
                         LabelArm.Visible = True
                         LabelArm.Text = "Randomization Arm: " & RandArmText
+                        DirectCast(sender, Button).Enabled = False
                     End If
                 End If
 
@@ -2575,7 +2580,7 @@ Public Class NewSurvey
                         MaxLength = 2
                     Case Is = "hhnum"
                         MaxLength = 3
-                    Case Is = "phone1", "phone2", "phone3"
+                    Case Is = "mobile_number"
                         MaxLength = 10
                     Case Is = "barcode", "barcode2", "collection_time"
                         MaxLength = 5

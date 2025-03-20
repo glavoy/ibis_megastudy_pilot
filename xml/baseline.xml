@@ -143,7 +143,7 @@
 
 
 	<question type = 'text' fieldname = 'respondants_age' fieldtype = 'text_integer'>
-		<text>I’d like to begin by asking, what is your age?</text>
+		<text>I'd like to begin by asking, what is your age?</text>
 		<maxCharacters>2</maxCharacters>
 		<numeric_check>
 			<values minvalue ='10' maxvalue='110' other_values = '10' message = 'Number must be between 10 and 110!'></values>
@@ -673,13 +673,33 @@ If yes, please consent the participant</text>
 	</question>
 
 
-	<question type = 'radio' fieldname = 'video_language' fieldtype = 'integer'>
+	<question type = 'radio' fieldname = 'video_language_ke' fieldtype = 'integer'>
 		<text>We are about to play the intervention video to the participant
 
 What is your Preferred Language for the video that we are about to play</text>
 		<responses>
-			<response></response>
+			<response value = '1'>Dholuo</response>
+			<response value = '2'>Swahili</response>
+			<response value = '3'>English</response>
 		</responses>
+		<preskip>
+			<skip fieldname='countrycode' condition = '=' response='1' response_type='fixed' skiptofieldname ='video_language_ug'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'video_language_ug' fieldtype = 'integer'>
+		<text>We are about to play the intervention video to the participant
+
+What is your Preferred Language for the video that we are about to play</text>
+		<responses>
+			<response value = '4'>Runyonkole</response>
+			<response value = '5'>Luganda</response>
+			<response value = '3'>English</response>
+		</responses>
+		<preskip>
+			<skip fieldname='countrycode' condition = '=' response='2' response_type='fixed' skiptofieldname ='play_video'></skip>
+		</preskip>
 	</question>
 
 
@@ -706,7 +726,7 @@ Thank you for your participation. Please remember to come back here for another 
 
 I will write that on an appointment card for you to take with you.
 
-When you return for your repeat HIV in 3 to 6 months, we will ask you if you have already participated in this study. In order to find you in our system, we may ask you for your name, your phone number, or your day of birth. Can you please share with us your day of birth now? (Day only - 1 to 31)
+When you return for your repeat HIV in 3 to 6 months, we will ask you if you have already participated in this study. In order to find you in our system, we may ask you for your name, your phone number, or your month of birth. Can you please share with us your month of birth now? (Month only)
 
 Do you have any final questions for me?
 
@@ -715,7 +735,7 @@ Do you have any final questions for me?
 			<skip fieldname='arm' condition = '=' response='8' response_type='fixed' skiptofieldname ='information_screen1'></skip>
 		</preskip>
 		<postskip>
-			<skip fieldname='arm' condition = '&lt;&gt;' response='8' response_type='fixed' skiptofieldname ='day_of_birth'></skip>
+			<skip fieldname='arm' condition = '&lt;&gt;' response='8' response_type='fixed' skiptofieldname ='month_of_birth'></skip>
 		</postskip>
 	</question>
 
@@ -728,7 +748,7 @@ Thank you for your participation. Please remember to come back here for another 
 
 (Counselor instructions: If the default date does not work for the participant, they may choose a different date; write selected date on appointment card)
 
-When you return for your repeat HIV in 3 to 6 months, we will ask you if you have already participated in this study. In order to find you in our system, we may ask you for your name, your phone number, or your day of birth. Can you please share with us your day of birth now?
+When you return for your repeat HIV in 3 to 6 months, we will ask you if you have already participated in this study. In order to find you in our system, we may ask you for your name, your phone number, or your month of birth. Can you please share with us your month of birth now?
 
 Do you have any final questions for me?
 
@@ -741,12 +761,22 @@ Do you have any final questions for me?
 	</question>
 
 
-	<question type = 'text' fieldname = 'day_of_birth' fieldtype = 'text_integer'>
-		<text>Enter the day of the month the participant was born</text>
-		<maxCharacters>2</maxCharacters>
-		<numeric_check>
-			<values minvalue ='1' maxvalue='31' other_values = '1' message = 'Number must be between 1 and 31!'></values>
-		</numeric_check>
+	<question type = 'radio' fieldname = 'month_of_birth' fieldtype = 'integer'>
+		<text>Please select the month the participant was born</text>
+		<responses>
+			<response value = '1'>January</response>
+			<response value = '2'>February</response>
+			<response value = '3'>March</response>
+			<response value = '4'>April</response>
+			<response value = '5'>May</response>
+			<response value = '6'>June</response>
+			<response value = '7'>July</response>
+			<response value = '8'>August</response>
+			<response value = '9'>September</response>
+			<response value = '10'>October</response>
+			<response value = '11'>November</response>
+			<response value = '12'>December</response>
+		</responses>
 	</question>
 
 
