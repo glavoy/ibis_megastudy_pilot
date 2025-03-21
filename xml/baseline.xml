@@ -817,7 +817,9 @@ Do you have any final questions for me?
 
 
 	<question type = 'radio' fieldname = 'understand_video' fieldtype = 'integer'>
-		<text>How well did the participant seem to understand the message of the video?</text>
+		<text>How well did the participant seem to understand the message of the video?
+
+[You can make this assessment based on the participant's level of attention, engagement with the video, any misinterpretations, questions, etc.]</text>
 		<responses>
 			<response value = '1'>UNDERSTOOD VERY WELL</response>
 			<response value = '2'>UNDERSTOOD WELL</response>
