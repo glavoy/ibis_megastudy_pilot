@@ -343,34 +343,7 @@ Public Class NewSurvey
             Dim ConnectionString As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
             ConnectionString.Open()
 
-            ' Get the primary key for the table
-            Dim PKstrSQL As String = "select primarykey from crfs where tablename = '" & Survey & "'"
-            Dim daPK As New OleDbDataAdapter(PKstrSQL, ConnectionString)
-            Dim dsPK As New DataSet
-            daPK.Fill(dsPK)
-            Dim PrimaryKey As String = ""
-            For Each row As DataRow In dsPK.Tables(0).Rows
-                PrimaryKey = row.Item("primarykey")
-            Next
-
-            Dim VDATE_US As String = ""
-            'need to use this because queries in MS access can only use dates in m/d/yy format
-            If InStr(PrimaryKey, "vdate") > 0 Then
-                If Len(VDATE) > 10 Then
-                    VDATE_US = DateTime.ParseExact(VDATE, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy HH:mm:ss")
-                Else
-                    VDATE_US = DateTime.ParseExact(VDATE, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy HH:mm:ss")
-                End If
-            End If
-
-            Select Case PrimaryKey
-                Case "subjid"
-                    strSQL += " FROM " & Survey & " WHERE subjid = '" & SUBJID & "'"
-                Case "subjid,vdate"
-                    strSQL += " FROM " & Survey & " WHERE subjid = '" & SUBJID & "' and vdate = #" & VDATE_US & "# order by vdate desc"
-                Case "screening_id,vdate"
-                    strSQL += " FROM " & Survey & " WHERE screening_id = '" & SUBJID & "'"
-            End Select
+            strSQL += " FROM " & Survey & " WHERE uniqueid = '" & UNIQUEID & "'"
 
             'get the data from the database
             Dim da As New OleDbDataAdapter(strSQL, ConnectionString)
@@ -786,72 +759,13 @@ Public Class NewSurvey
                 ConnectionString.Close()
                 MsgBox("The data has been saved!")
 
-                '' Load the evatar video
-                '' Call the function to get the correct video
-                'If GetValue("eligibility_check") = 1 And RandArmText <> "Default appointment" Then
-                '    MsgBox("A short Video will be displayed shortly for this participant")
-
-                '    Dim video_name As String = getRandVideo(GetValue("client_sex"), GetValue("respondants_age"), RandArmText, GetValue("preferred_language"))
-                '    Dim videoPath As String = "C:\IBIS_pilot\rand_video\" & video_name
-                '    Process.Start(New ProcessStartInfo(videoPath) With {.UseShellExecute = True})
-                '    'Process.Start("wmplayer.exe", "/play C:\IBIS_pilot\rand_video\video1.mp4")
-                'End If
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
     End Sub
 
-    Private Function getRandVideo(sex As Integer, age As Integer, randarmtext As String, pref_lang As Integer)
-        Dim video_path As String = "-9"
-        Try
-            Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
-            Dim section As ConnectionStringsSection = DirectCast(config.GetSection("connectionStrings"), ConnectionStringsSection)
-            Dim ConnectionString As New OleDbConnection(section.ConnectionStrings("ConnString").ConnectionString)
-            ConnectionString.Open()
-            Dim strSQL As String = "Select video_name from videolistpath where arm = '" & randarmtext & "';"
 
-            If randarmtext = "Social norms" Then
-                Dim age_cat As Integer = 0
-                If age <= 30 Then
-                    age_cat = 1
-                ElseIf age > 30 Then
-                    age_cat = 2
-                End If
-                strSQL = "Select video_name from videolistpath where arm = '" & randarmtext & "' and sexcode =" & sex & " and agecategory =" & age_cat
-            End If
-
-            Dim da As New OleDbDataAdapter(strSQL, ConnectionString)
-            Dim ds As New DataSet
-            da.Fill(ds)
-            Dim dt As DataTable = ds.Tables(0)
-            ConnectionString.Close()
-
-
-            For Each row As DataRow In dt.Rows
-                If Not IsDBNull(row("video_name")) Then
-                    ' Set the result
-                    video_path = row("video_name")
-                End If
-            Next
-
-            'TODO Updatr this section once we have the correct list of videos
-            If pref_lang = 1 Then
-                video_path &= ".mp4"
-            ElseIf pref_lang = 2 Then
-                video_path &= ".mp4"
-            ElseIf pref_lang = 3 Then
-                video_path &= ".mp4"
-            Else
-                video_path &= ".mp4"
-            End If
-            Return video_path
-        Catch ex As Exception
-            MsgBox(ex.Message)
-            Return video_path  ' Return the default value in case of exception
-        End Try
-
-    End Function
 
 
     'modify the existing data in the household info table
@@ -894,35 +808,12 @@ Public Class NewSurvey
                 SetLastMod()
             End If
 
-            Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
-            Dim section As ConnectionStringsSection = DirectCast(config.GetSection("connectionStrings"), ConnectionStringsSection)
-            Dim ConnectionString As New OleDbConnection(section.ConnectionStrings("ConnString").ConnectionString)
+            Dim ConnectionString As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
             ConnectionString.Open()
 
             Dim strSQL As String = ""
             Dim strSaveDataToText As String = ""
             Dim uniqueid As String = GetValue("uniqueid")
-
-            ' Get the primary key for the table
-            Dim PKstrSQL As String = "select primarykey from crfs where tablename = '" & Survey & "'"
-            Dim daPK As New OleDbDataAdapter(PKstrSQL, ConnectionString)
-            Dim dsPK As New DataSet
-            daPK.Fill(dsPK)
-            Dim PrimaryKey As String = ""
-            For Each row As DataRow In dsPK.Tables(0).Rows
-                PrimaryKey = row.Item("primarykey")
-            Next
-
-            Dim VDATE_US As String = ""
-            'need to use this because queries in MS access can only use dates in m/d/yy format
-            If InStr(PrimaryKey, "vdate") > 0 Then
-                If Len(VDATE) > 10 Then
-                    VDATE_US = DateTime.ParseExact(VDATE, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy HH:mm:ss")
-                Else
-                    VDATE_US = DateTime.ParseExact(VDATE, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy HH:mm:ss")
-                End If
-            End If
-
 
             '********************************************************************
             'Due to the nature of MS Access, an update query cannot contain more than 127 fields
@@ -1017,14 +908,6 @@ Public Class NewSurvey
                     End Select
                 Next
 
-                'complete the SQL statement with the appropriate where clause
-                'Select Case PrimaryKey
-                '    Case "subjid"
-                '        strSQL += " where subjid = '" & SUBJID & "'"
-                '    Case "subjid,vdate", "opal_id,vdate"
-                '        strSQL += " where subjid = '" & SUBJID & "' and vdate = #" & VDATE_US & "#"
-                'End Select
-
                 If Len(uniqueid) = 0 Or uniqueid = "-9" Then
                     ConnectionString.Close()
                     MsgBox("Error Creating the Update Statement. Call the data team for guidance!")
@@ -1049,7 +932,7 @@ Public Class NewSurvey
             End If
 
             ConnectionString.Close()
-            MsgBox("The data hase been saved!")
+            MsgBox("The data has been saved!")
 
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -2734,12 +2617,21 @@ Public Class NewSurvey
                                             End Sub
                 inControls.Add(btnReplay)
 
+                Dim countrycode = GetValue("countrycode")
+                Dim language As String = ""
+                If countrycode = 1 Then
+                    language = GetResponse("video_language_ug")
+                Else
+                    language = GetResponse("video_language_ke")
+                End If
+
+
 
 
                 ' Load the evatar video
                 ' Call the function to get the correct video
                 If GetValue("eligibility_check") = 1 And RandArmText <> "Default appointment" Then
-                    video_name = getRandVideo(GetValue("client_sex"), GetValue("respondants_age"), RandArmText, GetValue("preferred_language"))
+                    video_name = getRandVideo(CInt(GetValue("client_sex")), CInt(GetValue("respondants_age")), RandArmText, language)
                     videoPath = "C:\IBIS_pilot\rand_video\" & video_name
                 End If
 
@@ -2761,6 +2653,47 @@ Public Class NewSurvey
     End Sub
 
 
+
+
+
+    Private Function getRandVideo(sex As Integer, age As Integer, randarmtext As String, pref_lang As String)
+        Dim video_path As String = "C:\IBIS_pilot\rand_video\Brian (en) - Social norms.mp4"  ' Default return value
+        Try
+            Using connection As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
+                Dim query As String
+
+                ' If arm is "Social norms", add sex and age filters
+                If randarmtext = "Social norms" Then
+                    Dim age_cat As Integer = If(age <= 30, 1, 2)
+                    query = "SELECT video_name FROM videolistpath WHERE arm = ? AND sexcode = ? AND agecategory = ? AND video_language = ?"
+                Else
+                    query = "SELECT video_name FROM videolistpath WHERE arm = ? AND video_language = ?"
+                End If
+
+                Using command As New OleDbCommand(query, connection)
+                    ' Add parameters in the exact order they appear in the query
+                    command.Parameters.AddWithValue("?", randarmtext)
+
+                    If randarmtext = "Social norms" Then
+                        command.Parameters.AddWithValue("?", sex)
+                        command.Parameters.AddWithValue("?", If(age <= 30, 1, 2))
+                    End If
+
+                    command.Parameters.AddWithValue("?", pref_lang)
+
+                    connection.Open()
+                    Using reader As OleDbDataReader = command.ExecuteReader()
+                        If reader.Read() AndAlso Not IsDBNull(reader("video_name")) Then
+                            video_path = reader("video_name").ToString()
+                        End If
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            MsgBox("Error: " & ex.Message)
+        End Try
+        Return video_path
+    End Function
 
 
 

@@ -341,43 +341,6 @@ Public Class Main_Menu
 
 
     Private Sub ButtonBaseline_Click(sender As Object, e As EventArgs) Handles ButtonBaseline.Click
-        'Try
-        '    Dim response As Integer
-        '    Dim enterfu As Integer
-        '    If Len(SUBJID) > 10 Then
-        '        response = MsgBox("The Participant that is currently selected is " & ParticipantsName & vbCrLf & "Do you want to edit the baseline previous entry?", vbYesNo, "New Participant")
-        '        If response = vbNo Then
-        '            enterfu = MsgBox("The Participant that is currently selected is " & ParticipantsName & vbCrLf & "Do you want to do the Follow up Visit?", vbYesNo, "Follow up Visit")
-        '            If enterfu = vbNo Then
-        '                Survey = "baseline"
-        '                NewSurvey.ShowDialog()
-        '                NewSurvey.Dispose()
-        '            Else
-        '                'load the follow-up survey
-        '            End If
-
-        '        Else
-        '            Survey = "baseline"
-        '            ModifyingSurvey = True
-        '            NewSurvey.ShowDialog()
-        '            NewSurvey.Dispose()
-        '        End If
-        '    Else
-        '        response = MsgBox("You have not prescreened the participant, Do you want to proceed without prescreening?" & vbCrLf & "Note that this may cause duplicate enrollment", vbYesNo, "New Participant")
-        '        If response = vbYes Then
-        '            Survey = "baseline"
-        '            NewSurvey.ShowDialog()
-        '            NewSurvey.Dispose()
-        '        End If
-
-        '    End If
-
-
-        'Catch ex As Exception
-        '    MessageBox.Show(ex.Message)
-        'End Try
-
-
         ModifyingSurvey = False
         Survey = "baseline"
         NewSurvey.ShowDialog()
@@ -411,9 +374,7 @@ Public Class Main_Menu
     ' Function to Load Household Details for Control Arm
     Private Sub LoadParticipantDetails()
         Try
-            Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
-            Dim section As ConnectionStringsSection = DirectCast(config.GetSection("connectionStrings"), ConnectionStringsSection)
-            Using Connection As New OleDbConnection(section.ConnectionStrings("ConnString").ConnectionString)
+            Using Connection As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
                 Connection.Open()
 
                 ' Query to fetch household details from precensus

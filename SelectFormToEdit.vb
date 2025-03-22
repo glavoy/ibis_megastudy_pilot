@@ -2,10 +2,16 @@
 Imports System.Windows.Forms.VisualStyles
 Imports System.Configuration
 Imports System.Data.Common
+Imports System.Diagnostics.Eventing.Reader
 
 Public Class SelectFormToEdit
     Private ReadOnly ConnectionString As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
     Dim selectedOption As String = ""
+
+    Private Sub SelectFormToEdit_Load(sender As Object, e As EventArgs) Handles Me.Load
+        ButtonGO.Enabled = False
+    End Sub
+
     Private Sub Button_Cancel_Click(sender As Object, e As EventArgs) Handles Button_Cancel.Click
         InterviewCancelled = True
         Me.Close()
@@ -13,16 +19,13 @@ Public Class SelectFormToEdit
 
     Private Sub Button_Verify_Click(sender As Object, e As EventArgs) Handles Button_Verify.Click
         Try
-
             Dim strSQL As String = ""
-
-
             Select Case selectedOption
                 Case "byScreeningId"
                     If TextBoxSubjid.Text = "" Then
                         MsgBox("You have Not Entered the ID to be searched", vbOKOnly, "Missing ID")
                     Else
-                        strSQL = "select screening_id, vdate from " & Survey & " where screening_id = '" & TextBoxSubjid.Text & "' order by vdate desc"
+                        strSQL = "select screening_id, uniqueid from " & Survey & " where screening_id = '" & TextBoxSubjid.Text & "'"
                         Dim da As New OleDbDataAdapter(strSQL, ConnectionString)
                         Dim ds As New DataSet
                         da.Fill(ds)
@@ -31,17 +34,16 @@ Public Class SelectFormToEdit
                             MsgBox("There is no Screening CRF for ID " & TextBoxSubjid.Text, vbOKOnly, "Missing ID")
                             Exit Sub
                         Else
-                            SUBJID = TextBoxSubjid.Text
+                            ButtonGO.Enabled = True
+                            UNIQUEID = ds.Tables(0).Rows(0)("uniqueid").ToString()
                         End If
                     End If
-
-
 
                 Case "byStudyId"
                     If TextBoxSubjid.Text = "" Then
                         MsgBox("You have Not Entered the ID to be searched", vbOKOnly, "Missing ID")
                     Else
-                        strSQL = "select subjid, screening_id from " & Survey & " where subjid = '" & TextBoxSubjid.Text & "'"
+                        strSQL = "select subjid, uniqueid from " & Survey & " where subjid = '" & TextBoxSubjid.Text & "'"
                         Dim da As New OleDbDataAdapter(strSQL, ConnectionString)
                         Dim ds As New DataSet
                         da.Fill(ds)
@@ -50,27 +52,14 @@ Public Class SelectFormToEdit
                             MsgBox("There is no Baseline CRF for ID " & TextBoxSubjid.Text, vbOKOnly, "Missing ID")
                             Exit Sub
                         Else
-                            For Each row As DataRow In dt.Rows
-                                If Not IsDBNull(row("screening_id")) Then
-                                    SUBJID = row("screening_id")
-                                End If
-                            Next
-
+                            ButtonGO.Enabled = True
+                            UNIQUEID = ds.Tables(0).Rows(0)("uniqueid").ToString()
                         End If
                     End If
 
-
                 Case Else
                     MsgBox("You have Not selected the Search by Category ", vbOKOnly, "Missing Search Category")
-
-
             End Select
-
-            If SUBJID = "" Then
-                ButtonGO.Enabled = False
-            Else
-                ButtonGO.Enabled = True
-            End If
             ConnectionString.Close()
 
         Catch ex As Exception
@@ -97,4 +86,6 @@ Public Class SelectFormToEdit
             MessageBox.Show(ex.Message)
         End Try
     End Sub
+
+
 End Class

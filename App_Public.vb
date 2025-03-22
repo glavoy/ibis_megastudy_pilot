@@ -7,6 +7,7 @@ Module IBIS_Public
 
     Public Survey As String                                 'This is used to keep which survey we are doing - add household or household members
     Public SUBJID As String                                 'used to store the SUBJID
+    Public UNIQUEID As String                               'used to store the UNIQUEID
     Public VDATE As String = "01/01/1899"                   'used to store the Visit Date
     Public Community As String                              'used to store the Community
     Public Village As String                                'selected village - from MainMenu

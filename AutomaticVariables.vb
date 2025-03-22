@@ -163,8 +163,8 @@ Module AutomaticVariables
                         Dim clinic As Integer = CInt(GetValue("health_facility"))
                         Dim arm As Integer = CInt(GetValue("arm"))
                         CurrentAutoValue = GetNextRandArmText(clinic, arm)
-                        RandArmText = CurrentAutoValue
                     End If
+                    RandArmText = CurrentAutoValue
 
                 Case Is = "preferred_language_text"
                     Dim country As Integer = CInt(GetValue("countrycode"))
