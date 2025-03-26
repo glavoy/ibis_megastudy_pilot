@@ -94,14 +94,14 @@ Module IBIS_Public
     '*****************************************************
     ' Function to get the next randomization arm
     '*****************************************************
-    Public Function GetNextRandArm(clinic_code As Integer) As String
+    Public Function GetNextParticipantRandArm(clinic_code As Integer) As String
         Dim nextLineNum As String = "-9"
         Try
             Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
             Dim section As ConnectionStringsSection = DirectCast(config.GetSection("connectionStrings"), ConnectionStringsSection)
             Dim ConnectionString As New OleDbConnection(section.ConnectionStrings("ConnString").ConnectionString)
             ConnectionString.Open()
-            Dim strSQL As String = "Select arm from baseline where eligibility_check = 1 and health_facility = " & clinic_code & " order by starttime desc;"
+            Dim strSQL As String = "Select participant_randarm from baseline where consent = 1 and eligibility_check = 1 and health_facility = " & clinic_code & " order by starttime desc;"
 
             Dim da As New OleDbDataAdapter(strSQL, ConnectionString)
             Dim ds As New DataSet
@@ -113,8 +113,8 @@ Module IBIS_Public
             Dim MaxRandArm As Integer = 1
 
             For Each row As DataRow In dt.Rows
-                If Not IsDBNull(row("arm")) Then
-                    Dim arm As Integer = CInt(row("arm"))
+                If Not IsDBNull(row("participant_randarm")) Then
+                    Dim arm As Integer = CInt(row("participant_randarm"))
                     MaxRandArm = arm + 1
                     If MaxRandArm > 12 Then
                         MaxRandArm = 1
@@ -132,6 +132,39 @@ Module IBIS_Public
         End Try
 
         Return nextLineNum
+    End Function
+
+
+    '*****************************************************
+    ' Function to get the next randomization arm
+    '*****************************************************
+    Public Function GetRandArm(clinic_code As Integer, participant As Integer) As String
+        Dim nextarm As Integer = -9
+        Try
+            Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
+            Dim section As ConnectionStringsSection = DirectCast(config.GetSection("connectionStrings"), ConnectionStringsSection)
+            Dim ConnectionString As New OleDbConnection(section.ConnectionStrings("ConnString").ConnectionString)
+            ConnectionString.Open()
+            Dim strSQL As String = "Select arm_code, participant from randomizationlist where participant = " & participant & " and health_facility = " & clinic_code
+
+            Dim da As New OleDbDataAdapter(strSQL, ConnectionString)
+            Dim ds As New DataSet
+            da.Fill(ds)
+            Dim dt As DataTable = ds.Tables(0)
+            ConnectionString.Close()
+
+            For Each row As DataRow In dt.Rows
+                If Not IsDBNull(row("arm_code")) Then
+                    nextarm = CInt(row("arm_code"))
+                    Exit For
+                End If
+            Next
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+        Return nextarm
     End Function
 
 
@@ -188,4 +221,63 @@ Module IBIS_Public
     End Function
 
 
+    Public Function GetDBConnection() As OleDbConnection
+        Try
+            Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
+            Dim section As ConnectionStringsSection = DirectCast(config.GetSection("connectionStrings"), ConnectionStringsSection)
+            Return New OleDbConnection(section.ConnectionStrings("ConnString").ConnectionString)
+        Catch ex As Exception
+            MessageBox.Show("Error retrieving database connection: " & ex.Message)
+            Return Nothing
+        End Try
+    End Function
+
+    Public Function setAppointmentDateByMonths(baseinterval As Integer)
+        Dim result As String
+        Try
+            VDATE = GetValue("starttime")
+
+            ' Try to parse with full date/time format
+            Dim visit_date As DateTime
+
+            ' First attempt with full format
+            If DateTime.TryParseExact(VDATE, "dd/MM/yyyy HH:mm:ss",
+                System.Globalization.CultureInfo.InvariantCulture,
+                Globalization.DateTimeStyles.None, visit_date) Then
+                ' Success with full format
+
+                ' Second attempt with date only format
+            ElseIf DateTime.TryParseExact(VDATE, "dd/MM/yyyy",
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    Globalization.DateTimeStyles.None, visit_date) Then
+                ' Success with date only format
+
+                ' Third attempt with generic parsing (culture dependent)
+            ElseIf DateTime.TryParse(VDATE, visit_date) Then
+                ' Success with generic parsing
+
+            Else
+                ' If all parsing attempts fail
+                ' Log the error
+                Console.WriteLine("Could not parse date: " & VDATE)
+                ' Set a default value or throw exception based on your requirements
+                visit_date = DateTime.Now ' Default to current date/time
+            End If
+
+            ' Add 3 months
+            Dim newDate As DateTime = visit_date.AddMonths(baseinterval)
+
+            ' Convert back to string in the desired format
+            result = newDate.ToString("dd/MM/yyyy")
+
+        Catch ex As Exception
+            ' Handle any other exceptions
+            ' Set a default value or rethrow based on requirements
+            result = DateTime.Now.AddMonths(baseinterval).ToString("dd/MM/yyyy")
+            ' Alternatively: Throw
+        End Try
+
+        Return result
+
+    End Function
 End Module

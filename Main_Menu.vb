@@ -211,7 +211,7 @@ Public Class Main_Menu
         If selectedMonth > 0 Then
             Using connection As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
                 ' Update query to include subjid
-                Dim query As String = "SELECT participants_name, subjid FROM baseline WHERE UCASE(participants_name) LIKE ? AND month_of_birth = ? ORDER BY participants_name"
+                Dim query As String = "SELECT participants_name, subjid FROM baseline WHERE UCASE(participants_name) LIKE ? OR month_of_birth = ? ORDER BY participants_name"
                 Using command As New OleDbCommand(query, connection)
                     command.Parameters.AddWithValue("?", "%" & filterText & "%")
                     command.Parameters.AddWithValue("?", selectedMonth)
@@ -381,7 +381,7 @@ Public Class Main_Menu
                 Dim strSQL As String = "
                 SELECT subjid, respondants_age, participants_name, 
                        NickName, mobile_number, client_sex, health_facility, county,
-                        subcounty, village
+                        subcounty, village, next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m
                 FROM baseline
                 WHERE subjid = @subjid"
 
@@ -394,7 +394,7 @@ Public Class Main_Menu
                             SUBJID = reader("subjid").ToString()
                             Community = reader("health_facility").ToString()
                             ParticipantsName = reader("participants_name").ToString()
-                            ParticipantsOtherName = reader("NickName").ToString()
+                            ParticipantsOtherName = If(reader("NickName").ToString() = "-6", "N/A", reader("NickName").ToString())
                             ParticipantsAge = reader("respondants_age").ToString()
                             ParticipantsGender = reader("client_sex").ToString()
                             County = reader("county").ToString()
@@ -410,6 +410,9 @@ Public Class Main_Menu
                             LabelCounty.Text = "County: " & County
                             LabelSubcounty.Text = "Sub County: " & Subcounty
                             LabelVillage.Text = "Village: " & Village
+                            LabelFuwindow.Text = "Target follow-up window: " & Microsoft.VisualBasic.Left(reader("next_appt_3m").ToString(), 10) & " to " & Microsoft.VisualBasic.Left(reader("next_appt_6m").ToString(), 10)
+                            LabelFuAllow.Text = "Allowable follow-up window: " & Microsoft.VisualBasic.Left(reader("appt_w1_2m").ToString(), 10) & " to " & Microsoft.VisualBasic.Left(reader("appt_w2_8m").ToString(), 10)
+
 
                             ' Handle NULL values for phone numbers
                             Dim phone1 As String = If(IsDBNull(reader("mobile_number")), "N/A", reader("mobile_number").ToString())
@@ -441,6 +444,8 @@ Public Class Main_Menu
         LabelCounty.Visible = True
         LabelSubcounty.Visible = True
         LabelVillage.Visible = True
+        LabelFuAllow.Visible = True
+        LabelFuwindow.Visible = True
     End Sub
 
     ' Hide Control-specific labels
@@ -454,6 +459,8 @@ Public Class Main_Menu
         LabelCounty.Visible = False
         LabelSubcounty.Visible = False
         LabelVillage.Visible = False
+        LabelFuAllow.Visible = False
+        LabelFuwindow.Visible = False
     End Sub
 
     Private Sub ButtonCannotFind_Click(sender As Object, e As EventArgs) Handles ButtonCannotFind.Click
@@ -517,7 +524,8 @@ Public Class Main_Menu
 
                 ' Query to search by phone number
                 Dim query As String = "SELECT subjid, health_facility, participants_name, NickName, " &
-                                     "respondants_age, client_sex, county, subcounty, village, mobile_number " &
+                                     "respondants_age, client_sex, county, subcounty, village, mobile_number, " &
+                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m " &
                                      "FROM baseline WHERE mobile_number = ?"
 
                 Using command As New OleDbCommand(query, connection)
@@ -545,6 +553,8 @@ Public Class Main_Menu
                             LabelCounty.Text = "County: " & County
                             LabelSubcounty.Text = "Sub County: " & Subcounty
                             LabelVillage.Text = "Village: " & Village
+                            LabelFuwindow.Text = "Target follow-up window: " & Microsoft.VisualBasic.Left(reader("next_appt_3m").ToString(), 10) & " to " & Microsoft.VisualBasic.Left(reader("next_appt_6m").ToString(), 10)
+                            LabelFuAllow.Text = "Allowable follow-up window: " & Microsoft.VisualBasic.Left(reader("appt_w1_2m").ToString(), 10) & " to " & Microsoft.VisualBasic.Left(reader("appt_w2_8m").ToString(), 10)
 
                             ' Handle NULL values for phone number
                             Dim phone1 As String = If(IsDBNull(reader("mobile_number")), "N/A", reader("mobile_number").ToString())

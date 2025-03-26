@@ -87,7 +87,7 @@
 
 
 	<question type = 'automatic' fieldname = 'screening_id' fieldtype = 'text'>
-		<maxCharacters>15</maxCharacters>
+		<maxCharacters>20</maxCharacters>
 	</question>
 
 
@@ -148,11 +148,12 @@
 		<numeric_check>
 			<values minvalue ='10' maxvalue='110' other_values = '10' message = 'Number must be between 10 and 110!'></values>
 		</numeric_check>
+		<dont_know>-7</dont_know>
 	</question>
 
 
 	<question type = 'radio' fieldname = 'age_check' fieldtype = 'integer'>
-		<text>Is the respondent => 15 years?</text>
+		<text>Is the respondent >= 15 years?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
@@ -197,7 +198,8 @@
 
 
 	<question type = 'radio' fieldname = 'reading_language' fieldtype = 'integer'>
-		<text>Do you feel comfortable reading short messages in at least one of the following languages: Dholuo, Swahili, or English?</text>
+		<text>Do you feel comfortable reading short messages in at least one of the following languages: Dholuo, Swahili, or English?
+Or do you have some who can help you read messages in of the following languages: Dholuo, Swahili, or English?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
@@ -229,7 +231,6 @@
 		<preskip>
 			<skip fieldname='eligibility_check1' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='comments'></skip>
 		</preskip>
-		<refuse>-8</refuse>
 	</question>
 
 
@@ -239,7 +240,6 @@
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
-		<refuse>-8</refuse>
 	</question>
 
 
@@ -249,7 +249,6 @@
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
-		<refuse>-8</refuse>
 	</question>
 
 
@@ -259,7 +258,6 @@
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
-		<refuse>-8</refuse>
 	</question>
 
 
@@ -269,7 +267,6 @@
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
-		<refuse>-8</refuse>
 	</question>
 
 
@@ -279,7 +276,6 @@
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
-		<refuse>-8</refuse>
 	</question>
 
 
@@ -289,7 +285,6 @@
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
-		<refuse>-8</refuse>
 	</question>
 
 
@@ -299,7 +294,6 @@
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
-		<refuse>-8</refuse>
 	</question>
 
 
@@ -309,7 +303,6 @@
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
-		<refuse>-8</refuse>
 	</question>
 
 
@@ -319,7 +312,6 @@
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
-		<refuse>-8</refuse>
 	</question>
 
 
@@ -329,17 +321,15 @@
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
-		<refuse>-8</refuse>
 	</question>
 
 
 	<question type = 'radio' fieldname = 'recent_hiv_exposure' fieldtype = 'integer'>
-		<text>In the past 6 months, have you had a recent HIV exposure risk (for example, had a condom break, raped someone, been raped)?</text>
+		<text>In the past 6 months,have you had a recent HIV exposure risk (for example, had a condom break, raped someone, been raped)?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
-		<refuse>-8</refuse>
 	</question>
 
 
@@ -440,6 +430,15 @@ If yes, please consent the participant</text>
 	</question>
 
 
+	<question type = 'text' fieldname = 'phone_ownership_oth' fieldtype = 'text'>
+		<text>Specify who owns the phone</text>
+		<maxCharacters>80</maxCharacters>
+		<preskip>
+			<skip fieldname='phone_ownership' condition = '&lt;&gt;' response='97' response_type='fixed' skiptofieldname ='education_level'></skip>
+		</preskip>
+	</question>
+
+
 	<question type = 'radio' fieldname = 'education_level' fieldtype = 'integer'>
 		<text>What is the highest level of school you have attended?</text>
 		<responses>
@@ -513,8 +512,18 @@ If yes, please consent the participant</text>
 	</question>
 
 
+	<question type = 'text' fieldname = 'occupation_oth' fieldtype = 'text'>
+		<text>Specify other occupation</text>
+		<maxCharacters>80</maxCharacters>
+		<preskip>
+			<skip fieldname='occupation' condition = '&lt;&gt;' response='97' response_type='fixed' skiptofieldname ='preferred_language_ke'></skip>
+		</preskip>
+	</question>
+
+
 	<question type = 'radio' fieldname = 'preferred_language_ke' fieldtype = 'integer'>
-		<text>What is your preferred language to read in?</text>
+		<text>What is your preferred language to read in?
+Interviewer Note: If the participant indicated that they have someone else who can read the message for them, select the language that they can read</text>
 		<responses>
 			<response value = '1'>Dholuo</response>
 			<response value = '2'>Swahili</response>
@@ -532,7 +541,8 @@ If yes, please consent the participant</text>
 
 
 	<question type = 'radio' fieldname = 'preferred_language_ug' fieldtype = 'integer'>
-		<text>What is your preferred language to read in?</text>
+		<text>What is your preferred language to read in?
+Interviewer Note: If the participant indicated that they have someone else who can read the message for them, select the language that they can read</text>
 		<responses>
 			<response value = '4'>Runyonkole</response>
 			<response value = '5'>Luganda</response>
@@ -666,6 +676,19 @@ If yes, please consent the participant</text>
 	</question>
 
 
+	<question type = 'text' fieldname = 'motivation_hiv_test_oth' fieldtype = 'text'>
+		<text>Specify other motivation that might be for getting another HIV test in the future</text>
+		<maxCharacters>80</maxCharacters>
+		<preskip>
+			<skip fieldname='motivation_hiv_test' condition = '&lt;&gt;' response='4' response_type='fixed' skiptofieldname ='participant_randarm'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'participant_randarm' fieldtype = 'integer'>
+	</question>
+
+
 	<question type = 'automatic' fieldname = 'arm' fieldtype = 'integer'>
 	</question>
 
@@ -724,6 +747,14 @@ What is your Preferred Language for the video that we are about to play</text>
 
 
 	<question type = 'automatic' fieldname = 'next_appt_6m' fieldtype = 'date'>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'appt_w1_2m' fieldtype = 'date'>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'appt_w2_8m' fieldtype = 'date'>
 	</question>
 
 
@@ -806,11 +837,11 @@ Do you have any final questions for me?
 	<question type = 'radio' fieldname = 'extra_time_consent' fieldtype = 'integer'>
 		<text>How much extra time did the IBIS informed consent process add to the HTS session?</text>
 		<responses>
-			<response value = '1'>LESS THAN 5 MINUTES</response>
-			<response value = '2'>5-10 MINUTES</response>
-			<response value = '3'>10-15 MINUTES</response>
-			<response value = '4'>15-20 MINUTES</response>
-			<response value = '5'>MORE THAN 20 MINUTES</response>
+			<response value = '1'>Less Than 5 Minutes</response>
+			<response value = '2'>5-10 Minutes</response>
+			<response value = '3'>10-15 Minutes</response>
+			<response value = '4'>15-20 Minutes</response>
+			<response value = '5'>More Than 20 Minutes</response>
 		</responses>
 	</question>
 
@@ -818,25 +849,23 @@ Do you have any final questions for me?
 	<question type = 'radio' fieldname = 'extra_time_study_proc' fieldtype = 'integer'>
 		<text>How much extra time did the IBIS study procedures (not including the consent process) add to the HTS session (eligibility survey, baseline survey, showing the video to the participant)?</text>
 		<responses>
-			<response value = '1'>LESS THAN 5 MINUTES</response>
-			<response value = '2'>5-10 MINUTES</response>
-			<response value = '3'>10-15 MINUTES</response>
-			<response value = '4'>15-20 MINUTES</response>
-			<response value = '5'>MORE THAN 20 MINUTES</response>
+			<response value = '1'>Less Than 5 Minutes</response>
+			<response value = '2'>5-10 Minutes</response>
+			<response value = '3'>10-15 Minutes</response>
+			<response value = '4'>15-20 Minutes</response>
+			<response value = '5'>More Than 20 Minutes</response>
 		</responses>
 	</question>
 
 
 	<question type = 'radio' fieldname = 'understand_video' fieldtype = 'integer'>
-		<text>How well did the participant seem to understand the message of the video?
-
-[You can make this assessment based on the participant's level of attention, engagement with the video, any misinterpretations, questions, etc.]</text>
+		<text>How well did the participant seem to understand the message of the video?</text>
 		<responses>
-			<response value = '1'>UNDERSTOOD VERY WELL</response>
-			<response value = '2'>UNDERSTOOD WELL</response>
-			<response value = '3'>UNDERSTOOD OK</response>
-			<response value = '4'>UNDERSTOOD POORLY</response>
-			<response value = '5'>DID NOT UNDERSTAND AT ALL</response>
+			<response value = '1'>Understood Very Well</response>
+			<response value = '2'>Understood Well</response>
+			<response value = '3'>Understood Ok</response>
+			<response value = '4'>Understood Poorly</response>
+			<response value = '5'>Did not Understand at All</response>
 		</responses>
 	</question>
 
