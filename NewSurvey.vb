@@ -1786,11 +1786,6 @@ Public Class NewSurvey
             Dim spinningImage As Image = My.Resources.spin_12315_128 ' Change to your actual resource/image
 
             If QuestionInfoArray(CurrentQuestion).FieldName = "arm_text_demo" Then
-                'Drop/remove the picture
-                If (PictureBoxArm.Image IsNot Nothing) Then
-                    PictureBoxArm.Image.Dispose()
-                    PictureBoxArm.Image = Nothing
-                End If
 
                 PictureBoxArm.Visible = True
                 ' Create a new control.
@@ -1820,7 +1815,6 @@ Public Class NewSurvey
 
                 If ShowPreviousResponse = True Then
 
-                    PictureBoxArm.WaitOnLoad = True
                     PictureBoxArm.Image = normalImage
                     LabelArm.Visible = True
                     LabelArm.Text = "Randomization Arm: " & RandArmText
@@ -1858,7 +1852,6 @@ Public Class NewSurvey
 
                 ' Update PictureBox image based on the flag
                 If isSpinning Then
-                    PictureBoxArm.WaitOnLoad = True
                     PictureBoxArm.Image = spinningImage
                     DirectCast(sender, Button).Text = "Stop"
                     Button_Next.Enabled = False
