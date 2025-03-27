@@ -831,6 +831,9 @@ Do you have any final questions for me?
 
 	<question type = 'information' fieldname = 'information_screen_interviewer' fieldtype = 'n/a'>
 		<text>Please answer a few questions about this survey experience.</text>
+		<preskip>
+			<skip fieldname='consent' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='uniqueid'></skip>
+		</preskip>
 	</question>
 
 
