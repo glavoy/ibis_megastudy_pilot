@@ -1786,6 +1786,7 @@ Public Class NewSurvey
             Dim spinningImage As Image = My.Resources.spin_12315_128 ' Change to your actual resource/image
 
             If QuestionInfoArray(CurrentQuestion).FieldName = "arm_text_demo" Then
+
                 PictureBoxArm.Visible = True
                 ' Create a new control.
                 ' Set up some properties
@@ -1813,6 +1814,7 @@ Public Class NewSurvey
                 AddHandler newButton.Click, AddressOf ButtonHandlerClick
 
                 If ShowPreviousResponse = True Then
+
                     PictureBoxArm.Image = normalImage
                     LabelArm.Visible = True
                     LabelArm.Text = "Randomization Arm: " & RandArmText
@@ -1854,6 +1856,7 @@ Public Class NewSurvey
                     DirectCast(sender, Button).Text = "Stop"
                     Button_Next.Enabled = False
                 Else
+
                     PictureBoxArm.Image = normalImage
                     DirectCast(sender, Button).Text = "Click the button to Spin Randomization Wheel"
                     Button_Next.Enabled = True
@@ -2276,6 +2279,9 @@ Public Class NewSurvey
                     newCalendar.MinDate = DateAdd(DateInterval.Day, -7, Now())
                 Case "edd"
                     newCalendar.MaxDate = DateAdd(DateInterval.Day, 250, Now())
+                    newCalendar.MinDate = Now()
+                Case "dflt_appt_arm_schd_appt_date"
+                    newCalendar.MaxDate = DateAdd(DateInterval.Day, 30 * 9, Now())
                     newCalendar.MinDate = Now()
             End Select
 
@@ -2848,9 +2854,6 @@ Public Class NewSurvey
             MessageBox.Show(ex.Message)
         End Try
     End Sub
-
-
-
 
 
 End Class
