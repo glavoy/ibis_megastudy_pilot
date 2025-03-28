@@ -90,9 +90,10 @@ Partial Class Main_Menu
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(248, 30)
+        Me.Label1.Location = New System.Drawing.Point(331, 37)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(335, 37)
+        Me.Label1.Size = New System.Drawing.Size(416, 46)
         Me.Label1.TabIndex = 14
         Me.Label1.Text = "IBIS MegaStudy Pilot"
         '
@@ -194,9 +195,10 @@ Partial Class Main_Menu
         'ButtonQuit
         '
         Me.ButtonQuit.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonQuit.Location = New System.Drawing.Point(10, 21)
+        Me.ButtonQuit.Location = New System.Drawing.Point(13, 26)
+        Me.ButtonQuit.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.ButtonQuit.Name = "ButtonQuit"
-        Me.ButtonQuit.Size = New System.Drawing.Size(74, 46)
+        Me.ButtonQuit.Size = New System.Drawing.Size(99, 57)
         Me.ButtonQuit.TabIndex = 26
         Me.ButtonQuit.Text = "Quit"
         Me.ButtonQuit.UseVisualStyleBackColor = True
@@ -211,55 +213,55 @@ Partial Class Main_Menu
         'HouseholdSurveyToolStripMenuItem
         '
         Me.HouseholdSurveyToolStripMenuItem.Name = "HouseholdSurveyToolStripMenuItem"
-        Me.HouseholdSurveyToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
+        Me.HouseholdSurveyToolStripMenuItem.Size = New System.Drawing.Size(232, 26)
         Me.HouseholdSurveyToolStripMenuItem.Text = "Household Survey"
         '
         'HouseholsdMemberToolStripMenuItem
         '
         Me.HouseholsdMemberToolStripMenuItem.Name = "HouseholsdMemberToolStripMenuItem"
-        Me.HouseholsdMemberToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
+        Me.HouseholsdMemberToolStripMenuItem.Size = New System.Drawing.Size(232, 26)
         Me.HouseholsdMemberToolStripMenuItem.Text = "Household Member"
         '
         'MovedOutToolStripMenuItem1
         '
         Me.MovedOutToolStripMenuItem1.Name = "MovedOutToolStripMenuItem1"
-        Me.MovedOutToolStripMenuItem1.Size = New System.Drawing.Size(186, 22)
+        Me.MovedOutToolStripMenuItem1.Size = New System.Drawing.Size(232, 26)
         Me.MovedOutToolStripMenuItem1.Text = "Moved Out"
         '
         'FollowupSurveyToolStripMenuItem
         '
         Me.FollowupSurveyToolStripMenuItem.Name = "FollowupSurveyToolStripMenuItem"
-        Me.FollowupSurveyToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
+        Me.FollowupSurveyToolStripMenuItem.Size = New System.Drawing.Size(232, 26)
         Me.FollowupSurveyToolStripMenuItem.Text = "Followup Survey"
         '
         'HIVSurveyToolStripMenuItem1
         '
         Me.HIVSurveyToolStripMenuItem1.Name = "HIVSurveyToolStripMenuItem1"
-        Me.HIVSurveyToolStripMenuItem1.Size = New System.Drawing.Size(186, 22)
+        Me.HIVSurveyToolStripMenuItem1.Size = New System.Drawing.Size(232, 26)
         Me.HIVSurveyToolStripMenuItem1.Text = "HIV Survey"
         '
         'LabRequisitionFormToolStripMenuItem1
         '
         Me.LabRequisitionFormToolStripMenuItem1.Name = "LabRequisitionFormToolStripMenuItem1"
-        Me.LabRequisitionFormToolStripMenuItem1.Size = New System.Drawing.Size(186, 22)
+        Me.LabRequisitionFormToolStripMenuItem1.Size = New System.Drawing.Size(232, 26)
         Me.LabRequisitionFormToolStripMenuItem1.Text = "Lab Requisition Form"
         '
         'RepeatTesterFormToolStripMenuItem1
         '
         Me.RepeatTesterFormToolStripMenuItem1.Name = "RepeatTesterFormToolStripMenuItem1"
-        Me.RepeatTesterFormToolStripMenuItem1.Size = New System.Drawing.Size(186, 22)
+        Me.RepeatTesterFormToolStripMenuItem1.Size = New System.Drawing.Size(232, 26)
         Me.RepeatTesterFormToolStripMenuItem1.Text = "Repeat Tester Form"
         '
         'TBSurveyToolStripMenuItem1
         '
         Me.TBSurveyToolStripMenuItem1.Name = "TBSurveyToolStripMenuItem1"
-        Me.TBSurveyToolStripMenuItem1.Size = New System.Drawing.Size(186, 22)
+        Me.TBSurveyToolStripMenuItem1.Size = New System.Drawing.Size(232, 26)
         Me.TBSurveyToolStripMenuItem1.Text = "TB Survey"
         '
         'SputumSurveyToolStripMenuItem1
         '
         Me.SputumSurveyToolStripMenuItem1.Name = "SputumSurveyToolStripMenuItem1"
-        Me.SputumSurveyToolStripMenuItem1.Size = New System.Drawing.Size(186, 22)
+        Me.SputumSurveyToolStripMenuItem1.Size = New System.Drawing.Size(232, 26)
         Me.SputumSurveyToolStripMenuItem1.Text = "Sputum Survey"
         '
         'DeleteToolStripMenuItem
@@ -272,7 +274,7 @@ Partial Class Main_Menu
         'HouseholdMemberToolStripMenuItem
         '
         Me.HouseholdMemberToolStripMenuItem.Name = "HouseholdMemberToolStripMenuItem"
-        Me.HouseholdMemberToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.HouseholdMemberToolStripMenuItem.Size = New System.Drawing.Size(224, 26)
         Me.HouseholdMemberToolStripMenuItem.Text = "Household Member"
         '
         'ButtonBaseline
@@ -280,9 +282,10 @@ Partial Class Main_Menu
         Me.ButtonBaseline.BackColor = System.Drawing.Color.LightGray
         Me.ButtonBaseline.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonBaseline.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonBaseline.Location = New System.Drawing.Point(62, 401)
+        Me.ButtonBaseline.Location = New System.Drawing.Point(83, 494)
+        Me.ButtonBaseline.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.ButtonBaseline.Name = "ButtonBaseline"
-        Me.ButtonBaseline.Size = New System.Drawing.Size(197, 105)
+        Me.ButtonBaseline.Size = New System.Drawing.Size(263, 129)
         Me.ButtonBaseline.TabIndex = 23
         Me.ButtonBaseline.Text = "Do Screening and Baseline Survey"
         Me.ButtonBaseline.UseVisualStyleBackColor = False
@@ -292,10 +295,10 @@ Partial Class Main_Menu
         Me.ButtonEditBaseline.BackColor = System.Drawing.Color.LightGray
         Me.ButtonEditBaseline.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonEditBaseline.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonEditBaseline.Location = New System.Drawing.Point(364, 401)
-        Me.ButtonEditBaseline.Margin = New System.Windows.Forms.Padding(2)
+        Me.ButtonEditBaseline.Location = New System.Drawing.Point(485, 494)
+        Me.ButtonEditBaseline.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ButtonEditBaseline.Name = "ButtonEditBaseline"
-        Me.ButtonEditBaseline.Size = New System.Drawing.Size(197, 103)
+        Me.ButtonEditBaseline.Size = New System.Drawing.Size(263, 127)
         Me.ButtonEditBaseline.TabIndex = 27
         Me.ButtonEditBaseline.Text = "Edit Screening and Baseline Survey"
         Me.ButtonEditBaseline.UseVisualStyleBackColor = False
@@ -305,10 +308,10 @@ Partial Class Main_Menu
         Me.ButtonSMSSchedule.BackColor = System.Drawing.Color.LightGray
         Me.ButtonSMSSchedule.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonSMSSchedule.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonSMSSchedule.Location = New System.Drawing.Point(219, 542)
-        Me.ButtonSMSSchedule.Margin = New System.Windows.Forms.Padding(2)
+        Me.ButtonSMSSchedule.Location = New System.Drawing.Point(292, 667)
+        Me.ButtonSMSSchedule.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ButtonSMSSchedule.Name = "ButtonSMSSchedule"
-        Me.ButtonSMSSchedule.Size = New System.Drawing.Size(197, 46)
+        Me.ButtonSMSSchedule.Size = New System.Drawing.Size(263, 57)
         Me.ButtonSMSSchedule.TabIndex = 28
         Me.ButtonSMSSchedule.Text = "Show SMS schedule"
         Me.ButtonSMSSchedule.UseVisualStyleBackColor = False
@@ -317,9 +320,10 @@ Partial Class Main_Menu
         '
         Me.LabelSubjid.AutoSize = True
         Me.LabelSubjid.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelSubjid.Location = New System.Drawing.Point(795, 124)
+        Me.LabelSubjid.Location = New System.Drawing.Point(1060, 153)
+        Me.LabelSubjid.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.LabelSubjid.Name = "LabelSubjid"
-        Me.LabelSubjid.Size = New System.Drawing.Size(93, 17)
+        Me.LabelSubjid.Size = New System.Drawing.Size(107, 20)
         Me.LabelSubjid.TabIndex = 37
         Me.LabelSubjid.Text = "LabelSubjid"
         '
@@ -327,9 +331,10 @@ Partial Class Main_Menu
         '
         Me.LabelParticipants_name.AutoSize = True
         Me.LabelParticipants_name.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelParticipants_name.Location = New System.Drawing.Point(795, 145)
+        Me.LabelParticipants_name.Location = New System.Drawing.Point(1060, 178)
+        Me.LabelParticipants_name.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.LabelParticipants_name.Name = "LabelParticipants_name"
-        Me.LabelParticipants_name.Size = New System.Drawing.Size(182, 17)
+        Me.LabelParticipants_name.Size = New System.Drawing.Size(211, 20)
         Me.LabelParticipants_name.TabIndex = 38
         Me.LabelParticipants_name.Text = "LabelParticipants_name"
         '
@@ -337,9 +342,10 @@ Partial Class Main_Menu
         '
         Me.LabelNickname.AutoSize = True
         Me.LabelNickname.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelNickname.Location = New System.Drawing.Point(795, 165)
+        Me.LabelNickname.Location = New System.Drawing.Point(1060, 203)
+        Me.LabelNickname.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.LabelNickname.Name = "LabelNickname"
-        Me.LabelNickname.Size = New System.Drawing.Size(118, 17)
+        Me.LabelNickname.Size = New System.Drawing.Size(137, 20)
         Me.LabelNickname.TabIndex = 39
         Me.LabelNickname.Text = "LabelNickname"
         '
@@ -347,9 +353,10 @@ Partial Class Main_Menu
         '
         Me.LabelPhone_number.AutoSize = True
         Me.LabelPhone_number.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelPhone_number.Location = New System.Drawing.Point(794, 227)
+        Me.LabelPhone_number.Location = New System.Drawing.Point(1059, 279)
+        Me.LabelPhone_number.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.LabelPhone_number.Name = "LabelPhone_number"
-        Me.LabelPhone_number.Size = New System.Drawing.Size(157, 17)
+        Me.LabelPhone_number.Size = New System.Drawing.Size(179, 20)
         Me.LabelPhone_number.TabIndex = 41
         Me.LabelPhone_number.Text = "LabelPhone_number"
         '
@@ -357,9 +364,10 @@ Partial Class Main_Menu
         '
         Me.LabelAge.AutoSize = True
         Me.LabelAge.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelAge.Location = New System.Drawing.Point(795, 185)
+        Me.LabelAge.Location = New System.Drawing.Point(1060, 228)
+        Me.LabelAge.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.LabelAge.Name = "LabelAge"
-        Me.LabelAge.Size = New System.Drawing.Size(76, 17)
+        Me.LabelAge.Size = New System.Drawing.Size(87, 20)
         Me.LabelAge.TabIndex = 42
         Me.LabelAge.Text = "LabelAge"
         '
@@ -367,9 +375,10 @@ Partial Class Main_Menu
         '
         Me.LabelSex.AutoSize = True
         Me.LabelSex.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelSex.Location = New System.Drawing.Point(794, 207)
+        Me.LabelSex.Location = New System.Drawing.Point(1059, 255)
+        Me.LabelSex.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.LabelSex.Name = "LabelSex"
-        Me.LabelSex.Size = New System.Drawing.Size(74, 17)
+        Me.LabelSex.Size = New System.Drawing.Size(86, 20)
         Me.LabelSex.TabIndex = 43
         Me.LabelSex.Text = "LabelSex"
         '
@@ -377,9 +386,10 @@ Partial Class Main_Menu
         '
         Me.LabelCounty.AutoSize = True
         Me.LabelCounty.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelCounty.Location = New System.Drawing.Point(793, 247)
+        Me.LabelCounty.Location = New System.Drawing.Point(1057, 304)
+        Me.LabelCounty.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.LabelCounty.Name = "LabelCounty"
-        Me.LabelCounty.Size = New System.Drawing.Size(98, 17)
+        Me.LabelCounty.Size = New System.Drawing.Size(113, 20)
         Me.LabelCounty.TabIndex = 45
         Me.LabelCounty.Text = "LabelCounty"
         '
@@ -387,9 +397,10 @@ Partial Class Main_Menu
         '
         Me.LabelSubcounty.AutoSize = True
         Me.LabelSubcounty.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelSubcounty.Location = New System.Drawing.Point(793, 267)
+        Me.LabelSubcounty.Location = New System.Drawing.Point(1057, 329)
+        Me.LabelSubcounty.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.LabelSubcounty.Name = "LabelSubcounty"
-        Me.LabelSubcounty.Size = New System.Drawing.Size(124, 17)
+        Me.LabelSubcounty.Size = New System.Drawing.Size(142, 20)
         Me.LabelSubcounty.TabIndex = 46
         Me.LabelSubcounty.Text = "LabelSubcounty"
         '
@@ -397,9 +408,10 @@ Partial Class Main_Menu
         '
         Me.LabelVillage.AutoSize = True
         Me.LabelVillage.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelVillage.Location = New System.Drawing.Point(793, 287)
+        Me.LabelVillage.Location = New System.Drawing.Point(1057, 353)
+        Me.LabelVillage.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.LabelVillage.Name = "LabelVillage"
-        Me.LabelVillage.Size = New System.Drawing.Size(97, 17)
+        Me.LabelVillage.Size = New System.Drawing.Size(112, 20)
         Me.LabelVillage.TabIndex = 47
         Me.LabelVillage.Text = "LabelVillage"
         '
@@ -407,9 +419,10 @@ Partial Class Main_Menu
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(795, 95)
+        Me.Label6.Location = New System.Drawing.Point(1060, 117)
+        Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(209, 17)
+        Me.Label6.Size = New System.Drawing.Size(245, 20)
         Me.Label6.TabIndex = 48
         Me.Label6.Text = "Selected Participant Details"
         '
@@ -425,10 +438,11 @@ Partial Class Main_Menu
         Me.GroupBox1.Controls.Add(Me.ComboBoxName)
         Me.GroupBox1.Controls.Add(Me.Label8)
         Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox1.Location = New System.Drawing.Point(10, 70)
-        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2)
+        Me.GroupBox1.Location = New System.Drawing.Point(13, 86)
+        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(774, 295)
+        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.GroupBox1.Size = New System.Drawing.Size(1032, 363)
         Me.GroupBox1.TabIndex = 50
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Pre-screening"
@@ -438,9 +452,10 @@ Partial Class Main_Menu
         Me.ButtonCannotFind.BackColor = System.Drawing.Color.LightGray
         Me.ButtonCannotFind.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonCannotFind.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonCannotFind.Location = New System.Drawing.Point(219, 195)
+        Me.ButtonCannotFind.Location = New System.Drawing.Point(292, 240)
+        Me.ButtonCannotFind.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.ButtonCannotFind.Name = "ButtonCannotFind"
-        Me.ButtonCannotFind.Size = New System.Drawing.Size(197, 54)
+        Me.ButtonCannotFind.Size = New System.Drawing.Size(263, 66)
         Me.ButtonCannotFind.TabIndex = 160
         Me.ButtonCannotFind.Text = "Cannot Find Participant"
         Me.ButtonCannotFind.UseVisualStyleBackColor = False
@@ -450,19 +465,20 @@ Partial Class Main_Menu
         Me.ComboBoxMonthOfBirth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBoxMonthOfBirth.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ComboBoxMonthOfBirth.FormattingEnabled = True
-        Me.ComboBoxMonthOfBirth.Location = New System.Drawing.Point(198, 34)
-        Me.ComboBoxMonthOfBirth.Margin = New System.Windows.Forms.Padding(3, 1, 3, 1)
+        Me.ComboBoxMonthOfBirth.Location = New System.Drawing.Point(264, 42)
+        Me.ComboBoxMonthOfBirth.Margin = New System.Windows.Forms.Padding(4, 1, 4, 1)
         Me.ComboBoxMonthOfBirth.Name = "ComboBoxMonthOfBirth"
-        Me.ComboBoxMonthOfBirth.Size = New System.Drawing.Size(149, 25)
+        Me.ComboBoxMonthOfBirth.Size = New System.Drawing.Size(197, 31)
         Me.ComboBoxMonthOfBirth.TabIndex = 159
         '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(4, 38)
+        Me.Label2.Location = New System.Drawing.Point(5, 47)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(172, 21)
+        Me.Label2.Size = New System.Drawing.Size(217, 28)
         Me.Label2.TabIndex = 158
         Me.Label2.Text = "Select Month of birth"
         '
@@ -471,9 +487,10 @@ Partial Class Main_Menu
         Me.ButtonSearchPhone.BackColor = System.Drawing.Color.LightGray
         Me.ButtonSearchPhone.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonSearchPhone.Font = New System.Drawing.Font("Segoe UI", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonSearchPhone.Location = New System.Drawing.Point(431, 67)
+        Me.ButtonSearchPhone.Location = New System.Drawing.Point(575, 82)
+        Me.ButtonSearchPhone.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.ButtonSearchPhone.Name = "ButtonSearchPhone"
-        Me.ButtonSearchPhone.Size = New System.Drawing.Size(142, 34)
+        Me.ButtonSearchPhone.Size = New System.Drawing.Size(189, 42)
         Me.ButtonSearchPhone.TabIndex = 157
         Me.ButtonSearchPhone.Text = "Search by phone number"
         Me.ButtonSearchPhone.UseVisualStyleBackColor = False
@@ -481,29 +498,28 @@ Partial Class Main_Menu
         'TextBoxFilter
         '
         Me.TextBoxFilter.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBoxFilter.Location = New System.Drawing.Point(86, 69)
-        Me.TextBoxFilter.Margin = New System.Windows.Forms.Padding(2)
+        Me.TextBoxFilter.Location = New System.Drawing.Point(115, 85)
+        Me.TextBoxFilter.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.TextBoxFilter.Name = "TextBoxFilter"
-        Me.TextBoxFilter.Size = New System.Drawing.Size(261, 25)
+        Me.TextBoxFilter.Size = New System.Drawing.Size(347, 30)
         Me.TextBoxFilter.TabIndex = 154
         '
         'TextBoxPhoneNumber
         '
         Me.TextBoxPhoneNumber.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBoxPhoneNumber.Location = New System.Drawing.Point(422, 20)
-        Me.TextBoxPhoneNumber.Margin = New System.Windows.Forms.Padding(2)
+        Me.TextBoxPhoneNumber.Location = New System.Drawing.Point(563, 25)
+        Me.TextBoxPhoneNumber.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.TextBoxPhoneNumber.Name = "TextBoxPhoneNumber"
-        Me.TextBoxPhoneNumber.Size = New System.Drawing.Size(143, 29)
+        Me.TextBoxPhoneNumber.Size = New System.Drawing.Size(189, 34)
         Me.TextBoxPhoneNumber.TabIndex = 156
         '
         'Label7
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Segoe UI", 9.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(6, 75)
-        Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label7.Location = New System.Drawing.Point(8, 92)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(71, 15)
+        Me.Label7.Size = New System.Drawing.Size(91, 20)
         Me.Label7.TabIndex = 155
         Me.Label7.Text = "Filter name"
         '
@@ -512,19 +528,20 @@ Partial Class Main_Menu
         Me.ComboBoxName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBoxName.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ComboBoxName.FormattingEnabled = True
-        Me.ComboBoxName.Location = New System.Drawing.Point(114, 119)
-        Me.ComboBoxName.Margin = New System.Windows.Forms.Padding(3, 1, 3, 1)
+        Me.ComboBoxName.Location = New System.Drawing.Point(152, 146)
+        Me.ComboBoxName.Margin = New System.Windows.Forms.Padding(4, 1, 4, 1)
         Me.ComboBoxName.Name = "ComboBoxName"
-        Me.ComboBoxName.Size = New System.Drawing.Size(327, 29)
+        Me.ComboBoxName.Size = New System.Drawing.Size(435, 36)
         Me.ComboBoxName.TabIndex = 152
         '
         'Label8
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(6, 121)
+        Me.Label8.Location = New System.Drawing.Point(8, 149)
+        Me.Label8.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(60, 21)
+        Me.Label8.Size = New System.Drawing.Size(73, 28)
         Me.Label8.TabIndex = 153
         Me.Label8.Text = "Name:"
         '
@@ -534,10 +551,10 @@ Partial Class Main_Menu
         Me.ButtonFollowupSurvey.Enabled = False
         Me.ButtonFollowupSurvey.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonFollowupSurvey.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonFollowupSurvey.Location = New System.Drawing.Point(219, 607)
-        Me.ButtonFollowupSurvey.Margin = New System.Windows.Forms.Padding(2)
+        Me.ButtonFollowupSurvey.Location = New System.Drawing.Point(292, 747)
+        Me.ButtonFollowupSurvey.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ButtonFollowupSurvey.Name = "ButtonFollowupSurvey"
-        Me.ButtonFollowupSurvey.Size = New System.Drawing.Size(197, 55)
+        Me.ButtonFollowupSurvey.Size = New System.Drawing.Size(263, 68)
         Me.ButtonFollowupSurvey.TabIndex = 51
         Me.ButtonFollowupSurvey.Text = "Followup Survey"
         Me.ButtonFollowupSurvey.UseVisualStyleBackColor = False
@@ -547,10 +564,10 @@ Partial Class Main_Menu
         Me.ButtonBackupDB.BackColor = System.Drawing.Color.LightGray
         Me.ButtonBackupDB.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonBackupDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonBackupDB.Location = New System.Drawing.Point(219, 702)
-        Me.ButtonBackupDB.Margin = New System.Windows.Forms.Padding(2)
+        Me.ButtonBackupDB.Location = New System.Drawing.Point(292, 864)
+        Me.ButtonBackupDB.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ButtonBackupDB.Name = "ButtonBackupDB"
-        Me.ButtonBackupDB.Size = New System.Drawing.Size(197, 46)
+        Me.ButtonBackupDB.Size = New System.Drawing.Size(263, 57)
         Me.ButtonBackupDB.TabIndex = 52
         Me.ButtonBackupDB.Text = "Backup Database"
         Me.ButtonBackupDB.UseVisualStyleBackColor = False
@@ -559,9 +576,10 @@ Partial Class Main_Menu
         '
         Me.LabelFuwindow.AutoSize = True
         Me.LabelFuwindow.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelFuwindow.Location = New System.Drawing.Point(793, 307)
+        Me.LabelFuwindow.Location = New System.Drawing.Point(1057, 378)
+        Me.LabelFuwindow.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.LabelFuwindow.Name = "LabelFuwindow"
-        Me.LabelFuwindow.Size = New System.Drawing.Size(182, 17)
+        Me.LabelFuwindow.Size = New System.Drawing.Size(212, 20)
         Me.LabelFuwindow.TabIndex = 53
         Me.LabelFuwindow.Text = "Target follow-up window"
         Me.LabelFuwindow.Visible = False
@@ -570,19 +588,20 @@ Partial Class Main_Menu
         '
         Me.LabelFuAllow.AutoSize = True
         Me.LabelFuAllow.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelFuAllow.Location = New System.Drawing.Point(793, 327)
+        Me.LabelFuAllow.Location = New System.Drawing.Point(1057, 402)
+        Me.LabelFuAllow.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.LabelFuAllow.Name = "LabelFuAllow"
-        Me.LabelFuAllow.Size = New System.Drawing.Size(202, 17)
+        Me.LabelFuAllow.Size = New System.Drawing.Size(238, 20)
         Me.LabelFuAllow.TabIndex = 54
         Me.LabelFuAllow.Text = "Allowable follow-up window"
         Me.LabelFuAllow.Visible = False
         '
         'Main_Menu
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Silver
-        Me.ClientSize = New System.Drawing.Size(951, 782)
+        Me.ClientSize = New System.Drawing.Size(1268, 962)
         Me.ControlBox = False
         Me.Controls.Add(Me.LabelFuAllow)
         Me.Controls.Add(Me.LabelFuwindow)
@@ -605,6 +624,7 @@ Partial Class Main_Menu
         Me.Controls.Add(Me.ButtonQuit)
         Me.Controls.Add(Me.Label1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Name = "Main_Menu"
         Me.Text = "`"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized

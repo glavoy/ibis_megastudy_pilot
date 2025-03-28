@@ -1,5 +1,6 @@
 ﻿Imports System.Configuration
 Imports System.Data.OleDb
+Imports System.Net
 
 Public Class Main_Menu
     'Private originalNamesTable As DataTable
@@ -379,7 +380,7 @@ Public Class Main_Menu
 
                 ' Query to fetch household details from precensus
                 Dim strSQL As String = "
-                SELECT subjid, respondants_age, participants_name, 
+                SELECT subjid,screening_id, respondants_age, participants_name, 
                        NickName, mobile_number, client_sex, health_facility, county,
                         subcounty, village, next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m
                 FROM baseline
@@ -391,7 +392,7 @@ Public Class Main_Menu
                     Using reader As OleDbDataReader = cmd.ExecuteReader()
                         If reader.Read() Then
                             ' Populate global variables
-                            SUBJID = reader("subjid").ToString()
+                            SUBJID = If(reader("subjid").ToString() = "-9", reader("screening_id").ToString(), reader("subjid").ToString())
                             Community = reader("health_facility").ToString()
                             ParticipantsName = reader("participants_name").ToString()
                             ParticipantsOtherName = If(reader("NickName").ToString() = "-6", "N/A", reader("NickName").ToString())
@@ -585,6 +586,61 @@ Public Class Main_Menu
         Return phoneNumber.Length = 10 AndAlso phoneNumber.StartsWith("0") AndAlso IsNumeric(phoneNumber)
     End Function
 
+    Private Sub ButtonBackupDB_Click(sender As Object, e As EventArgs) Handles ButtonBackupDB.Click
+        Cursor = Cursors.WaitCursor
+        Application.DoEvents()
+        Try
+            If CheckForInternetConnection() = True Then
+                ' Set the path to the Python interpreter
+                Dim pythonPath As String = getPythonPath()
 
+                ' Set the path to the Python script
+                Dim scriptPath As String = "C:\IBIS_pilot\Scripts\upload_to_ftp_server_IBIS.py"
+                ' Use the Shell function to execute the command
+                Shell(pythonPath & " " & scriptPath, vbNormalFocus, True)
+
+            Else
+                MsgBox("You are not connected to the Internet. Please connect to the Internet and try again.")
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+        Cursor = Cursors.Default
+    End Sub
+
+    ' Get Python Path
+    Private Function getPythonPath() As String
+        Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
+        Dim section As ConnectionStringsSection = DirectCast(config.GetSection("connectionStrings"), ConnectionStringsSection)
+        Dim ConnectionString As New OleDbConnection(section.ConnectionStrings("ConnString").ConnectionString)
+        ' Set the path to the Python interpreter
+        Dim pythonPath As String = ""
+        ConnectionString.Open()
+        Dim strSQL As String = "select pythonpath from config"
+        Dim daPP As New OleDbDataAdapter(strSQL, ConnectionString)
+        Dim dsPP As New DataSet
+        daPP.Fill(dsPP)
+        For Each row As DataRow In dsPP.Tables(0).Rows
+            pythonPath = row.Item("pythonpath")
+        Next
+        daPP.Dispose()
+        dsPP.Dispose()
+
+        ConnectionString.Close()
+
+        Return pythonPath
+    End Function
+    Public Shared Function CheckForInternetConnection() As Boolean
+        Try
+            Using client = New WebClient()
+                Using stream = client.OpenRead("http://www.google.com")
+                    Return True
+                End Using
+            End Using
+        Catch
+            Return False
+        End Try
+    End Function
 End Class
 
