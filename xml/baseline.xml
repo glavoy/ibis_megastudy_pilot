@@ -772,7 +772,7 @@ When you return for your repeat HIV in 3 to 6 months, we will ask you if you hav
 
 Do you have any final questions for me?
 
-(Counselor instructions: thank the participant for their time and write down 3-6 month window on appointment card</text>
+(Counselor instructions: thank the participant for their time and write down 3-6 month window on appointment card)</text>
 		<preskip>
 			<skip fieldname='arm' condition = '=' response='8' response_type='fixed' skiptofieldname ='information_screen1'></skip>
 		</preskip>
@@ -831,9 +831,6 @@ Do you have any final questions for me?
 
 	<question type = 'information' fieldname = 'information_screen_interviewer' fieldtype = 'n/a'>
 		<text>Please answer a few questions about this survey experience.</text>
-		<preskip>
-			<skip fieldname='consent' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='uniqueid'></skip>
-		</preskip>
 	</question>
 
 

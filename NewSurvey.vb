@@ -1704,7 +1704,8 @@ Public Class NewSurvey
                 Button_Previous.Enabled = False
             End If
 
-            PictureBoxArm.Visible = False
+            PictureBoxStatic.Visible = False
+            PictureBoxAnimated.Visible = False
             LabelArm.Visible = False
             ' Determine what "type" of control should be created based on the question-type attribute
             ' in the xml file and pass the information to create the appropriate control
@@ -1782,12 +1783,12 @@ Public Class NewSurvey
 
 
         Try
-            Dim normalImage As Image = My.Resources.lucky_spin ' Change to your actual resource/image
-            Dim spinningImage As Image = My.Resources.spin_12315_128 ' Change to your actual resource/image
+            'Dim normalImage As Image = My.Resources.lucky_spin ' Change to your actual resource/image
+            'Dim spinningImage As Image = My.Resources.spin_12315_128 ' Change to your actual resource/image
 
             If QuestionInfoArray(CurrentQuestion).FieldName = "arm_text_demo" Then
 
-                PictureBoxArm.Visible = True
+                PictureBoxStatic.Visible = True
                 ' Create a new control.
                 ' Set up some properties
                 Dim newButton As New Button With {
@@ -1815,7 +1816,9 @@ Public Class NewSurvey
 
                 If ShowPreviousResponse = True Then
 
-                    PictureBoxArm.Image = normalImage
+                    'PictureBoxStatic.Image = normalImage
+                    PictureBoxStatic.Visible = True
+                    PictureBoxAnimated.Visible = False
                     LabelArm.Visible = True
                     LabelArm.Text = "Randomization Arm: " & RandArmText
                     Button_Next.Enabled = True
@@ -1839,8 +1842,8 @@ Public Class NewSurvey
     '**********************************************************************************
     Private Sub ButtonHandlerClick(ByVal sender As Object, ByVal e As EventArgs)
 
-        Dim normalImage As Image = My.Resources.lucky_spin ' Change to your actual resource/image
-        Dim spinningImage As Image = My.Resources.spin_12315_128 ' Change to your actual resource/image
+        'Dim normalImage As Image = My.Resources.lucky_spin ' Change to your actual resource/image
+        'Dim spinningImage As Image = My.Resources.spin_12315_128 ' Change to your actual resource/image
 
 
         Try
@@ -1852,12 +1855,16 @@ Public Class NewSurvey
 
                 ' Update PictureBox image based on the flag
                 If isSpinning Then
-                    PictureBoxArm.Image = spinningImage
+                    'PictureBoxStatic.Image = spinningImage
+                    PictureBoxAnimated.Visible = True
+                    PictureBoxStatic.Visible = False
                     DirectCast(sender, Button).Text = "Stop"
                     Button_Next.Enabled = False
                 Else
 
-                    PictureBoxArm.Image = normalImage
+                    'PictureBoxStatic.Image = normalImage
+                    PictureBoxStatic.Visible = True
+                    PictureBoxAnimated.Visible = False
                     DirectCast(sender, Button).Text = "Click the button to Spin Randomization Wheel"
                     Button_Next.Enabled = True
                     If clickCount > 1 Then
