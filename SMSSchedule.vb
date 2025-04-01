@@ -21,7 +21,7 @@ Public Class SMSSchedule
 
         ' Initialize date filters with default values (current month)
         dtpStartDate.Value = New DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)
-        dtpEndDate.Value = DateTime.Now
+        dtpEndDate.Value = DateTime.Now.AddDays(28)
 
         ' Load data on form load
         LoadData()
@@ -140,9 +140,9 @@ Public Class SMSSchedule
                 Dim endDateStr As String = dtpEndDate.Value.ToString("dd/MM/yyyy")
 
                 ' SQL query
-                Dim query As String = "SELECT subjid, mobile_number, arm_text, preferred_language_text, vdate " &
+                Dim query As String = "SELECT subjid, mobile_number, arm_text, preferred_language_text, starttime " &
                                     "FROM baseline " &
-                                    "WHERE eligibility_check = 1 AND vdate BETWEEN #" & startDateStr & "# AND #" & endDateStr & "#"
+                                    "WHERE eligibility_check = 1 AND starttime BETWEEN #" & startDateStr & "# AND #" & endDateStr & "#"
 
                 ' Create data adapter and table
                 dataAdapter = New OleDbDataAdapter(query, connection)
@@ -158,8 +158,8 @@ Public Class SMSSchedule
 
                 ' Calculate follow-up dates and add SMS message
                 For Each row As DataRow In dataTable.Rows
-                    If Not IsDBNull(row("vdate")) Then
-                        Dim baselineDate As DateTime = CDate(row("vdate"))
+                    If Not IsDBNull(row("starttime")) Then
+                        Dim baselineDate As DateTime = CDate(row("starttime"))
                         row("eight_week_followup") = baselineDate.AddDays(8 * 7) ' 8 weeks
                         row("eleven_week_followup") = baselineDate.AddDays(11 * 7) ' 11 weeks
                     End If
@@ -202,13 +202,13 @@ Public Class SMSSchedule
                 dgvBaselineData.Columns("mobile_number").HeaderText = "Phone Number"
                 dgvBaselineData.Columns("arm_text").HeaderText = "Study Arm"
                 dgvBaselineData.Columns("preferred_language_text").HeaderText = "Preferred Language"
-                dgvBaselineData.Columns("vdate").HeaderText = "BL Date"
+                dgvBaselineData.Columns("starttime").HeaderText = "BL Date"
                 dgvBaselineData.Columns("eight_week_followup").HeaderText = "8-week Follow-up Date"
                 dgvBaselineData.Columns("eleven_week_followup").HeaderText = "11-week Follow-up Date"
                 dgvBaselineData.Columns("sms_message").HeaderText = "SMS Message to Send"
 
                 ' Format date columns
-                dgvBaselineData.Columns("vdate").DefaultCellStyle.Format = "dd/MM/yyyy"
+                dgvBaselineData.Columns("starttime").DefaultCellStyle.Format = "dd/MM/yyyy"
                 dgvBaselineData.Columns("eight_week_followup").DefaultCellStyle.Format = "dd/MM/yyyy"
                 dgvBaselineData.Columns("eleven_week_followup").DefaultCellStyle.Format = "dd/MM/yyyy"
             End Using
