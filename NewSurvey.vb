@@ -44,6 +44,8 @@ Public Class NewSurvey
 
     'Declare a flag to track the image state()
     Private isSpinning As Boolean = False
+    Dim PictureBoxArm As New PictureBox()
+
 
     ' Counter for button clicks
     Private clickCount As Integer = 0
@@ -1787,6 +1789,16 @@ Public Class NewSurvey
 
             If QuestionInfoArray(CurrentQuestion).FieldName = "arm_text_demo" Then
 
+                With PictureBoxArm
+                    .Name = inNode.Attributes("fieldname").Value
+                    .Size = New Size(600, 350) ' Set size
+                    .Location = New Point(60, 60)
+                    .SizeMode = PictureBoxSizeMode.StretchImage ' Scale image
+                    .Image = normalImage
+                End With
+
+                inControls.Add(PictureBoxArm) 'add control to the form
+                PictureBoxArm.Visible = True
                 PictureBoxArm.Visible = True
                 ' Create a new control.
                 ' Set up some properties
@@ -1802,7 +1814,7 @@ Public Class NewSurvey
 
 
                 'Add the Textbox to the form
-                newButton.Location = New Point(150, 400)
+                newButton.Location = New Point(150, 420)
                 newButton.Font = New Font("Arial", 14)
                 inControls.Add(newButton)
                 newButton.Focus()
@@ -2636,7 +2648,7 @@ Public Class NewSurvey
 
                 ' Load the evatar video
                 ' Call the function to get the correct video
-                If GetValue("eligibility_check") = 1 And RandArmText <> "Default appointment" Then
+                If GetValue("consent") = 1 Then
                     video_name = getRandVideo(CInt(GetValue("client_sex")), CInt(GetValue("respondants_age")), RandArmText, language)
                     videoPath = "C:\IBIS_pilot\rand_video\" & video_name
                 End If
