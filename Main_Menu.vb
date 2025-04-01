@@ -16,6 +16,7 @@ Public Class Main_Menu
     Private Sub Main_Menu_Load(sender As Object, e As EventArgs) Handles Me.Load
         ' Setup day of birth combo box
         ' Setup month of birth combo box
+        Me.Text = SW_VER
         ComboBoxMonthOfBirth.Items.Clear()
         ComboBoxMonthOfBirth.Items.Add("SELECT MONTH")
 
