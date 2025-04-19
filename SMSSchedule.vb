@@ -131,6 +131,41 @@ Public Class SMSSchedule
         Me.pnlTop.PerformLayout()
     End Sub
 
+    Private Function getSMS(arm_code As Integer, visitweek As Integer, pref_lang As Integer, Optional appt_date As String = "19/04/2025") As String
+        Dim sms As String = ""
+        Try
+            Using connection As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
+                Dim query As String
+
+                query = "SELECT sms FROM sms_services WHERE arm_code = ? AND visitweek = ? AND preferred_language = ?"
+
+                Using command As New OleDbCommand(query, connection)
+                    ' Add parameters in the exact order they appear in the query
+                    command.Parameters.AddWithValue("?", arm_code)
+                    command.Parameters.AddWithValue("?", visitweek)
+                    command.Parameters.AddWithValue("?", pref_lang)
+
+                    connection.Open()
+                    Using reader As OleDbDataReader = command.ExecuteReader()
+                        If reader.Read() AndAlso Not IsDBNull(reader("sms")) Then
+                            sms = reader("sms").ToString()
+                        End If
+                    End Using
+                End Using
+            End Using
+
+            'add appointment date to the default appointment date arm
+            If arm_code = 8 Then
+                sms = Replace(sms, "[date]", appt_date)
+            End If
+            Return sms
+        Catch ex As Exception
+            MsgBox("Error: " & ex.Message)
+            Return sms
+        End Try
+
+
+    End Function
     Private Sub LoadData()
         Try
             ' Create connection using the connection string from configuration
@@ -140,9 +175,9 @@ Public Class SMSSchedule
                 Dim endDateStr As String = dtpEndDate.Value.ToString("dd/MM/yyyy")
 
                 ' SQL query
-                Dim query As String = "SELECT subjid, mobile_number, arm_text, preferred_language_text, starttime " &
+                Dim query As String = "SELECT subjid, mobile_number,arm,arm_text, preferred_language,preferred_language_text, starttime,dflt_appt_arm_schd_appt_date " &
                                     "FROM baseline " &
-                                    "WHERE eligibility_check = 1 AND starttime BETWEEN #" & startDateStr & "# AND #" & endDateStr & "#"
+                                    "WHERE consent = 1 AND starttime BETWEEN #" & startDateStr & "# AND #" & endDateStr & "#"
 
                 ' Create data adapter and table
                 dataAdapter = New OleDbDataAdapter(query, connection)
@@ -154,7 +189,8 @@ Public Class SMSSchedule
                 ' Add calculated columns
                 dataTable.Columns.Add("eight_week_followup", GetType(DateTime))
                 dataTable.Columns.Add("eleven_week_followup", GetType(DateTime))
-                dataTable.Columns.Add("sms_message", GetType(String))
+                dataTable.Columns.Add("sms_message_wk8", GetType(String))
+                dataTable.Columns.Add("sms_message_wk11", GetType(String))
 
                 ' Calculate follow-up dates and add SMS message
                 For Each row As DataRow In dataTable.Rows
@@ -166,32 +202,40 @@ Public Class SMSSchedule
 
                     ' Add specific SMS message based on arm_text
                     Dim armText As String = If(IsDBNull(row("arm_text")), "", row("arm_text").ToString())
-                    Select Case armText.Trim()
-                        Case "Fresh start effect"
-                            row("sms_message") = "It's a perfect time for a fresh start with your health journey. Your appointment is important."
-                        Case "U=U messaging"
-                            row("sms_message") = "Remember: Undetectable = Untransmittable. Your regular check-up helps maintain your health."
-                        Case "Reserved for you"
-                            row("sms_message") = "You have an appointment reserved especially for you. We're looking forward to seeing you."
-                        Case "Community benefits"
-                            row("sms_message") = "Your visit helps our community stay healthy. Thank you for being part of the solution."
-                        Case "Education-based #2(gamification)"
-                            row("sms_message") = "You're making progress on your health journey! Keep the momentum going with your upcoming appointment."
-                        Case "Risk assessment"
-                            row("sms_message") = "Regular check-ups are key to staying healthy. Your appointment helps manage any potential risks."
-                        Case "Default appointment"
-                            row("sms_message") = "This is a reminder about your upcoming appointment. We look forward to seeing you."
-                        Case "Healthy living"
-                            row("sms_message") = "Your commitment to healthy living includes regular check-ups. Your appointment is coming up."
-                        Case "Social norms"
-                            row("sms_message") = "Most people in your community attend their scheduled appointments. Join them at your upcoming visit."
-                        Case "Empowerment"
-                            row("sms_message") = "You have the power to manage your health. Your upcoming appointment is an important step."
-                        Case "Education-based #1"
-                            row("sms_message") = "Did you know regular visits improve long-term health outcomes? Your appointment is coming up."
-                        Case Else
-                            row("sms_message") = "Thank you for participating in our study. Your upcoming appointment is scheduled soon."
-                    End Select
+                    If CInt(row("arm")) = 8 Then
+                        row("sms_message_wk8") = getSMS(CInt(row("arm")), 8, CInt(row("preferred_language")), row("dflt_appt_arm_schd_appt_date"))
+                        row("sms_message_wk11") = getSMS(CInt(row("arm")), 11, CInt(row("preferred_language")), row("dflt_appt_arm_schd_appt_date"))
+                    Else
+                        row("sms_message_wk8") = getSMS(CInt(row("arm")), 8, CInt(row("preferred_language")))
+                        row("sms_message_wk11") = getSMS(CInt(row("arm")), 11, CInt(row("preferred_language")))
+                    End If
+
+                    'Select Case armText.Trim()
+                    '    Case "Fresh start effect"
+                    '        row("sms_message") = "It's a perfect time for a fresh start with your health journey. Your appointment is important."
+                    '    Case "U=U messaging"
+                    '        row("sms_message") = "Remember: Undetectable = Untransmittable. Your regular check-up helps maintain your health."
+                    '    Case "Reserved for you"
+                    '        row("sms_message") = "You have an appointment reserved especially for you. We're looking forward to seeing you."
+                    '    Case "Community benefits"
+                    '        row("sms_message") = "Your visit helps our community stay healthy. Thank you for being part of the solution."
+                    '    Case "Education-based #2(gamification)"
+                    '        row("sms_message") = "You're making progress on your health journey! Keep the momentum going with your upcoming appointment."
+                    '    Case "Risk assessment"
+                    '        row("sms_message") = "Regular check-ups are key to staying healthy. Your appointment helps manage any potential risks."
+                    '    Case "Default appointment"
+                    '        row("sms_message") = "This is a reminder about your upcoming appointment. We look forward to seeing you."
+                    '    Case "Healthy living"
+                    '        row("sms_message") = "Your commitment to healthy living includes regular check-ups. Your appointment is coming up."
+                    '    Case "Social norms"
+                    '        row("sms_message") = "Most people in your community attend their scheduled appointments. Join them at your upcoming visit."
+                    '    Case "Empowerment"
+                    '        row("sms_message") = "You have the power to manage your health. Your upcoming appointment is an important step."
+                    '    Case "Education-based #1"
+                    '        row("sms_message") = "Did you know regular visits improve long-term health outcomes? Your appointment is coming up."
+                    '    Case Else
+                    '        row("sms_message") = "Thank you for participating in our study. Your upcoming appointment is scheduled soon."
+                    'End Select
                 Next
 
                 ' Set data source for grid view
@@ -205,7 +249,8 @@ Public Class SMSSchedule
                 dgvBaselineData.Columns("starttime").HeaderText = "BL Date"
                 dgvBaselineData.Columns("eight_week_followup").HeaderText = "8-week Follow-up Date"
                 dgvBaselineData.Columns("eleven_week_followup").HeaderText = "11-week Follow-up Date"
-                dgvBaselineData.Columns("sms_message").HeaderText = "SMS Message to Send"
+                dgvBaselineData.Columns("sms_message_wk8").HeaderText = "Wk 8 SMS"
+                dgvBaselineData.Columns("sms_message_wk11").HeaderText = "Wk 11 SMS"
 
                 ' Format date columns
                 dgvBaselineData.Columns("starttime").DefaultCellStyle.Format = "dd/MM/yyyy"

@@ -21,6 +21,12 @@
 	</question>
 
 
+	<question type = 'text' fieldname = 'interviewer_id' fieldtype = 'text_integer'>
+		<text>Please enter the Interviewer ID that has been assigned to you</text>
+		<maxCharacters>2</maxCharacters>
+	</question>
+
+
 	<question type = 'radio' fieldname = 'client_sex' fieldtype = 'integer'>
 		<text>Client's Sex</text>
 		<responses>
@@ -199,7 +205,7 @@
 
 	<question type = 'radio' fieldname = 'reading_language' fieldtype = 'integer'>
 		<text>Do you feel comfortable reading short messages in at least one of the following languages: Dholuo, Swahili, or English?
-Or do you have some who can help you read messages in of the following languages: Dholuo, Swahili, or English?</text>
+Or do you have someone who can help you read messages in of the following languages: Dholuo, Swahili, or English?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
@@ -622,6 +628,9 @@ Interviewer Note: If the participant indicated that they have someone else who c
 			<response value = '4'>12-24 Months Ago</response>
 			<response value = '5'>More Than 2 Years Ago</response>
 		</responses>
+		<preskip>
+			<skip fieldname='hiv_test_history' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='heard_about_art'></skip>
+		</preskip>
 	</question>
 
 
