@@ -323,6 +323,8 @@ Public Class Main_Menu
 
             ' Update the button text with the selected name in uppercase
             ButtonFollowupSurvey.Text = "Follow-up Survey for:" & vbNewLine & selectedName
+            ButtonFollowupSurvey.Enabled = True
+            ButtonEditFollowup.Enabled = True
         Else
             ' Reset button text and SUBJID if "SELECT NAME" is selected
             ButtonFollowupSurvey.Text = "Follow-up Survey"
@@ -567,7 +569,8 @@ Public Class Main_Menu
 
                             ' Update the button text with the found name
                             ButtonFollowupSurvey.Text = "Follow-up Survey for:" & vbNewLine & ParticipantsName
-
+                            ButtonFollowupSurvey.Enabled = True
+                            ButtonEditFollowup.Enabled = True
                             ' Disable baseline button since we've found a participant
                             ButtonBaseline.Enabled = False
                         Else
@@ -611,7 +614,7 @@ Public Class Main_Menu
     End Sub
 
     ' Get Python Path
-    Private Function getPythonPath() As String
+    Private Function GetPythonPath() As String
         Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
         Dim section As ConnectionStringsSection = DirectCast(config.GetSection("connectionStrings"), ConnectionStringsSection)
         Dim ConnectionString As New OleDbConnection(section.ConnectionStrings("ConnString").ConnectionString)
@@ -643,5 +646,23 @@ Public Class Main_Menu
             Return False
         End Try
     End Function
+
+    Private Sub ButtonFollowupSurvey_Click(sender As Object, e As EventArgs) Handles ButtonFollowupSurvey.Click
+        ModifyingSurvey = False
+        Survey = "followup"
+        NewSurvey.ShowDialog()
+        NewSurvey.Dispose()
+    End Sub
+
+    Private Sub ButtonEditFollowup_Click(sender As Object, e As EventArgs) Handles ButtonEditFollowup.Click
+        Try
+            ModifyingSurvey = True
+            Survey = "followup"
+            SelectFormToEdit.ShowDialog()
+            SelectFormToEdit.Dispose()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
 End Class
 

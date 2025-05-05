@@ -1,0 +1,181 @@
+<?xml version = '1.0' encoding = 'utf-8'?>
+<survey>
+
+
+	<question type = 'automatic' fieldname = 'starttime' fieldtype = 'datetime'>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'countrycode' fieldtype = 'integer'>
+		<text>Select The country/region</text>
+		<responses>
+			<response value = '1'>Uganda</response>
+			<response value = '2'>Kenya</response>
+		</responses>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'subjid' fieldtype = 'text'>
+		<maxCharacters>20</maxCharacters>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'participants_name' fieldtype = 'text'>
+		<maxCharacters>80</maxCharacters>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'arm' fieldtype = 'integer'>
+	</question>
+
+
+	<question type = 'text' fieldname = 'tabletnum' fieldtype = 'text_integer'>
+		<text>Please enter the tablet number of the tablet you are using</text>
+		<maxCharacters>2</maxCharacters>
+	</question>
+
+
+	<question type = 'text' fieldname = 'interviewer_id' fieldtype = 'text_integer'>
+		<text>Please enter the Interviewer ID that has been assigned to you</text>
+		<maxCharacters>2</maxCharacters>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'health_facility_ke' fieldtype = 'integer'>
+		<text>Health facility name</text>
+		<responses>
+			<response value = '21'>Homa Bay Teaching and Referral Hospital</response>
+			<response value = '22'>Rachuonyo District Hospital</response>
+			<response value = '23'>Suba District Hospital</response>
+			<response value = '24'>Ndhiwa District Hospital</response>
+			<response value = '99'>Other</response>
+		</responses>
+		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='health_facility_ug'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'health_facility_ug' fieldtype = 'integer'>
+		<text>Health facility name</text>
+		<responses>
+			<response value = '11'>Bushenyi HCIV</response>
+			<response value = '12'>Ishaka Adventist Hospital (Bushenyi)</response>
+			<response value = '13'>Ishongororo HCIV (Ibanda)</response>
+			<response value = '14'>Ruhoko HCIV (Ibanda)</response>
+			<response value = '99'>Other</response>
+		</responses>
+		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='health_facility'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'text' fieldname = 'health_facility_oth' fieldtype = 'text'>
+		<text>Specify other health facility</text>
+		<maxCharacters>80</maxCharacters>
+		<preskip>
+			<skip fieldname='health_facility_ke' condition = '&lt;&gt;' response='99' response_type='fixed' skiptofieldname ='health_facility'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'health_facility' fieldtype = 'integer'>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'hiv_testing_site' fieldtype = 'integer'>
+		<text>HIV testing site</text>
+		<responses>
+			<response value = '1'>OPD</response>
+			<response value = '2'>ANC/MCH</response>
+			<response value = '3'>DICE/Key Pops</response>
+			<response value = '99'>Other</response>
+		</responses>
+	</question>
+
+
+	<question type = 'text' fieldname = 'hiv_testing_site_oth' fieldtype = 'text'>
+		<text>Specify other HIV testing site</text>
+		<maxCharacters>80</maxCharacters>
+		<preskip>
+			<skip fieldname='hiv_testing_site' condition = '&lt;&gt;' response='99' response_type='fixed' skiptofieldname ='hivtest_result_today'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'hivtest_result_today' fieldtype = 'integer'>
+		<text>What was the participant’s HIV test result today?</text>
+		<responses>
+			<response value = '0'>Negative</response>
+			<response value = '1'>Positive</response>
+			<response value = '2'>Indeterminate</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'hiv_positive_referral' fieldtype = 'integer'>
+		<text>If HIV result = positive, Was the participant referred for HIV care and ART?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+		<preskip>
+			<skip fieldname='hivtest_result_today' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='prep_referral'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'prep_referral' fieldtype = 'integer'>
+		<text>If HIV result = negative, Was the participant referred for PrEP or PEP?</text>
+		<responses>
+			<response value = '1'>Referred For PrEP</response>
+			<response value = '2'>Referred for PEP</response>
+			<response value = '3'>Currently Taking PrEP</response>
+			<response value = '4'>Not on PrEP and no Referral</response>
+		</responses>
+		<preskip>
+			<skip fieldname='hivtest_result_today' condition = '&lt;&gt;' response='0' response_type='fixed' skiptofieldname ='information_screen_interviewer'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'information_screen_interviewer' fieldtype = 'n/a'>
+		<text>Please answer a few questions about this survey experience.</text>		
+	</question>
+
+
+	<question type = 'text' fieldname = 'comments' fieldtype = 'text'>
+		<text>Use this field to record any special comments/info/problems</text>
+		<maxCharacters>255</maxCharacters>
+		<na>-6</na>
+	</question>
+
+
+	<question type = 'text' fieldname = 'subjid2' fieldtype = 'text'>
+		<text>Re-write Study ID</text>
+		<maxCharacters>20</maxCharacters>
+		<logic_check>
+			<logic fieldname='subjid2' condition = '&lt;&gt;' response = 'subjid' response_type = 'dynamic' condition2 = '=' currentresponse = '1' message = 'This does not match your previous entry!'></logic>
+		</logic_check>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'uniqueid' fieldtype = 'text'>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'swver' fieldtype = 'text'>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'stoptime' fieldtype = 'datetime'>
+	</question>
+
+
+	<question type = 'information' fieldname = 'end_of_questions' fieldtype = 'n/a'>
+		<text>Press the 'Next' button to save the data.</text >
+	</question>
+
+
+</survey>

@@ -92,6 +92,21 @@
 	</question>
 
 
+	<question type = 'date' fieldname = 'dob' fieldtype = 'date'>
+		<text>Enter the Participants date of birth</text>
+		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='screening_id'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'text' fieldname = 'national_id' fieldtype = 'text'>
+		<text>Enter the national identification number</text>
+		<maxCharacters>20</maxCharacters>
+		<na>-6</na>
+	</question>
+
+
 	<question type = 'automatic' fieldname = 'screening_id' fieldtype = 'text'>
 		<maxCharacters>20</maxCharacters>
 	</question>
@@ -133,11 +148,29 @@
 	<question type = 'text' fieldname = 'county' fieldtype = 'text'>
 		<text>County</text>
 		<maxCharacters>80</maxCharacters>
+		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='district'></skip>
+		</preskip>
 	</question>
 
 
 	<question type = 'text' fieldname = 'subcounty' fieldtype = 'text'>
 		<text>Subcounty</text>
+		<maxCharacters>80</maxCharacters>
+	</question>
+
+
+	<question type = 'text' fieldname = 'district' fieldtype = 'text'>
+		<text>District</text>
+		<maxCharacters>80</maxCharacters>
+		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='village'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'text' fieldname = 'parish' fieldtype = 'text'>
+		<text>Parish</text>
 		<maxCharacters>80</maxCharacters>
 	</question>
 
@@ -205,7 +238,7 @@
 
 	<question type = 'radio' fieldname = 'reading_language' fieldtype = 'integer'>
 		<text>Do you feel comfortable reading short messages in at least one of the following languages: Dholuo, Swahili, or English?
-Or do you have someone who can help you read messages in of the following languages: Dholuo, Swahili, or English?</text>
+Or do you have someone who can help you read messages in any of the following languages: Dholuo, Swahili, or English?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
@@ -246,6 +279,9 @@ Or do you have someone who can help you read messages in of the following langua
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
+		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='hiv_positive_partner'></skip>
+		</preskip>
 	</question>
 
 
@@ -282,6 +318,9 @@ Or do you have someone who can help you read messages in of the following langua
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
+		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='sex_for_compensation'></skip>
+		</preskip>
 	</question>
 
 
@@ -303,12 +342,36 @@ Or do you have someone who can help you read messages in of the following langua
 	</question>
 
 
+	<question type = 'radio' fieldname = 'index_client' fieldtype = 'integer'>
+		<text>Have you been identified through an index client in the past 6 months?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='dice_clinic'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'risk_group_affiliation' fieldtype = 'integer'>
+		<text>Do any of the following categories describe you or your occupation? Sex worker, person who injects drugs, fisher folk, long-distance truck drivers, men who have sex with men (MSM), uniformed forces, adolescents and young women, pregnant or breastfeeding women.</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
 	<question type = 'radio' fieldname = 'dice_clinic' fieldtype = 'integer'>
 		<text>Have you been seen in a DICE clinic in the past 6 months (i.e. are you PWID, MSM, sex worker, transgender)?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
+		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='on_prep'></skip>
+		</preskip>
 	</question>
 
 
@@ -629,8 +692,10 @@ Interviewer Note: If the participant indicated that they have someone else who c
 			<response value = '5'>More Than 2 Years Ago</response>
 		</responses>
 		<preskip>
-			<skip fieldname='hiv_test_history' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='heard_about_art'></skip>
+			<skip fieldname='last_hiv_test' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='heard_about_art'></skip>
 		</preskip>
+		<dont_know>-7</dont_know>
+		<refuse>-8</refuse>
 	</question>
 
 
@@ -840,9 +905,6 @@ Do you have any final questions for me?
 
 	<question type = 'information' fieldname = 'information_screen_interviewer' fieldtype = 'n/a'>
 		<text>Please answer a few questions about this survey experience.</text>
-		<preskip>
-			<skip fieldname='consent' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='uniqueid'></skip>
-		</preskip>
 	</question>
 
 

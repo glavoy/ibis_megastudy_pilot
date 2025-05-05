@@ -69,13 +69,17 @@ Namespace My.Resources
         '''	&lt;/question&gt;
         '''
         '''
-        '''	&lt;question type = &apos;radio&apos; fieldname = &apos;health_facility&apos; fieldtype = &apos;integer&apos;&gt;
-        '''		&lt;text&gt;Health facility name&lt;/text&gt;
+        '''	&lt;question type = &apos;radio&apos; fieldname = &apos;countrycode&apos; fieldtype = &apos;integer&apos;&gt;
+        '''		&lt;text&gt;Select The country/region&lt;/text&gt;
         '''		&lt;responses&gt;
-        '''			&lt;response value = &apos;11&apos;&gt;Bushenyi HCIV&lt;/response&gt;
-        '''			&lt;response value = &apos;12&apos;&gt;Ishaka Adventist Hospital(Bushenyi)&lt;/response&gt;
-        '''			&lt;response value = &apos;13&apos;&gt;Ishongororo HCIV (Ibanda)&lt;/response&gt;
-        '''			&lt;response value = &apos;14&apos;&gt;Ruhoko HC [rest of string was truncated]&quot;;.
+        '''			&lt;response value = &apos;1&apos;&gt;Uganda&lt;/response&gt;
+        '''			&lt;response value = &apos;2&apos;&gt;Kenya&lt;/response&gt;
+        '''		&lt;/responses&gt;
+        '''	&lt;/question&gt;
+        '''
+        '''
+        '''	&lt;question type = &apos;text&apos; fieldname = &apos;tabletnum&apos; fieldtype = &apos;text_integer&apos;&gt;
+        '''		&lt;text&gt;Please enter the tab [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property baseline() As String
             Get
@@ -100,6 +104,33 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("eye", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version = &apos;1.0&apos; encoding = &apos;utf-8&apos;?&gt;
+        '''&lt;survey&gt;
+        '''
+        '''
+        '''	&lt;question type = &apos;automatic&apos; fieldname = &apos;starttime&apos; fieldtype = &apos;datetime&apos;&gt;
+        '''	&lt;/question&gt;
+        '''
+        '''
+        '''	&lt;question type = &apos;radio&apos; fieldname = &apos;countrycode&apos; fieldtype = &apos;integer&apos;&gt;
+        '''		&lt;text&gt;Select The country/region&lt;/text&gt;
+        '''		&lt;responses&gt;
+        '''			&lt;response value = &apos;1&apos;&gt;Uganda&lt;/response&gt;
+        '''			&lt;response value = &apos;2&apos;&gt;Kenya&lt;/response&gt;
+        '''		&lt;/responses&gt;
+        '''	&lt;/question&gt;
+        '''
+        '''
+        '''	&lt;question type = &apos;automatic&apos; fieldname = &apos;subjid&apos; fieldtype = &apos;text&apos;&gt;
+        '''		&lt;maxCharacters&gt;20&lt;/maxCharacters [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property followup() As String
+            Get
+                Return ResourceManager.GetString("followup", resourceCulture)
             End Get
         End Property
         
