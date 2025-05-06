@@ -1766,6 +1766,19 @@ Public Class NewSurvey
             'show the form again with the new controls
             Show()
 
+            'show labels
+            If Survey = "followup" Then
+                LabelHHID.Visible = True
+                LabelHHID.Text = "Study ID: " & SUBJID
+
+            Else
+                If question_num > GetQuestionNumber("screening_id") Then
+                    LabelHHID.Visible = True
+                    LabelHHID.Text = "Study ID: " & GetValue("screening_id")
+                End If
+            End If
+
+
 
 
         Catch ex As Exception

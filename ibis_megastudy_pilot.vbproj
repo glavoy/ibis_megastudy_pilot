@@ -206,6 +206,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="xml\followup.xml" />
     <None Include="packages.config" />
     <None Include="xml\baseline.xml" />
     <None Include="images\eye.png" />

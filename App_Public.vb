@@ -232,7 +232,7 @@ Module IBIS_Public
         End Try
     End Function
 
-    Public Function setAppointmentDateByMonths(baseinterval As Integer)
+    Public Function SetAppointmentDateByMonths(baseinterval As Integer)
         Dim result As String
         Try
             VDATE = GetValue("starttime")

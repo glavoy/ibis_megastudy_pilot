@@ -83,6 +83,7 @@ Partial Class Main_Menu
         Me.ButtonBackupDB = New System.Windows.Forms.Button()
         Me.LabelFuwindow = New System.Windows.Forms.Label()
         Me.LabelFuAllow = New System.Windows.Forms.Label()
+        Me.ButtonEditFollowup = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -196,7 +197,7 @@ Partial Class Main_Menu
         '
         Me.ButtonQuit.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ButtonQuit.Location = New System.Drawing.Point(13, 26)
-        Me.ButtonQuit.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ButtonQuit.Margin = New System.Windows.Forms.Padding(4)
         Me.ButtonQuit.Name = "ButtonQuit"
         Me.ButtonQuit.Size = New System.Drawing.Size(99, 57)
         Me.ButtonQuit.TabIndex = 26
@@ -283,7 +284,7 @@ Partial Class Main_Menu
         Me.ButtonBaseline.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonBaseline.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ButtonBaseline.Location = New System.Drawing.Point(83, 494)
-        Me.ButtonBaseline.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ButtonBaseline.Margin = New System.Windows.Forms.Padding(4)
         Me.ButtonBaseline.Name = "ButtonBaseline"
         Me.ButtonBaseline.Size = New System.Drawing.Size(263, 129)
         Me.ButtonBaseline.TabIndex = 23
@@ -441,7 +442,7 @@ Partial Class Main_Menu
         Me.GroupBox1.Location = New System.Drawing.Point(13, 86)
         Me.GroupBox1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(4)
         Me.GroupBox1.Size = New System.Drawing.Size(1032, 363)
         Me.GroupBox1.TabIndex = 50
         Me.GroupBox1.TabStop = False
@@ -453,7 +454,7 @@ Partial Class Main_Menu
         Me.ButtonCannotFind.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonCannotFind.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ButtonCannotFind.Location = New System.Drawing.Point(292, 240)
-        Me.ButtonCannotFind.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ButtonCannotFind.Margin = New System.Windows.Forms.Padding(4)
         Me.ButtonCannotFind.Name = "ButtonCannotFind"
         Me.ButtonCannotFind.Size = New System.Drawing.Size(263, 66)
         Me.ButtonCannotFind.TabIndex = 160
@@ -488,7 +489,7 @@ Partial Class Main_Menu
         Me.ButtonSearchPhone.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonSearchPhone.Font = New System.Drawing.Font("Segoe UI", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ButtonSearchPhone.Location = New System.Drawing.Point(575, 82)
-        Me.ButtonSearchPhone.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ButtonSearchPhone.Margin = New System.Windows.Forms.Padding(4)
         Me.ButtonSearchPhone.Name = "ButtonSearchPhone"
         Me.ButtonSearchPhone.Size = New System.Drawing.Size(189, 42)
         Me.ButtonSearchPhone.TabIndex = 157
@@ -551,7 +552,7 @@ Partial Class Main_Menu
         Me.ButtonFollowupSurvey.Enabled = False
         Me.ButtonFollowupSurvey.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonFollowupSurvey.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonFollowupSurvey.Location = New System.Drawing.Point(292, 747)
+        Me.ButtonFollowupSurvey.Location = New System.Drawing.Point(83, 762)
         Me.ButtonFollowupSurvey.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ButtonFollowupSurvey.Name = "ButtonFollowupSurvey"
         Me.ButtonFollowupSurvey.Size = New System.Drawing.Size(263, 68)
@@ -596,6 +597,20 @@ Partial Class Main_Menu
         Me.LabelFuAllow.Text = "Allowable follow-up window"
         Me.LabelFuAllow.Visible = False
         '
+        'ButtonEditFollowup
+        '
+        Me.ButtonEditFollowup.BackColor = System.Drawing.Color.LightGray
+        Me.ButtonEditFollowup.Enabled = False
+        Me.ButtonEditFollowup.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.ButtonEditFollowup.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonEditFollowup.Location = New System.Drawing.Point(484, 762)
+        Me.ButtonEditFollowup.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.ButtonEditFollowup.Name = "ButtonEditFollowup"
+        Me.ButtonEditFollowup.Size = New System.Drawing.Size(263, 68)
+        Me.ButtonEditFollowup.TabIndex = 55
+        Me.ButtonEditFollowup.Text = "Edit Followup Survey"
+        Me.ButtonEditFollowup.UseVisualStyleBackColor = False
+        '
         'Main_Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -603,6 +618,7 @@ Partial Class Main_Menu
         Me.BackColor = System.Drawing.Color.Silver
         Me.ClientSize = New System.Drawing.Size(1268, 962)
         Me.ControlBox = False
+        Me.Controls.Add(Me.ButtonEditFollowup)
         Me.Controls.Add(Me.LabelFuAllow)
         Me.Controls.Add(Me.LabelFuwindow)
         Me.Controls.Add(Me.ButtonBackupDB)
@@ -624,7 +640,7 @@ Partial Class Main_Menu
         Me.Controls.Add(Me.ButtonQuit)
         Me.Controls.Add(Me.Label1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "Main_Menu"
         Me.Text = "`"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
@@ -694,4 +710,5 @@ Partial Class Main_Menu
     Friend WithEvents ButtonBackupDB As Button
     Friend WithEvents LabelFuwindow As Label
     Friend WithEvents LabelFuAllow As Label
+    Friend WithEvents ButtonEditFollowup As Button
 End Class
