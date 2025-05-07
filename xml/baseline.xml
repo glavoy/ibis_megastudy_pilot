@@ -832,6 +832,14 @@ What is your Preferred Language for the video that we are about to play</text>
 	</question>
 
 
+	<question type = 'automatic' fieldname = 'sms_schedule_8weeks' fieldtype = 'date'>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'sms_schedule_11weeks' fieldtype = 'date'>
+	</question>
+
+
 	<question type = 'information' fieldname = 'information_screen' fieldtype = 'n/a'>
 		<text>Participant ID: [[subjid]]
 Study arm: [[arm_text]]
