@@ -227,26 +227,28 @@ Module AutomaticVariables
                     CurrentAutoValue = CInt(health_facility)
 
                 Case Is = "next_appt_3m"
-                    CurrentAutoValue = setAppointmentDateByMonths(3)
+                    CurrentAutoValue = SetAppointmentDateByMonths(3)
 
                 Case Is = "next_appt_6m"
-                    CurrentAutoValue = setAppointmentDateByMonths(6)
+                    CurrentAutoValue = SetAppointmentDateByMonths(6)
 
                 Case Is = "appt_w1_2m"
-                    CurrentAutoValue = setAppointmentDateByMonths(2)
+                    CurrentAutoValue = SetAppointmentDateByMonths(2)
 
                 Case Is = "appt_w2_8m"
-                    CurrentAutoValue = setAppointmentDateByMonths(8)
+                    CurrentAutoValue = SetAppointmentDateByMonths(8)
+
+                Case Is = "sms_schedule_8weeks"
+                    CurrentAutoValue = SetAppointmentDateByMonths(8, True)
+
+                Case Is = "sms_schedule_11weeks"
+                    CurrentAutoValue = SetAppointmentDateByMonths(11, True)
 
             End Select
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
     End Sub
-
-
-
-
 
 
 

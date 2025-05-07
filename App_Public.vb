@@ -232,7 +232,7 @@ Module IBIS_Public
         End Try
     End Function
 
-    Public Function SetAppointmentDateByMonths(baseinterval As Integer)
+    Public Function SetAppointmentDateByMonths(baseinterval As Integer, Optional isWeeks As Boolean = False) As String
         Dim result As String
         Try
             VDATE = GetValue("starttime")
@@ -265,7 +265,13 @@ Module IBIS_Public
             End If
 
             ' Add 3 months
-            Dim newDate As DateTime = visit_date.AddMonths(baseinterval)
+            Dim newDate As DateTime
+
+            If isWeeks Then
+                newDate = visit_date.AddDays(baseinterval * 7) ' Add weeks
+            Else
+                newDate = visit_date.AddMonths(baseinterval) ' Add months
+            End If
 
             ' Convert back to string in the desired format
             result = newDate.ToString("dd/MM/yyyy")
