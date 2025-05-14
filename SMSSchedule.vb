@@ -178,8 +178,8 @@ Public Class SMSSchedule
                                   "dflt_appt_arm_schd_appt_date, sms_schedule_8weeks, sms_schedule_11weeks " &
                                   "FROM baseline " &
                                   "WHERE consent = 1 AND " &
-                                  "((sms_schedule_8weeks BETWEEN #" & startDateStr & "# AND #" & endDateStr & "#) " &
-                                  "OR (sms_schedule_11weeks BETWEEN #" & startDateStr & "# AND #" & endDateStr & "#))"
+                                  "((sms_schedule_8weeks IS NOT NULL AND sms_schedule_8weeks BETWEEN #" & startDateStr & "# AND #" & endDateStr & "#) " &
+                                  "OR (sms_schedule_11weeks IS NOT NULL AND sms_schedule_11weeks BETWEEN #" & startDateStr & "# AND #" & endDateStr & "#))"
 
                 ' Create data adapter and table
                 dataAdapter = New OleDbDataAdapter(query, connection)
