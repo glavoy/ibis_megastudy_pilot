@@ -801,7 +801,7 @@ What is your Preferred Language for the video that we are about to play</text>
 
 What is your Preferred Language for the video that we are about to play</text>
 		<responses>
-			<response value = '4'>Runyonkole</response>
+			<response value = '4'>Runyankole</response>
 			<response value = '5'>Luganda</response>
 			<response value = '3'>English</response>
 		</responses>
@@ -925,6 +925,9 @@ Do you have any final questions for me?
 			<response value = '4'>15-20 Minutes</response>
 			<response value = '5'>More Than 20 Minutes</response>
 		</responses>
+		<preskip>
+			<skip fieldname='eligibility_check' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='what_technical_difficulties'></skip>
+		</preskip>
 	</question>
 
 
