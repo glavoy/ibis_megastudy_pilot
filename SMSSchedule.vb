@@ -174,10 +174,12 @@ Public Class SMSSchedule
                 Dim startDateStr As String = dtpStartDate.Value.ToString("dd/MM/yyyy")
                 Dim endDateStr As String = dtpEndDate.Value.ToString("dd/MM/yyyy")
 
-                ' SQL query
-                Dim query As String = "SELECT subjid, mobile_number,arm,arm_text, preferred_language,preferred_language_text, starttime,dflt_appt_arm_schd_appt_date " &
-                                    "FROM baseline " &
-                                    "WHERE consent = 1 AND starttime BETWEEN #" & startDateStr & "# AND #" & endDateStr & "#"
+                Dim query As String = "SELECT subjid, mobile_number, arm, arm_text, preferred_language, preferred_language_text, starttime, " &
+                                  "dflt_appt_arm_schd_appt_date, sms_schedule_8weeks, sms_schedule_11weeks " &
+                                  "FROM baseline " &
+                                  "WHERE consent = 1 AND " &
+                                  "((sms_schedule_8weeks IS NOT NULL AND sms_schedule_8weeks BETWEEN #" & startDateStr & "# AND #" & endDateStr & "#) " &
+                                  "OR (sms_schedule_11weeks IS NOT NULL AND sms_schedule_11weeks BETWEEN #" & startDateStr & "# AND #" & endDateStr & "#))"
 
                 ' Create data adapter and table
                 dataAdapter = New OleDbDataAdapter(query, connection)
@@ -186,58 +188,38 @@ Public Class SMSSchedule
                 ' Fill data table
                 dataAdapter.Fill(dataTable)
 
-                ' Add calculated columns
-                dataTable.Columns.Add("eight_week_followup", GetType(DateTime))
-                dataTable.Columns.Add("eleven_week_followup", GetType(DateTime))
+                ' Add columns for SMS 
                 dataTable.Columns.Add("sms_message_wk8", GetType(String))
                 dataTable.Columns.Add("sms_message_wk11", GetType(String))
 
                 ' Calculate follow-up dates and add SMS message
+
                 For Each row As DataRow In dataTable.Rows
-                    If Not IsDBNull(row("starttime")) Then
-                        Dim baselineDate As DateTime = CDate(row("starttime"))
-                        row("eight_week_followup") = baselineDate.AddDays(8 * 7) ' 8 weeks
-                        row("eleven_week_followup") = baselineDate.AddDays(11 * 7) ' 11 weeks
-                    End If
 
-                    ' Add specific SMS message based on arm_text
-                    Dim armText As String = If(IsDBNull(row("arm_text")), "", row("arm_text").ToString())
-                    If CInt(row("arm")) = 8 Then
-                        row("sms_message_wk8") = getSMS(CInt(row("arm")), 8, CInt(row("preferred_language")), row("dflt_appt_arm_schd_appt_date"))
-                        row("sms_message_wk11") = getSMS(CInt(row("arm")), 11, CInt(row("preferred_language")), row("dflt_appt_arm_schd_appt_date"))
+                    Dim armCode As Integer = CInt(row("arm"))
+                    Dim langCode As Integer = CInt(row("preferred_language"))
+                    Dim defaultApptDate As String = If(IsDBNull(row("dflt_appt_arm_schd_appt_date")), "", row("dflt_appt_arm_schd_appt_date").ToString())
+
+                    ' Use default appointment date as [date] for arm 8
+                    If armCode = 8 Then
+                        row("sms_message_wk8") = getSMS(armCode, 8, langCode, defaultApptDate)
+                        row("sms_message_wk11") = getSMS(armCode, 11, langCode, defaultApptDate)
                     Else
-                        row("sms_message_wk8") = getSMS(CInt(row("arm")), 8, CInt(row("preferred_language")))
-                        row("sms_message_wk11") = getSMS(CInt(row("arm")), 11, CInt(row("preferred_language")))
+                        row("sms_message_wk8") = getSMS(armCode, 8, langCode)
+                        row("sms_message_wk11") = getSMS(armCode, 11, langCode)
                     End If
-
-                    'Select Case armText.Trim()
-                    '    Case "Fresh start effect"
-                    '        row("sms_message") = "It's a perfect time for a fresh start with your health journey. Your appointment is important."
-                    '    Case "U=U messaging"
-                    '        row("sms_message") = "Remember: Undetectable = Untransmittable. Your regular check-up helps maintain your health."
-                    '    Case "Reserved for you"
-                    '        row("sms_message") = "You have an appointment reserved especially for you. We're looking forward to seeing you."
-                    '    Case "Community benefits"
-                    '        row("sms_message") = "Your visit helps our community stay healthy. Thank you for being part of the solution."
-                    '    Case "Education-based #2(gamification)"
-                    '        row("sms_message") = "You're making progress on your health journey! Keep the momentum going with your upcoming appointment."
-                    '    Case "Risk assessment"
-                    '        row("sms_message") = "Regular check-ups are key to staying healthy. Your appointment helps manage any potential risks."
-                    '    Case "Default appointment"
-                    '        row("sms_message") = "This is a reminder about your upcoming appointment. We look forward to seeing you."
-                    '    Case "Healthy living"
-                    '        row("sms_message") = "Your commitment to healthy living includes regular check-ups. Your appointment is coming up."
-                    '    Case "Social norms"
-                    '        row("sms_message") = "Most people in your community attend their scheduled appointments. Join them at your upcoming visit."
-                    '    Case "Empowerment"
-                    '        row("sms_message") = "You have the power to manage your health. Your upcoming appointment is an important step."
-                    '    Case "Education-based #1"
-                    '        row("sms_message") = "Did you know regular visits improve long-term health outcomes? Your appointment is coming up."
-                    '    Case Else
-                    '        row("sms_message") = "Thank you for participating in our study. Your upcoming appointment is scheduled soon."
-                    'End Select
                 Next
 
+
+                ' Add specific SMS message based on arm_text
+                ' Dim armText As String = If(IsDBNull(row("arm_text")), "", row("arm_text").ToString())
+                ' If CInt(row("arm")) = 8 Then
+                ' row("sms_message_wk8") = getSMS(CInt(row("arm")), 8, CInt(row("preferred_language")), row("dflt_appt_arm_schd_appt_date"))
+                ' row("sms_message_wk11") = getSMS(CInt(row("arm")), 11, CInt(row("preferred_language")), row("dflt_appt_arm_schd_appt_date"))
+                ' Else
+                ' row("sms_message_wk8") = getSMS(CInt(row("arm")), 8, CInt(row("preferred_language")))
+                ' row("sms_message_wk11") = getSMS(CInt(row("arm")), 11, CInt(row("preferred_language")))
+                ' End If '
                 ' Set data source for grid view
                 dgvBaselineData.DataSource = dataTable
 
@@ -247,15 +229,15 @@ Public Class SMSSchedule
                 dgvBaselineData.Columns("arm_text").HeaderText = "Study Arm"
                 dgvBaselineData.Columns("preferred_language_text").HeaderText = "Preferred Language"
                 dgvBaselineData.Columns("starttime").HeaderText = "BL Date"
-                dgvBaselineData.Columns("eight_week_followup").HeaderText = "8-week Follow-up Date"
-                dgvBaselineData.Columns("eleven_week_followup").HeaderText = "11-week Follow-up Date"
+                dgvBaselineData.Columns("sms_schedule_8weeks").HeaderText = "8-week Follow-up Date"
+                dgvBaselineData.Columns("sms_schedule_11weeks").HeaderText = "11-week Follow-up Date"
                 dgvBaselineData.Columns("sms_message_wk8").HeaderText = "Wk 8 SMS"
                 dgvBaselineData.Columns("sms_message_wk11").HeaderText = "Wk 11 SMS"
 
                 ' Format date columns
                 dgvBaselineData.Columns("starttime").DefaultCellStyle.Format = "dd/MM/yyyy"
-                dgvBaselineData.Columns("eight_week_followup").DefaultCellStyle.Format = "dd/MM/yyyy"
-                dgvBaselineData.Columns("eleven_week_followup").DefaultCellStyle.Format = "dd/MM/yyyy"
+                dgvBaselineData.Columns("sms_schedule_8weeks").DefaultCellStyle.Format = "dd/MM/yyyy"
+                dgvBaselineData.Columns("sms_schedule_11weeks").DefaultCellStyle.Format = "dd/MM/yyyy"
             End Using
 
         Catch ex As Exception

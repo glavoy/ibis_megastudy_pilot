@@ -141,7 +141,7 @@
 
 
 	<question type = 'information' fieldname = 'information_screen_interviewer' fieldtype = 'n/a'>
-		<text>Please answer a few questions about this survey experience.</text>		
+		<text>Please answer a few questions about this survey experience.</text>
 	</question>
 
 

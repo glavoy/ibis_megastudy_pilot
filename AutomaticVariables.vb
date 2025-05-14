@@ -133,13 +133,15 @@ Module AutomaticVariables
                     Dim tb_history As Integer = CInt(GetValue("tb_history"))
                     Dim sex_for_compensation As Integer = CInt(GetValue("sex_for_compensation"))
                     Dim paid_for_sex As Integer = CInt(GetValue("paid_for_sex"))
+                    Dim index_client As Integer = CInt(GetValue("index_client"))
+                    Dim risk_group_affiliation As Integer = CInt(GetValue("risk_group_affiliation"))
                     Dim dice_clinic As Integer = CInt(GetValue("dice_clinic"))
                     Dim on_prep As Integer = CInt(GetValue("on_prep"))
                     Dim on_pep As Integer = CInt(GetValue("on_pep"))
                     Dim recent_hiv_exposure As Integer = CInt(GetValue("recent_hiv_exposure"))
 
                     CurrentAutoValue = 0
-                    If eligibility_check1 = 1 And (multiple_partners = 1 Or new_partner = 1 Or unprotected_sex = 1 Or hiv_positive_partner = 1 Or sti_history = 1 Or tb_history = 1 Or sex_for_compensation = 1 Or paid_for_sex = 1 Or dice_clinic = 1 Or on_prep = 1 Or on_pep = 1 Or recent_hiv_exposure = 1) Then
+                    If eligibility_check1 = 1 And (multiple_partners = 1 Or new_partner = 1 Or unprotected_sex = 1 Or hiv_positive_partner = 1 Or sti_history = 1 Or tb_history = 1 Or sex_for_compensation = 1 Or paid_for_sex = 1 Or dice_clinic = 1 Or on_prep = 1 Or on_pep = 1 Or recent_hiv_exposure = 1 Or index_client = 1 Or risk_group_affiliation = 1) Then
                         CurrentAutoValue = 1
                     End If
 
@@ -227,26 +229,28 @@ Module AutomaticVariables
                     CurrentAutoValue = CInt(health_facility)
 
                 Case Is = "next_appt_3m"
-                    CurrentAutoValue = setAppointmentDateByMonths(3)
+                    CurrentAutoValue = SetAppointmentDateByMonths(3)
 
                 Case Is = "next_appt_6m"
-                    CurrentAutoValue = setAppointmentDateByMonths(6)
+                    CurrentAutoValue = SetAppointmentDateByMonths(6)
 
                 Case Is = "appt_w1_2m"
-                    CurrentAutoValue = setAppointmentDateByMonths(2)
+                    CurrentAutoValue = SetAppointmentDateByMonths(2)
 
                 Case Is = "appt_w2_8m"
-                    CurrentAutoValue = setAppointmentDateByMonths(8)
+                    CurrentAutoValue = SetAppointmentDateByMonths(8)
+
+                Case Is = "sms_schedule_8weeks"
+                    CurrentAutoValue = SetAppointmentDateByMonths(8, True)
+
+                Case Is = "sms_schedule_11weeks"
+                    CurrentAutoValue = SetAppointmentDateByMonths(11, True)
 
             End Select
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
     End Sub
-
-
-
-
 
 
 
