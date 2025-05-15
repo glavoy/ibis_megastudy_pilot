@@ -650,6 +650,16 @@ Public Class Main_Menu
     Private Sub ButtonFollowupSurvey_Click(sender As Object, e As EventArgs) Handles ButtonFollowupSurvey.Click
         ModifyingSurvey = False
         Survey = "followup"
+        Dim strSQL As String = "select subjid from " & Survey & " where subjid = '" & SUBJID & "';"
+        Dim ConnectionString As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
+        Dim da As New OleDbDataAdapter(strSQL, ConnectionString)
+        Dim ds As New DataSet
+        da.Fill(ds)
+        If ds.Tables(0).Rows.Count > 0 Then
+            MsgBox("This Participant has already had a followup visit. This will create a duplicate entry", vbCritical, "Duplicate Subjid!")
+            Exit Sub
+        End If
+        ConnectionString.Close()
         NewSurvey.ShowDialog()
         NewSurvey.Dispose()
     End Sub

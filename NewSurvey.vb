@@ -1381,33 +1381,6 @@ Public Class NewSurvey
                 End Select
             End If
 
-            'check for duplicate barcode
-            If IsValidResponse = True And ModifyingSurvey = False Then
-                Select Case QuestionInfoArray(CurrentQuestion).FieldName
-                    Case = "subjid2" And Survey = "Followup"
-                        For Each aControl In Me.Controls
-                            Select Case TypeName(aControl)
-                                Case "TextBox"
-                                    CurrentValue = aControl.Text
-                            End Select
-                        Next
-                        Dim strSQL As String = "select subjid2 from " & Survey & " where subjid2 = '" & CurrentValue & "';"
-                        Dim ConnectionString As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
-                        Dim da As New OleDbDataAdapter(strSQL, ConnectionString)
-                        Dim ds As New DataSet
-                        da.Fill(ds)
-                        If ds.Tables(0).Rows.Count > 0 Then
-                            IsValidResponse = False
-                            MsgBox("This Participant has already been had a followup visit. This will create a duplicate entry", vbCritical, "Duplicate Subjid!")
-                            Exit Function
-                        End If
-                        ConnectionString.Close()
-                End Select
-            End If
-
-
-
-
             'test to see if the multiple selection questions have valid responses
             If IsValidResponse = True Then
                 Dim surveyResponseValue As String = ""
