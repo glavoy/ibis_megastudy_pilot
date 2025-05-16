@@ -156,7 +156,7 @@ Public Class SMSSchedule
 
             'add appointment date to the default appointment date arm
             If arm_code = 8 Then
-                sms = Replace(sms, "[date]", appt_date)
+                sms = Replace(sms, "[date]", Microsoft.VisualBasic.Left(appt_date, 10))
             End If
             Return sms
         Catch ex As Exception
