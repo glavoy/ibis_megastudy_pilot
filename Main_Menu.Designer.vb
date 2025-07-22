@@ -84,6 +84,7 @@ Partial Class Main_Menu
         Me.LabelFuwindow = New System.Windows.Forms.Label()
         Me.LabelFuAllow = New System.Windows.Forms.Label()
         Me.ButtonEditFollowup = New System.Windows.Forms.Button()
+        Me.ButtonGetData = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -565,7 +566,7 @@ Partial Class Main_Menu
         Me.ButtonBackupDB.BackColor = System.Drawing.Color.LightGray
         Me.ButtonBackupDB.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonBackupDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonBackupDB.Location = New System.Drawing.Point(292, 864)
+        Me.ButtonBackupDB.Location = New System.Drawing.Point(83, 880)
         Me.ButtonBackupDB.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ButtonBackupDB.Name = "ButtonBackupDB"
         Me.ButtonBackupDB.Size = New System.Drawing.Size(263, 57)
@@ -611,6 +612,19 @@ Partial Class Main_Menu
         Me.ButtonEditFollowup.Text = "Edit Followup Survey"
         Me.ButtonEditFollowup.UseVisualStyleBackColor = False
         '
+        'ButtonGetData
+        '
+        Me.ButtonGetData.BackColor = System.Drawing.Color.LightGray
+        Me.ButtonGetData.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.ButtonGetData.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonGetData.Location = New System.Drawing.Point(484, 880)
+        Me.ButtonGetData.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.ButtonGetData.Name = "ButtonGetData"
+        Me.ButtonGetData.Size = New System.Drawing.Size(263, 57)
+        Me.ButtonGetData.TabIndex = 56
+        Me.ButtonGetData.Text = "Get Data"
+        Me.ButtonGetData.UseVisualStyleBackColor = False
+        '
         'Main_Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -618,6 +632,7 @@ Partial Class Main_Menu
         Me.BackColor = System.Drawing.Color.Silver
         Me.ClientSize = New System.Drawing.Size(1268, 962)
         Me.ControlBox = False
+        Me.Controls.Add(Me.ButtonGetData)
         Me.Controls.Add(Me.ButtonEditFollowup)
         Me.Controls.Add(Me.LabelFuAllow)
         Me.Controls.Add(Me.LabelFuwindow)
@@ -711,4 +726,5 @@ Partial Class Main_Menu
     Friend WithEvents LabelFuwindow As Label
     Friend WithEvents LabelFuAllow As Label
     Friend WithEvents ButtonEditFollowup As Button
+    Friend WithEvents ButtonGetData As Button
 End Class

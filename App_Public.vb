@@ -29,6 +29,7 @@ Module IBIS_Public
     Public ParticipantsPhone As Integer
     Public Subcounty As String
     Public County As String
+    Public csvFiles As String() = {"followup_lookup.csv"}
 
     '*****************************************************
     ' Function to get the next line number
@@ -285,5 +286,63 @@ Module IBIS_Public
 
         Return result
 
+    End Function
+
+    ' Checks if the current SUBJID exists in the followup table.
+    ' Returns: True if SUBJID exists in followup table, False if not found or on error.
+    ' Uses the global followup variable for checking existence in the database.
+    Public Function DoesSUBJIDExistInFollowup() As Boolean
+        Try
+            Using Connection As OleDbConnection = GetDBConnection()
+                Connection.Open()
+
+                ' Check if HHID exists in census table
+                Dim strSQL As String = "SELECT COUNT(*) FROM followup WHERE subjid = @subjid"
+                Using cmd As New OleDbCommand(strSQL, Connection)
+                    cmd.Parameters.AddWithValue("@subjid", SUBJID)
+                    Dim count As Integer = Convert.ToInt32(cmd.ExecuteScalar())
+
+                    ' Return true if count > 0, meaning HHID exists in census table
+                    Return count > 0
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error checking if SUBJID exists in Followup: " & ex.Message)
+        End Try
+
+        ' Default return if an exception occurs
+        Return False
+    End Function
+
+
+    ' Checks if the current SUBJID exists in the lookup table.
+    ' Returns: True if SUBJID exists in lookup table, False if not found or on error.
+    ' Uses the global SUBJID variable for checking existence in the lookup.
+    Public Function DoesSUBJIDExistInLookup() As Boolean
+        Try
+
+            Dim census_lookup As Integer = 0
+
+            Using Connection As OleDbConnection = GetDBConnection()
+                Connection.Open()
+
+                ' Check if HHID exists in census table
+                Dim strSQL As String = "SELECT COUNT(*) FROM followup_lookup WHERE subjid = @subjid"
+                Using cmd As New OleDbCommand(strSQL, Connection)
+                    cmd.Parameters.AddWithValue("@subjid", SUBJID)
+                    census_lookup = Convert.ToInt32(cmd.ExecuteScalar())
+
+                    ' Return true if count > 0, meaning HHID exists in census table
+                    Return census_lookup
+                End Using
+            End Using
+
+
+        Catch ex As Exception
+            MessageBox.Show("Error checking if SUBJID exists in followup_lookup: " & ex.Message)
+        End Try
+
+        ' Default return if an exception occurs
+        Return False
     End Function
 End Module
