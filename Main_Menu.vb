@@ -1,6 +1,9 @@
 ﻿Imports System.Configuration
 Imports System.Data.OleDb
+Imports System.IO
 Imports System.Net
+Imports System.Text
+Imports Microsoft.VisualBasic.FileIO
 
 Public Class Main_Menu
     'Private originalNamesTable As DataTable
@@ -530,10 +533,11 @@ Public Class Main_Menu
                 Dim query As String = "SELECT subjid, health_facility, participants_name, NickName, " &
                                      "respondants_age, client_sex, county, subcounty, village, mobile_number, " &
                                      "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m " &
-                                     "FROM baseline WHERE mobile_number = ?"
+                                     "FROM baseline WHERE mobile_number = ? or mobile_number = ?"
 
                 Using command As New OleDbCommand(query, connection)
                     command.Parameters.AddWithValue("?", phoneNumber)
+                    command.Parameters.AddWithValue("?", Microsoft.VisualBasic.Right(phoneNumber, 9))
 
                     Using reader As OleDbDataReader = command.ExecuteReader()
                         If reader.Read() Then
@@ -596,7 +600,7 @@ Public Class Main_Menu
         Try
             If CheckForInternetConnection() = True Then
                 ' Set the path to the Python interpreter
-                Dim pythonPath As String = getPythonPath()
+                Dim pythonPath As String = GetPythonPath()
 
                 ' Set the path to the Python script
                 Dim scriptPath As String = "C:\IBIS_pilot\Scripts\upload_to_ftp_server_IBIS.py"
@@ -650,16 +654,13 @@ Public Class Main_Menu
     Private Sub ButtonFollowupSurvey_Click(sender As Object, e As EventArgs) Handles ButtonFollowupSurvey.Click
         ModifyingSurvey = False
         Survey = "followup"
-        Dim strSQL As String = "select subjid from " & Survey & " where subjid = '" & SUBJID & "';"
-        Dim ConnectionString As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
-        Dim da As New OleDbDataAdapter(strSQL, ConnectionString)
-        Dim ds As New DataSet
-        da.Fill(ds)
-        If ds.Tables(0).Rows.Count > 0 Then
-            MsgBox("This Participant has already had a followup visit. This will create a duplicate entry", vbCritical, "Duplicate Subjid!")
+
+        If DoesSUBJIDExistInLookup() = True And DoesSUBJIDExistInFollowup() = False Then
+            MessageBox.Show("This Participant has already had a followup visit in a different tablet. To prevent a duplicate entry, further action is not allowed.")
             Exit Sub
+
         End If
-        ConnectionString.Close()
+
         NewSurvey.ShowDialog()
         NewSurvey.Dispose()
     End Sub
@@ -668,11 +669,291 @@ Public Class Main_Menu
         Try
             ModifyingSurvey = True
             Survey = "followup"
+            If DoesSUBJIDExistInFollowup() = True Then
+                ModifyingSurvey = True
+            ElseIf DoesSUBJIDExistInLookup() = True And DoesSUBJIDExistInFollowup() = False Then
+                MessageBox.Show("This Participant has already had a followup visit in a different tablet. To Edit, use the computer where the entry was done.")
+                Exit Sub
+            End If
             SelectFormToEdit.ShowDialog()
             SelectFormToEdit.Dispose()
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
     End Sub
+
+    Private Sub ButtonGetData_Click(sender As Object, e As EventArgs) Handles ButtonGetData.Click
+        Cursor = Cursors.WaitCursor
+        Application.DoEvents()
+
+        Try
+            Dim pythonFilePath As String = "C:\SapphirePhaseB\Clinic\Scripts\upload_to_ftp_server.py"
+            Dim variableName As String = "Tablet_code"
+            ' Set the path to the Python interpreter
+            Dim pythonPath As String = GetPythonPath()
+
+            If CheckForInternetConnection() = True Then
+
+                Dim Ret_Val
+                ' Set the path to the Python script
+                Dim scriptPath As String = "C:\IBIS_pilot\Scripts\read_from_csv_to_access.py"
+                ' Use the Shell function to execute the command
+                Ret_Val = Shell(pythonPath & " " & scriptPath, vbNormalFocus, True)
+
+                If Ret_Val = 0 Then
+                    For Each csvFile In csvFiles
+                        Dim tableName As String = Path.GetFileNameWithoutExtension(csvFile)
+                        Dim tableLookupName As String = tableName
+                        Dim csvPath As String = Path.Combine("C:\IBIS_pilot\csv", csvFile)
+
+                        Dim fieldDict As Dictionary(Of String, String) = GetTableFieldsAndTypes(tableLookupName)
+
+
+                        Dim csvFieldNames As String() = GetCSVFieldNames(csvPath)
+                        If Not CheckCSVFieldNames(fieldDict, csvFieldNames, csvFile) Then
+                            MessageBox.Show($"{tableName} data not imported! The field names in the MS Access database are different that the fields in the {csvFile} file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            Continue For
+                        End If
+
+                        If Not ImportCSVToLookupTable(csvPath, tableLookupName, fieldDict, csvFieldNames) Then
+                            Continue For
+                        End If
+
+
+                    Next
+
+                Else
+                    MsgBox("Errors were encountered while getting new data")
+                End If
+
+            Else
+                MsgBox("You are not connected to the Internet. Please connect to the Internet and try again.")
+            End If
+            ' Delete the csv files
+            'DeleteCSVFiles()
+            MsgBox("Finished getting new data.")
+            Cursor = Cursors.Default
+        Catch ex As Exception
+            Cursor = Cursors.Default
+            ' Delete the csv files
+            'DeleteCSVFiles()
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Public Sub DeleteCSVFiles()
+        Try
+            ' Define the folder path
+            Dim folderPath As String = "C:\IBIS_pilot\csv"
+
+            ' Get all CSV files in the folder
+            Dim csvFiles As String() = Directory.GetFiles(folderPath, "*.csv")
+
+            ' Iterate through each file and delete it
+            For Each csvFile As String In csvFiles
+                File.Delete(csvFile)
+            Next
+
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Function GetTableFieldsAndTypes(tableName As String) As Dictionary(Of String, String)
+        Dim fieldDict As New Dictionary(Of String, String)()
+        Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
+        Dim section As ConnectionStringsSection = DirectCast(config.GetSection("connectionStrings"), ConnectionStringsSection)
+        Dim ConnectionString As New OleDbConnection(section.ConnectionStrings("ConnString").ConnectionString)
+        Using ConnectionString
+            ConnectionString.Open()
+            Dim schemaTable As DataTable = ConnectionString.GetOleDbSchemaTable(OleDbSchemaGuid.Columns, New Object() {Nothing, Nothing, tableName, Nothing})
+            For Each row As DataRow In schemaTable.Rows
+                fieldDict.Add(row("COLUMN_NAME").ToString(), row("DATA_TYPE").ToString())
+            Next
+            ConnectionString.Close()
+        End Using
+        Return fieldDict
+    End Function
+
+    Function GetCSVFieldNames(csvPath As String) As String()
+        Using reader As New StreamReader(csvPath)
+            Return reader.ReadLine().Split(","c)
+        End Using
+    End Function
+
+    Function CheckCSVFieldNames(fieldDict As Dictionary(Of String, String), csvFieldNames As String(), csvName As String) As Boolean
+        ' Ensure all field names in the Access table are present in the CSV file, ignoring double quotes
+
+        Dim missing_in_csv = fieldDict.Keys.Except(csvFieldNames.Select(Function(f) f.Trim(""""))).ToList()
+        Dim missing_cols As String
+        missing_cols = ""
+
+        If missing_in_csv.Count > 0 Then
+            For Each key In missing_in_csv
+                missing_cols += key
+                missing_cols += ", "
+            Next
+
+            MessageBox.Show($"The following fields {missing_cols} are missing in the {csvName} file. Please contact someone from the data team.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
+        End If
+
+        For Each key In fieldDict.Keys
+            If Not csvFieldNames.Select(Function(f) f.Trim("""")).Contains(key) Then
+                Return False
+            End If
+        Next
+        Return True
+    End Function
+
+    Function ParseCSVLine(line As String) As String()
+        Dim result As New List(Of String)()
+        Dim inQuotes As Boolean = False
+        Dim value As New StringBuilder()
+
+        For Each c As Char In line
+            Select Case c
+                Case """"c
+                    inQuotes = Not inQuotes
+                Case ","c
+                    If inQuotes Then
+                        value.Append(c)
+                    Else
+                        result.Add(value.ToString())
+                        value.Clear()
+                    End If
+                Case Else
+                    value.Append(c)
+            End Select
+        Next
+        result.Add(value.ToString())
+
+        Return result.ToArray()
+    End Function
+
+
+
+    Function ImportCSVToLookupTable(csvPath As String, tableLookupName As String, fieldDict As Dictionary(Of String, String), csvFieldNames As String()) As Boolean
+        Try
+            Dim config As Configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
+            Dim section As ConnectionStringsSection = DirectCast(config.GetSection("connectionStrings"), ConnectionStringsSection)
+            Dim connectionString As New OleDbConnection(section.ConnectionStrings("ConnString").ConnectionString)
+            Using connectionString
+                connectionString.Open()
+
+                ' Count the number of records in the lookup table before delete
+                Dim countCmdb4del As New OleDbCommand($"SELECT COUNT(*) FROM {tableLookupName}", connectionString)
+                Dim backupRecordCountb4del As Integer = Convert.ToInt32(countCmdb4del.ExecuteScalar())
+
+                ' Delete all existing records from the backup table
+                Dim deleteCmd As New OleDbCommand($"DELETE FROM {tableLookupName}", connectionString)
+                deleteCmd.ExecuteNonQuery()
+
+                Dim csvRecordCount As Integer = 0
+
+                Using reader As New TextFieldParser(csvPath)
+                    reader.TextFieldType = FieldType.Delimited
+                    reader.SetDelimiters(",")
+
+                    Dim headers As String() = ParseCSVLine(reader.ReadLine())
+                    ' Filter CSV field names to only include those present in the MS Access table
+                    Dim validFieldNames As List(Of String) = headers.Where(Function(f) fieldDict.ContainsKey(f)).ToList()
+
+                    While Not reader.EndOfData
+                        Try
+
+                            Dim values As String() = reader.ReadFields()
+                            Dim insertCmd As New OleDbCommand($"INSERT INTO {tableLookupName} ({String.Join(",", validFieldNames)}) VALUES ({String.Join(",", validFieldNames.Select(Function(f) "?"))})", connectionString)
+
+                            ' For troubleshooting the SQL command
+                            Dim commandText As String = $"INSERT INTO {tableLookupName} ({String.Join(",", validFieldNames)}) VALUES ("
+
+                            For i As Integer = 0 To headers.Length - 1
+                                Dim fieldName As String = headers(i).Trim(""""c)
+                                If validFieldNames.Contains(fieldName) Then
+                                    Dim fieldType As String = fieldDict(fieldName)
+                                    Dim value As String = values(i).Trim(""""c)
+                                    value = value.Replace(vbCrLf, "").Replace(vbCr, "").Replace(vbLf, "")
+
+                                    If String.IsNullOrEmpty(value) Then
+                                        value = GetDummyValue(fieldType)
+                                    ElseIf fieldType = "7" Then ' Date field
+                                        value = FormatDate(value)
+                                    End If
+                                    insertCmd.Parameters.AddWithValue("?", value)
+                                    ' For troubleshooting the SQL command
+                                    commandText &= $"'{value}',"
+                                End If
+                            Next
+
+                            ' For troubleshooting the SQL command
+                            commandText = commandText.TrimEnd(","c) & ")"
+                            'Console.WriteLine(commandText)
+
+                            insertCmd.ExecuteNonQuery()
+                            csvRecordCount += 1
+                        Catch ex As MalformedLineException
+                            Console.WriteLine("Line " & ex.Message & " is invalid.  Skipping.")
+                        End Try
+                    End While
+                End Using
+
+
+                ' Count the number of records in the backup table
+                Dim countCmd As New OleDbCommand($"SELECT COUNT(*) FROM {tableLookupName}", connectionString)
+                Dim backupRecordCount As Integer = Convert.ToInt32(countCmd.ExecuteScalar())
+
+                If csvRecordCount <> backupRecordCount And csvRecordCount < backupRecordCountb4del Then
+                    MessageBox.Show($"Data not imported! There was an error importing the {tableLookupName} data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Return False
+                End If
+
+            End Using
+            Return True
+        Catch ex As Exception
+            Cursor = Cursors.Default
+            MessageBox.Show($"Data not imported! There is an issue with the {tableLookupName} data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
+        End Try
+    End Function
+
+    Function FormatDate(dateStr As String) As String
+        Dim parsedDate As DateTime
+        Dim formats As String() = {"dd/MM/yyyy", "dd/MM/yyyy HH:mm:ss", "d/M/yyyy", "d/M/yyyy HH:mm:ss",
+                               "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss"}
+
+        ' First, attempt to parse with the expected format
+        If DateTime.TryParseExact(dateStr, "dd/MM/yyyy", Globalization.CultureInfo.InvariantCulture, Globalization.DateTimeStyles.None, parsedDate) Then
+            Return parsedDate.ToString("dd/MM/yyyy")
+        End If
+
+        ' If that fails, try other formats
+        If DateTime.TryParseExact(dateStr, formats, Globalization.CultureInfo.InvariantCulture, Globalization.DateTimeStyles.None, parsedDate) Then
+            If parsedDate.TimeOfDay = TimeSpan.Zero Then
+                Return parsedDate.ToString("dd/MM/yyyy")
+            Else
+                Return parsedDate.ToString("dd/MM/yyyy HH:mm:ss")
+            End If
+        Else
+            ' Handle invalid date format
+            ' Optionally log the error or take other actions here
+            Console.WriteLine($"Invalid date format: {dateStr}")
+            Return String.Empty
+        End If
+    End Function
+
+
+    Function GetDummyValue(fieldType As String) As String
+        Select Case fieldType
+            Case "3", "5" ' Integer
+                Return "-9"
+            Case "202", "203", "130" ' String types
+                Return "-9"
+            Case "7" ' Date
+                Return "1899-01-01"
+            Case Else
+                Return "-9"
+        End Select
+    End Function
 End Class
 
