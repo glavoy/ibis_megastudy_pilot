@@ -111,6 +111,11 @@
 			<response value = '1'>Positive</response>
 			<response value = '2'>Indeterminate</response>
 		</responses>
+		<postskip>
+			<skip fieldname='hivtest_result_today' condition = '=' response='0' response_type='fixed' skiptofieldname ='hiv_risk_status'></skip>
+			<skip fieldname='hivtest_result_today' condition = '=' response='1' response_type='fixed' skiptofieldname ='hiv_risk_status'></skip>
+			<skip fieldname='hivtest_result_today' condition = '=' response='2' response_type='fixed' skiptofieldname ='hiv_risk_status'></skip>
+		</postskip>
 	</question>
 
 
@@ -137,6 +142,240 @@
 		<preskip>
 			<skip fieldname='hivtest_result_today' condition = '&lt;&gt;' response='0' response_type='fixed' skiptofieldname ='information_screen_interviewer'></skip>
 		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'infor_screen_1' fieldtype = 'n/a'>
+		<text>READ TO RESPONDENT: Now my next questions are about HIV and AIDS, and for each one I’d like for you to tell me your answer.</text>
+		<preskip>
+			<skip fieldname='hivtest_result_today' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='infor_screen_2'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'hiv_risk_status' fieldtype = 'integer'>
+		<text>Do you think your chances of getting HIV/AIDS in the coming year are high, moderate, low, or no risk at all?</text>
+		<responses>
+			<response value = '1'>High</response>
+			<response value = '2'>Moderate</response>
+			<response value = '3'>Low</response>
+			<response value = '4'>No Risk at all</response>
+		</responses>
+		<dont_know>-7</dont_know>
+		<refuse>-8</refuse>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'knows_art' fieldtype = 'integer'>
+		<text>Have you heard about antiretroviral therapy (ART), the medicines for treating HIV?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+		<dont_know>-7</dont_know>
+		<refuse>-8</refuse>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'knows_prep' fieldtype = 'integer'>
+		<text>Have you heard about PrEP (Pre-exposure prophylaxis): an HIV medication that is taken to prevent people from getting HIV?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+		<dont_know>-7</dont_know>
+		<refuse>-8</refuse>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'on_prep' fieldtype = 'integer'>
+		<text>Are you currently taking PrEP (HIV medication to prevent you from getting HIV)? This is usually a pill taken daily.</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+		<dont_know>-7</dont_know>
+		<refuse>-8</refuse>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'ready_for_hivtest' fieldtype = 'integer'>
+		<text>
+			How likely are you to go for an HIV test again sometime in the next 6 months?
+			[READ ALL ANSWER CHOICES]
+		</text>
+		<responses>
+			<response value = '1'>Very Likely</response>
+			<response value = '2'>Somewhat Likely</response>
+			<response value = '3'>Not Sure</response>
+			<response value = '4'>Unlikely</response>
+			<response value = '5'>Very Unlikely</response>
+		</responses>
+		<refuse>-8</refuse>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'motivation' fieldtype = 'integer'>
+		<text>
+			ASK ONLY FOR THOSE WHO DON’T REPORT “VERY UNLIKELY”
+			What do you think your main motivation might be for getting another HIV test in the future?
+		</text>
+		<responses>
+			<response value = '1'>Staying Healthy/HIV-Negative</response>
+			<response value = '2'>Preventing my sexual partners from becoming HIV infected</response>
+			<response value = '3'>Fearful of Getting Sick</response>
+			<response value = '99'>Other (Specify)</response>
+		</responses>
+		<preskip>
+			<skip fieldname='motivation' condition = '&lt;&gt;' response='5' response_type='fixed' skiptofieldname ='infor_screen_2'></skip>
+			<skip fieldname='motivation' condition = '&lt;&gt;' response='-7' response_type='fixed' skiptofieldname ='infor_screen_2'></skip>
+			<skip fieldname='motivation' condition = '&lt;&gt;' response='-8' response_type='fixed' skiptofieldname ='infor_screen_2'></skip>
+		</preskip>
+		<dont_know>-7</dont_know>
+		<refuse>-8</refuse>
+	</question>
+
+
+	<question type = 'text' fieldname = 'motivation_oth' fieldtype = 'text'>
+		<text>Specify the other motivation reason for getting another HIV test in the future</text>
+		<maxCharacters>255</maxCharacters>
+		<preskip>
+			<skip fieldname='motivation' condition = '&lt;&gt;' response='99' response_type='fixed' skiptofieldname ='infor_screen_2'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'infor_screen_2' fieldtype = 'n/a'>
+		<text>[Interviewer]: Now I’d like to ask you a few questions about your recent sexual history (since you last tested for HIV).</text>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'multiple_partners' fieldtype = 'integer'>
+		<text>Have you had more than one sexual partner since your last HIV test?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'new_partner' fieldtype = 'integer'>
+		<text>Have you had a new sexual partner since your last HIV test?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'unprotected_sex' fieldtype = 'integer'>
+		<text>Have you had sex without a condom since your last HIV test?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'hiv_positive_partner' fieldtype = 'integer'>
+		<text>Since your last HIV test, have you had a sexual partner whom you know is HIV-positive?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'sti_history' fieldtype = 'integer'>
+		<text>Since your last HIV test, have you been diagnosed with, treated for, or had symptoms of a sexually transmitted infection?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'sex_for_compensation' fieldtype = 'integer'>
+		<text>Have you received any compensation or gifts in exchange for sex since your last HIV test?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'paid_for_sex' fieldtype = 'integer'>
+		<text>Have you paid or given any compensation or gifts in exchange for sex since your last HIV test?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'dice_clinic' fieldtype = 'integer'>
+		<text>Have you been seen in a DICE clinic since your last HIV test (i.e. are you PWID, MSM, sex worker, transgender)?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'on_pep' fieldtype = 'integer'>
+		<text>Have you recently initiated PEP (Post-exposure prophylaxis) since your last HIV test, or have you been deemed eligible for PEP at this visit?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'recent_hiv_exposure' fieldtype = 'integer'>
+		<text>Since your last HIV test, have you had a recent HIV exposure risk (for example, had a condom break, raped someone, been raped)?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'information' fieldname = 'information_screen_ra1' fieldtype = 'n/a'>
+		<text>Questions for RA/counselor about referrals</text>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'hiv_positive_referral_accept' fieldtype = 'integer'>
+		<text>[If HIV result = positive] Did this participant accept referral for HIV care and ART?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+		<preskip>
+			<skip fieldname='hivtest_result_today' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='prep_pep_eligible'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'prep_pep_eligible' fieldtype = 'integer'>
+		<text>[IF HIV result = negative AND not currently taking PrEP (Q5)] Was the participant eligible for PrEP or PEP?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+		<preskip>
+			<skip fieldname='on_prep' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='information_screen_interviewer'></skip>
+			<skip fieldname='hivtest_result_today' condition = '&lt;&gt;' response='0' response_type='fixed' skiptofieldname ='information_screen_interviewer'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'prep_pep_referral_accept' fieldtype = 'integer'>
+		<text>[If PrEP/PEP eligible = yes] Did this participant accept referral for PrEP or PEP</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
 	</question>
 
 

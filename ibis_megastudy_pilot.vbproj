@@ -122,6 +122,7 @@
   <ItemGroup>
     <Compile Include="App_Public.vb" />
     <Compile Include="AutomaticVariables.vb" />
+    <Compile Include="DatabaseChanges.vb" />
     <Compile Include="LeaveNote.Designer.vb">
       <DependentUpon>LeaveNote.vb</DependentUpon>
     </Compile>

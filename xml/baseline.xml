@@ -113,9 +113,11 @@
 
 
 	<question type = 'information' fieldname = 'ibisid_info' fieldtype = 'n/a'>
-		<text>Please record the IBIS Screening ID for this participant:
+		<text>
+			Please record the IBIS Screening ID for this participant:
 
-[[screening_id]]</text>
+			[[screening_id]]
+		</text>
 	</question>
 
 
@@ -237,8 +239,10 @@
 
 
 	<question type = 'radio' fieldname = 'reading_language' fieldtype = 'integer'>
-		<text>Do you feel comfortable reading short messages in at least one of the following languages: Dholuo, Swahili, or English?
-Or do you have someone who can help you read messages in any of the following languages: Dholuo, Swahili, or English?</text>
+		<text>
+			Do you feel comfortable reading short messages in at least one of the following languages: Dholuo, Swahili, or English?
+			Or do you have someone who can help you read messages in any of the following languages: Dholuo, Swahili, or English?
+		</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
@@ -407,11 +411,13 @@ Or do you have someone who can help you read messages in any of the following la
 
 
 	<question type = 'radio' fieldname = 'eligibility_check' fieldtype = 'integer'>
-		<text>You are eligible for the IBIS study.
+		<text>
+			You are eligible for the IBIS study.
 
-Are you willing to participate in the IBIS study?
+			Are you willing to participate in the IBIS study?
 
-If yes, please consent the participant</text>
+			If yes, please consent the participant
+		</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
@@ -477,9 +483,11 @@ If yes, please consent the participant</text>
 
 
 	<question type = 'information' fieldname = 'ibisstudy_info' fieldtype = 'n/a'>
-		<text>Please record the IBIS Study ID for this participant (Enter on the enrolment Log):
+		<text>
+			Please record the IBIS Study ID for this participant (Enter on the enrolment Log):
 
-[[subjid]]</text>
+			[[subjid]]
+		</text>
 	</question>
 
 
@@ -503,7 +511,27 @@ If yes, please consent the participant</text>
 		<text>Specify who owns the phone</text>
 		<maxCharacters>80</maxCharacters>
 		<preskip>
-			<skip fieldname='phone_ownership' condition = '&lt;&gt;' response='97' response_type='fixed' skiptofieldname ='education_level'></skip>
+			<skip fieldname='phone_ownership' condition = '&lt;&gt;' response='97' response_type='fixed' skiptofieldname ='service_provider'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'service_provider' fieldtype = 'integer'>
+		<text>What service provider do you use for this mobile phone?</text>
+		<responses>
+			<response value = '1'>Safaricom</response>
+			<response value = '2'>Airtel</response>
+			<response value = '97'>Other Specify</response>
+		</responses>
+		<dont_know>-7</dont_know>
+	</question>
+
+
+	<question type = 'text' fieldname = 'service_provider_oth' fieldtype = 'text'>
+		<text>Specify other service provider</text>
+		<maxCharacters>80</maxCharacters>
+		<preskip>
+			<skip fieldname='service_provider' condition = '&lt;&gt;' response='97' response_type='fixed' skiptofieldname ='education_level'></skip>
 		</preskip>
 	</question>
 
@@ -591,8 +619,10 @@ If yes, please consent the participant</text>
 
 
 	<question type = 'radio' fieldname = 'preferred_language_ke' fieldtype = 'integer'>
-		<text>What is your preferred language to read in?
-Interviewer Note: If the participant indicated that they have someone else who can read the message for them, select the language that they can read</text>
+		<text>
+			What is your preferred language to read in?
+			Interviewer Note: If the participant indicated that they have someone else who can read the message for them, select the language that they can read
+		</text>
 		<responses>
 			<response value = '1'>Dholuo</response>
 			<response value = '2'>Swahili</response>
@@ -610,8 +640,10 @@ Interviewer Note: If the participant indicated that they have someone else who c
 
 
 	<question type = 'radio' fieldname = 'preferred_language_ug' fieldtype = 'integer'>
-		<text>What is your preferred language to read in?
-Interviewer Note: If the participant indicated that they have someone else who can read the message for them, select the language that they can read</text>
+		<text>
+			What is your preferred language to read in?
+			Interviewer Note: If the participant indicated that they have someone else who can read the message for them, select the language that they can read
+		</text>
 		<responses>
 			<response value = '4'>Runyonkole</response>
 			<response value = '5'>Luganda</response>
@@ -692,7 +724,7 @@ Interviewer Note: If the participant indicated that they have someone else who c
 			<response value = '5'>More Than 2 Years Ago</response>
 		</responses>
 		<preskip>
-			<skip fieldname='last_hiv_test' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='heard_about_art'></skip>
+			<skip fieldname='hiv_test_history' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='heard_about_art'></skip>
 		</preskip>
 		<dont_know>-7</dont_know>
 		<refuse>-8</refuse>
@@ -782,9 +814,11 @@ Interviewer Note: If the participant indicated that they have someone else who c
 
 
 	<question type = 'radio' fieldname = 'video_language_ke' fieldtype = 'integer'>
-		<text>We are about to play the intervention video to the participant
+		<text>
+			We are about to play the intervention video to the participant
 
-What is your Preferred Language for the video that we are about to play</text>
+			What is your Preferred Language for the video that we are about to play
+		</text>
 		<responses>
 			<response value = '1'>Dholuo</response>
 			<response value = '2'>Swahili</response>
@@ -797,9 +831,11 @@ What is your Preferred Language for the video that we are about to play</text>
 
 
 	<question type = 'radio' fieldname = 'video_language_ug' fieldtype = 'integer'>
-		<text>We are about to play the intervention video to the participant
+		<text>
+			We are about to play the intervention video to the participant
 
-What is your Preferred Language for the video that we are about to play</text>
+			What is your Preferred Language for the video that we are about to play
+		</text>
 		<responses>
 			<response value = '4'>Runyankole</response>
 			<response value = '5'>Luganda</response>
@@ -841,20 +877,22 @@ What is your Preferred Language for the video that we are about to play</text>
 
 
 	<question type = 'information' fieldname = 'information_screen' fieldtype = 'n/a'>
-		<text>Participant ID: [[subjid]]
-Study arm: [[arm_text]]
+		<text>
+			Participant ID: [[subjid]]
+			Study arm: [[arm_text]]
 
-Thank you for your participation. Please remember to come back here for another HIV test in 3 to 6 months from now.That would be anytime between:
+			Thank you for your participation. Please remember to come back here for another HIV test in 3 to 6 months from now.That would be anytime between:
 
-[[next_appt_3m]] to [[next_appt_6m]]
+			[[next_appt_3m]] to [[next_appt_6m]]
 
-I will write that on an appointment card for you to take with you.
+			I will write that on an appointment card for you to take with you.
 
-When you return for your repeat HIV in 3 to 6 months, we will ask you if you have already participated in this study. In order to find you in our system, we may ask you for your name, your phone number, or your month of birth. Can you please share with us your month of birth now? (Month only)
+			When you return for your repeat HIV in 3 to 6 months, we will ask you if you have already participated in this study. In order to find you in our system, we may ask you for your name, your phone number, or your month of birth. Can you please share with us your month of birth now? (Month only)
 
-Do you have any final questions for me?
+			Do you have any final questions for me?
 
-(Counselor instructions: thank the participant for their time and write down 3-6 month window on appointment card)</text>
+			(Counselor instructions: thank the participant for their time and write down 3-6 month window on appointment card)
+		</text>
 		<preskip>
 			<skip fieldname='arm' condition = '=' response='8' response_type='fixed' skiptofieldname ='information_screen1'></skip>
 		</preskip>
@@ -865,18 +903,20 @@ Do you have any final questions for me?
 
 
 	<question type = 'information' fieldname = 'information_screen1' fieldtype = 'n/a'>
-		<text>Participant ID: [[subjid]]
-Study arm: [[arm_text]]
+		<text>
+			Participant ID: [[subjid]]
+			Study arm: [[arm_text]]
 
-Thank you for your participation. Please remember to come back here for another HIV test in 3 to 6 months from now. We have scheduled an appointment date for you on [[next_appt_3m]]. If that date doesn't work, you may return anytime between [[next_appt_3m]] to [[next_appt_6m]]. I will write that on an appointment card for you to take with you.
+			Thank you for your participation. Please remember to come back here for another HIV test in 3 to 6 months from now. We have scheduled an appointment date for you on [[next_appt_3m]]. If that date doesn't work, you may return anytime between [[next_appt_3m]] to [[next_appt_6m]]. I will write that on an appointment card for you to take with you.
 
-(Counselor instructions: If the default date does not work for the participant, they may choose a different date; write selected date on appointment card)
+			(Counselor instructions: If the default date does not work for the participant, they may choose a different date; write selected date on appointment card)
 
-When you return for your repeat HIV in 3 to 6 months, we will ask you if you have already participated in this study. In order to find you in our system, we may ask you for your name, your phone number, or your month of birth. Can you please share with us your month of birth now?
+			When you return for your repeat HIV in 3 to 6 months, we will ask you if you have already participated in this study. In order to find you in our system, we may ask you for your name, your phone number, or your month of birth. Can you please share with us your month of birth now?
 
-Do you have any final questions for me?
+			Do you have any final questions for me?
 
-(Counselor instructions: thank the participant for their time and write down both the scheduled appointment date and the 3-6 month window on appointment card)</text>
+			(Counselor instructions: thank the participant for their time and write down both the scheduled appointment date and the 3-6 month window on appointment card)
+		</text>
 	</question>
 
 
@@ -925,9 +965,6 @@ Do you have any final questions for me?
 			<response value = '4'>15-20 Minutes</response>
 			<response value = '5'>More Than 20 Minutes</response>
 		</responses>
-		<preskip>
-			<skip fieldname='eligibility_check' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='what_technical_difficulties'></skip>
-		</preskip>
 	</question>
 
 
