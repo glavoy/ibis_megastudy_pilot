@@ -112,9 +112,9 @@
 			<response value = '2'>Indeterminate</response>
 		</responses>
 		<postskip>
-			<skip fieldname='hivtest_result_today' condition = '=' response='0' response_type='fixed' skiptofieldname ='hiv_risk_status'></skip>
-			<skip fieldname='hivtest_result_today' condition = '=' response='1' response_type='fixed' skiptofieldname ='hiv_risk_status'></skip>
-			<skip fieldname='hivtest_result_today' condition = '=' response='2' response_type='fixed' skiptofieldname ='hiv_risk_status'></skip>
+			<skip fieldname='hivtest_result_today' condition = '=' response='0' response_type='fixed' skiptofieldname ='infor_screen_1'></skip>
+			<skip fieldname='hivtest_result_today' condition = '=' response='1' response_type='fixed' skiptofieldname ='infor_screen_1'></skip>
+			<skip fieldname='hivtest_result_today' condition = '=' response='2' response_type='fixed' skiptofieldname ='infor_screen_1'></skip>
 		</postskip>
 	</question>
 
@@ -148,7 +148,7 @@
 	<question type = 'information' fieldname = 'infor_screen_1' fieldtype = 'n/a'>
 		<text>READ TO RESPONDENT: Now my next questions are about HIV and AIDS, and for each one I’d like for you to tell me your answer.</text>
 		<preskip>
-			<skip fieldname='hivtest_result_today' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='infor_screen_2'></skip>
+			<skip fieldname='hivtest_result_today' condition = '=' response='1' response_type='fixed' skiptofieldname ='infor_screen_2'></skip>
 		</preskip>
 	</question>
 
@@ -227,9 +227,9 @@
 			<response value = '99'>Other (Specify)</response>
 		</responses>
 		<preskip>
-			<skip fieldname='motivation' condition = '&lt;&gt;' response='5' response_type='fixed' skiptofieldname ='infor_screen_2'></skip>
-			<skip fieldname='motivation' condition = '&lt;&gt;' response='-7' response_type='fixed' skiptofieldname ='infor_screen_2'></skip>
-			<skip fieldname='motivation' condition = '&lt;&gt;' response='-8' response_type='fixed' skiptofieldname ='infor_screen_2'></skip>
+			<skip fieldname='ready_for_hivtest' condition = '=' response='5' response_type='fixed' skiptofieldname ='infor_screen_2'></skip>
+			<skip fieldname='ready_for_hivtest' condition = '=' response='-7' response_type='fixed' skiptofieldname ='infor_screen_2'></skip>
+			<skip fieldname='ready_for_hivtest' condition = '=' response='-8' response_type='fixed' skiptofieldname ='infor_screen_2'></skip>
 		</preskip>
 		<dont_know>-7</dont_know>
 		<refuse>-8</refuse>
@@ -265,6 +265,9 @@
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
+		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='hiv_positive_partner'></skip>
+		</preskip>
 	</question>
 
 
@@ -278,7 +281,7 @@
 
 
 	<question type = 'radio' fieldname = 'hiv_positive_partner' fieldtype = 'integer'>
-		<text>Since your last HIV test, have you had a sexual partner whom you know is HIV-positive?</text>
+		<text>Have you had a sexual partner who is HIV positive or whose status is unknown since your last HIV test?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
@@ -313,12 +316,36 @@
 	</question>
 
 
+	<question type = 'radio' fieldname = 'index_client' fieldtype = 'integer'>
+		<text>Have you been identified through an index client since your last HIV test?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='on_pep'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'risk_group_affiliation' fieldtype = 'integer'>
+		<text>Do any of the following categories describe you or your occupation? Sex worker, person who injects drugs, fisher folk, long-distance truck drivers, men who have sex with men (MSM), uniformed forces, adolescents and young women, pregnant or breastfeeding women.</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
 	<question type = 'radio' fieldname = 'dice_clinic' fieldtype = 'integer'>
 		<text>Have you been seen in a DICE clinic since your last HIV test (i.e. are you PWID, MSM, sex worker, transgender)?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
+		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='on_pep'></skip>
+		</preskip>
 	</question>
 
 

@@ -62,7 +62,8 @@ Module DatabaseChanges
                                                                                     sti_history Integer, sex_for_compensation Integer, paid_for_sex Integer, 
                                                                                     dice_clinic Integer, on_pep Integer"), Guid.NewGuid().ToString(), "Add new columns to the followup crf"),
                 New ChangeSet("werick", "Add columns followup", CreateAlterTableSQL("followup", "recent_hiv_exposure Integer, hiv_positive_referral_accept Integer, prep_pep_eligible Integer, 
-                                                                                    prep_pep_referral_accept Integer"), Guid.NewGuid().ToString(), "Add new columns to the followup crf")
+                                                                                    prep_pep_referral_accept Integer"), Guid.NewGuid().ToString(), "Add new columns to the followup crf"),
+                New ChangeSet("werick", "Add columns followup", CreateAlterTableSQL("followup", "index_client Integer, risk_group_affiliation Integer"), Guid.NewGuid().ToString(), "Add new columns to the followup crf")
             }
 
             'phonenum_lab
