@@ -157,7 +157,8 @@ Module AutomaticVariables
                         CurrentAutoValue = GetValue("participant_randarm")
                     Else
                         Dim clinic As Integer = CInt(GetValue("health_facility"))
-                        CurrentAutoValue = GetNextParticipantRandArm(clinic)
+                        Dim sex As Integer = CInt(GetValue("client_sex"))
+                        CurrentAutoValue = GetNextParticipantRandArm(clinic, sex)
                         RandArmID = CurrentAutoValue
                     End If
 
@@ -167,7 +168,8 @@ Module AutomaticVariables
                     Else
                         Dim clinic As Integer = CInt(GetValue("health_facility"))
                         Dim participant As Integer = CInt(GetValue("participant_randarm"))
-                        CurrentAutoValue = GetRandArm(clinic, participant)
+                        Dim sex As Integer = CInt(GetValue("client_sex"))
+                        CurrentAutoValue = GetRandArm(clinic, participant, sex)
                         RandArmID = CurrentAutoValue
                     End If
 
@@ -177,7 +179,8 @@ Module AutomaticVariables
                     Else
                         Dim clinic As Integer = CInt(GetValue("health_facility"))
                         Dim arm As Integer = CInt(GetValue("participant_randarm"))
-                        CurrentAutoValue = GetNextRandArmText(clinic, arm)
+                        Dim sex As Integer = CInt(GetValue("client_sex"))
+                        CurrentAutoValue = GetNextRandArmText(clinic, arm, sex)
                     End If
                     RandArmText = CurrentAutoValue
 
@@ -254,7 +257,7 @@ Module AutomaticVariables
 
 
 
-    'sub to calculate automatic variable: age
+    'sub to calculate  variable: age
     Public Function CalculateAge(dob) As String
         CalculateAge = 0
         If Len(dob) > 10 Then

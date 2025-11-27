@@ -1063,7 +1063,7 @@ Public Class NewSurvey
 
 
 
-            ''test to see if phonenumber is duplicate
+            'check to see if phonenumber is duplicate
             If IsValidResponse = True Then
                 If QuestionInfoArray(CurrentQuestion).FieldName = "mobile_number" And ModifyingSurvey = False Then
                     'Get the current value from the textbox
@@ -1074,7 +1074,7 @@ Public Class NewSurvey
                         End Select
                     Next
 
-                    Dim strSQL As String = "select mobile_number from " & Survey & " where mobile_number = '" & CurrentValue & "'"
+                    Dim strSQL As String = "select mobile_number from " & Survey & " where mobile_number = '" & CurrentValue & "' UNION " & "select mobile_number from baseline_lookup where mobile_number = '" & CurrentValue & "'"
                     Dim ConnectionString As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
                     Dim da As New OleDbDataAdapter(strSQL, ConnectionString)
                     Dim ds As New DataSet
@@ -1085,6 +1085,58 @@ Public Class NewSurvey
                         Exit Function
                     End If
                     ConnectionString.Close()
+                End If
+            End If
+
+
+            'check to see if national ID is duplicate
+            If IsValidResponse = True Then
+                If QuestionInfoArray(CurrentQuestion).FieldName = "national_id" And ModifyingSurvey = False Then
+                    'Get the current value from the textbox
+                    For Each aControl In Me.Controls
+                        Select Case TypeName(aControl)
+                            Case "TextBox"
+                                CurrentValue = aControl.Text
+                        End Select
+                    Next
+
+                    Dim strSQL As String = "select national_id from " & Survey & " where national_id = '" & CurrentValue & "' UNION " & "select national_id from baseline_lookup where national_id = '" & CurrentValue & "'"
+                    Dim ConnectionString As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
+                    Dim da As New OleDbDataAdapter(strSQL, ConnectionString)
+                    Dim ds As New DataSet
+                    da.Fill(ds)
+                    If ds.Tables(0).Rows.Count > 0 Then
+                        IsValidResponse = False
+                        MsgBox("This national_id number has already been assigned to another participant.", vbCritical, "Duplicate national_id number!")
+                        Exit Function
+                    End If
+                    ConnectionString.Close()
+                End If
+            End If
+
+
+
+            'check to see if national ID is duplicate
+            If IsValidResponse = True Then
+                If QuestionInfoArray(CurrentQuestion).FieldName = "respondants_age" And ModifyingSurvey = False Then
+                    'Get the current value from the textbox
+                    For Each aControl In Me.Controls
+                        Select Case TypeName(aControl)
+                            Case "TextBox"
+                                CurrentValue = aControl.Text
+                        End Select
+                    Next
+
+                    Dim age As Integer = CInt(CurrentValue)
+                    Dim dob As Date = GetValue("dob")
+                    Dim actual_age As Integer = CInt(CalculateAge(dob))
+
+                    If age <> actual_age Then
+                        IsValidResponse = False
+                        MsgBox("The Participant's age does not match the date of birth provided. Kindly review the Date of Birth or age: DOB: " & dob & " Actual Age: " & actual_age, vbCritical, "Invalid Age")
+
+                    End If
+
                 End If
             End If
 
@@ -1147,22 +1199,13 @@ Public Class NewSurvey
 
             ' ensure dob is not in the future
             If IsValidResponse = True Then
-                If QuestionInfoArray(CurrentQuestion).FieldName = "dobday" Then
-                    For Each aControl In Me.Controls
-                        Select Case TypeName(aControl)
-                            Case "GroupBox"
-                                For Each aGroupControl In CType(aControl, GroupBox).Controls
-                                    'Radio buttons
-                                    If TypeOf aGroupControl Is RadioButton Then
-                                        If CType(aGroupControl, RadioButton).Checked Then
-                                            CurrentValue = aGroupControl.tag
-                                        End If
-                                    End If
-                                Next
-                        End Select
-                    Next
+                If QuestionInfoArray(CurrentQuestion).FieldName = "dob" Then
+                    'Get the current value of selected date
+                    Dim CurrentValueDate As Date = CurrentDateSelected
 
-                    Dim date2 As Date = Date.Parse(CurrentValue & "/" & GetValue("dobmonth") & "/" & GetValue("dobyear"))
+                    Dim format As String = "d/MM/yyyy"
+                    Dim provider As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
+                    Dim date2 As Date = Date.ParseExact(CurrentValueDate, format, provider)
                     Dim date1 As Date = Now
 
                     ' Determine the number of days between the two dates.
@@ -1171,7 +1214,7 @@ Public Class NewSurvey
 
                     If numHours > 0 Then
                         IsValidResponse = False
-                        MsgBox("Household member cannot be born in the future! Please revise the year/month/day born", vbCritical, "Invalid DOB")
+                        MsgBox("Participant cannot be born in the future! Please revise the year/month/day born", vbCritical, "Invalid DOB")
                     End If
                 End If
             End If
@@ -1197,7 +1240,6 @@ Public Class NewSurvey
 
 
                     Dim age As Integer = CInt(GetValue("respondants_age"))
-
                     If age >= 15 And CurrentValue = 2 Then
                         IsValidResponse = False
                         MsgBox("The Participant's age is greater than 15 years, kindly select the correct response", vbCritical, "Invalid Response")

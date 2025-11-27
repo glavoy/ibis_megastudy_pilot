@@ -94,9 +94,6 @@
 
 	<question type = 'date' fieldname = 'dob' fieldtype = 'date'>
 		<text>Enter the Participants date of birth</text>
-		<preskip>
-			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='screening_id'></skip>
-		</preskip>
 	</question>
 
 

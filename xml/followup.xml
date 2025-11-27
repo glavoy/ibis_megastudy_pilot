@@ -53,6 +53,10 @@
 		<preskip>
 			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='health_facility_ug'></skip>
 		</preskip>
+		<postskip>
+			<skip fieldname='health_facility_ke' condition = '&lt;&gt;' response='99' response_type='fixed' skiptofieldname ='health_facility'></skip>
+			<skip fieldname='health_facility_ke' condition = '=' response='99' response_type='fixed' skiptofieldname ='health_facility_oth'></skip>
+		</postskip>
 	</question>
 
 
@@ -65,18 +69,16 @@
 			<response value = '14'>Ruhoko HCIV (Ibanda)</response>
 			<response value = '99'>Other</response>
 		</responses>
-		<preskip>
-			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='health_facility'></skip>
-		</preskip>
+		<postskip>
+			<skip fieldname='health_facility_ug' condition = '&lt;&gt;' response='99' response_type='fixed' skiptofieldname ='health_facility'></skip>
+			<skip fieldname='health_facility_ug' condition = '=' response='99' response_type='fixed' skiptofieldname ='health_facility_oth'></skip>
+		</postskip>
 	</question>
 
 
 	<question type = 'text' fieldname = 'health_facility_oth' fieldtype = 'text'>
 		<text>Specify other health facility</text>
 		<maxCharacters>80</maxCharacters>
-		<preskip>
-			<skip fieldname='health_facility_ke' condition = '&lt;&gt;' response='99' response_type='fixed' skiptofieldname ='health_facility'></skip>
-		</preskip>
 	</question>
 
 
@@ -200,10 +202,8 @@
 
 
 	<question type = 'radio' fieldname = 'ready_for_hivtest' fieldtype = 'integer'>
-		<text>
-			How likely are you to go for an HIV test again sometime in the next 6 months?
-			[READ ALL ANSWER CHOICES]
-		</text>
+		<text>How likely are you to go for an HIV test again sometime in the next 6 months?
+[READ ALL ANSWER CHOICES]</text>
 		<responses>
 			<response value = '1'>Very Likely</response>
 			<response value = '2'>Somewhat Likely</response>
@@ -216,10 +216,8 @@
 
 
 	<question type = 'radio' fieldname = 'motivation' fieldtype = 'integer'>
-		<text>
-			ASK ONLY FOR THOSE WHO DON’T REPORT “VERY UNLIKELY”
-			What do you think your main motivation might be for getting another HIV test in the future?
-		</text>
+		<text>ASK ONLY FOR THOSE WHO DON’T REPORT “VERY UNLIKELY” 
+What do you think your main motivation might be for getting another HIV test in the future?</text>
 		<responses>
 			<response value = '1'>Staying Healthy/HIV-Negative</response>
 			<response value = '2'>Preventing my sexual partners from becoming HIV infected</response>
@@ -350,7 +348,16 @@
 
 
 	<question type = 'radio' fieldname = 'on_pep' fieldtype = 'integer'>
-		<text>Have you recently initiated PEP (Post-exposure prophylaxis) since your last HIV test, or have you been deemed eligible for PEP at this visit?</text>
+		<text>Have you recently initiated PEP (Post-exposure prophylaxis) since your last HIV test?</text>
+		<responses>
+			<response value = '1'>Yes</response>
+			<response value = '2'>No</response>
+		</responses>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'pep_eligible' fieldtype = 'integer'>
+		<text>Are eligible for PEP (Post-exposure prophylaxis) at this visit today?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
