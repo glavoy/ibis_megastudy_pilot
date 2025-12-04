@@ -1100,7 +1100,7 @@ Public Class NewSurvey
                         End Select
                     Next
 
-                    Dim strSQL As String = "select national_id from " & Survey & " where national_id = '" & CurrentValue & "' UNION " & "select national_id from baseline_lookup where national_id = '" & CurrentValue & "'"
+                    Dim strSQL As String = "select national_id from " & Survey & " where national_id <> '-6' and national_id = '" & CurrentValue & "' UNION " & "select national_id from baseline_lookup where national_id <> '-6' and national_id = '" & CurrentValue & "'"
                     Dim ConnectionString As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
                     Dim da As New OleDbDataAdapter(strSQL, ConnectionString)
                     Dim ds As New DataSet
@@ -2727,13 +2727,13 @@ Public Class NewSurvey
 
 
     Private Function getRandVideo(sex As Integer, age As Integer, randarmtext As String, pref_lang As String)
-        Dim video_path As String = "C:\IBIS_pilot\rand_video\Brian (en) - Social norms.mp4"  ' Default return value
+        Dim video_path As String = "C:\IBIS_pilot\rand_video\Brian (en) - Social norms2.mp4"  ' Default return value
         Try
             Using connection As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
                 Dim query As String
 
-                ' If arm is "Social norms", add sex and age filters
-                If randarmtext = "Social norms" Then
+                ' If arm is "Social norms - sex-age-matched", add sex and age filters
+                If randarmtext = "Social norms - sex-age-matched" Then
                     Dim age_cat As Integer = If(age <= 30, 1, 2)
                     query = "SELECT video_name FROM videolistpath WHERE arm = ? AND sexcode = ? AND agecategory = ? AND video_language = ?"
                 Else

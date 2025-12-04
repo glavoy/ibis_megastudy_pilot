@@ -95,9 +95,9 @@ Partial Class Main_Menu
         Me.Label1.Location = New System.Drawing.Point(331, 37)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(416, 46)
+        Me.Label1.Size = New System.Drawing.Size(400, 58)
         Me.Label1.TabIndex = 14
-        Me.Label1.Text = "IBIS MegaStudy Pilot"
+        Me.Label1.Text = "IBIS MegaStudy"
         '
         'HouseholdToolStripMenuItem
         '

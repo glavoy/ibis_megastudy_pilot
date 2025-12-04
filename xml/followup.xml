@@ -202,8 +202,10 @@
 
 
 	<question type = 'radio' fieldname = 'ready_for_hivtest' fieldtype = 'integer'>
-		<text>How likely are you to go for an HIV test again sometime in the next 6 months?
-[READ ALL ANSWER CHOICES]</text>
+		<text>
+			How likely are you to go for an HIV test again sometime in the next 6 months?
+			[READ ALL ANSWER CHOICES]
+		</text>
 		<responses>
 			<response value = '1'>Very Likely</response>
 			<response value = '2'>Somewhat Likely</response>
@@ -216,8 +218,10 @@
 
 
 	<question type = 'radio' fieldname = 'motivation' fieldtype = 'integer'>
-		<text>ASK ONLY FOR THOSE WHO DON’T REPORT “VERY UNLIKELY” 
-What do you think your main motivation might be for getting another HIV test in the future?</text>
+		<text>
+			ASK ONLY FOR THOSE WHO DON’T REPORT “VERY UNLIKELY”
+			What do you think your main motivation might be for getting another HIV test in the future?
+		</text>
 		<responses>
 			<response value = '1'>Staying Healthy/HIV-Negative</response>
 			<response value = '2'>Preventing my sexual partners from becoming HIV infected</response>
@@ -348,7 +352,7 @@ What do you think your main motivation might be for getting another HIV test in 
 
 
 	<question type = 'radio' fieldname = 'on_pep' fieldtype = 'integer'>
-		<text>Have you recently initiated PEP (Post-exposure prophylaxis) since your last HIV test?</text>
+		<text>Have you initiated PEP (Post-exposure prophylaxis) since your last HIV test?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
@@ -357,7 +361,7 @@ What do you think your main motivation might be for getting another HIV test in 
 
 
 	<question type = 'radio' fieldname = 'pep_eligible' fieldtype = 'integer'>
-		<text>Are eligible for PEP (Post-exposure prophylaxis) at this visit today?</text>
+		<text>Are you eligible for PEP (Post-exposure prophylaxis) at this visit today?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>

@@ -823,6 +823,8 @@
 		</responses>
 		<preskip>
 			<skip fieldname='countrycode' condition = '=' response='1' response_type='fixed' skiptofieldname ='video_language_ug'></skip>
+			<skip fieldname='arm' condition = '=' response='11' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
+			<skip fieldname='arm' condition = '=' response='12' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
 		</preskip>
 	</question>
 
@@ -840,12 +842,18 @@
 		</responses>
 		<preskip>
 			<skip fieldname='countrycode' condition = '=' response='2' response_type='fixed' skiptofieldname ='play_video'></skip>
+			<skip fieldname='arm' condition = '=' response='11' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
+			<skip fieldname='arm' condition = '=' response='12' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
 		</preskip>
 	</question>
 
 
 	<question type = 'information' fieldname = 'play_video' fieldtype = 'n/a'>
 		<text>Play the video</text>
+		<preskip>
+			<skip fieldname='arm' condition = '=' response='11' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
+			<skip fieldname='arm' condition = '=' response='12' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
+		</preskip>
 	</question>
 
 
@@ -891,10 +899,10 @@
 			(Counselor instructions: thank the participant for their time and write down 3-6 month window on appointment card)
 		</text>
 		<preskip>
-			<skip fieldname='arm' condition = '=' response='8' response_type='fixed' skiptofieldname ='information_screen1'></skip>
+			<skip fieldname='arm' condition = '=' response='6' response_type='fixed' skiptofieldname ='information_screen1'></skip>
 		</preskip>
 		<postskip>
-			<skip fieldname='arm' condition = '&lt;&gt;' response='8' response_type='fixed' skiptofieldname ='month_of_birth'></skip>
+			<skip fieldname='arm' condition = '&lt;&gt;' response='6' response_type='fixed' skiptofieldname ='month_of_birth'></skip>
 		</postskip>
 	</question>
 
