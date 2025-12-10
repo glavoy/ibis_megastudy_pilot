@@ -823,8 +823,8 @@
 		</responses>
 		<preskip>
 			<skip fieldname='countrycode' condition = '=' response='1' response_type='fixed' skiptofieldname ='video_language_ug'></skip>
-			<skip fieldname='arm' condition = '=' response='11' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
-			<skip fieldname='arm' condition = '=' response='12' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
+			<skip fieldname='arm' condition = '=' response='11' response_type='fixed' skiptofieldname ='information_screen_sfi_en'></skip>
+			<skip fieldname='arm' condition = '=' response='12' response_type='fixed' skiptofieldname ='information_screen_soc_en'></skip>
 		</preskip>
 	</question>
 
@@ -842,8 +842,8 @@
 		</responses>
 		<preskip>
 			<skip fieldname='countrycode' condition = '=' response='2' response_type='fixed' skiptofieldname ='play_video'></skip>
-			<skip fieldname='arm' condition = '=' response='11' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
-			<skip fieldname='arm' condition = '=' response='12' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
+			<skip fieldname='arm' condition = '=' response='11' response_type='fixed' skiptofieldname ='information_screen_sfi_en'></skip>
+			<skip fieldname='arm' condition = '=' response='12' response_type='fixed' skiptofieldname ='information_screen_soc_en'></skip>
 		</preskip>
 	</question>
 
@@ -851,8 +851,109 @@
 	<question type = 'information' fieldname = 'play_video' fieldtype = 'n/a'>
 		<text>Play the video</text>
 		<preskip>
-			<skip fieldname='arm' condition = '=' response='11' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
-			<skip fieldname='arm' condition = '=' response='12' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
+			<skip fieldname='arm' condition = '=' response='11' response_type='fixed' skiptofieldname ='information_screen_sfi_en'></skip>
+			<skip fieldname='arm' condition = '=' response='12' response_type='fixed' skiptofieldname ='information_screen_soc_en'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'information_screen_soc_en' fieldtype = 'n/a'>
+		<text>
+			You have been selected to receive the usual HIV test counseling that people normally receive in [Kenya/Uganda]. As your counselor, I will provide post-test counseling to you.
+
+			Please remember to come back to this location for another HIV test in 3 to 6 months from now. The test is free and the results will be confidential. Please let me know if you have any questions.
+
+			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
+		</text>
+		<preskip>
+			<skip fieldname='arm' condition = '&lt;&gt;' response='12' response_type='fixed' skiptofieldname ='information_screen1'></skip>
+			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='information_screen_soc_sw'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'information_screen_soc_sw' fieldtype = 'n/a'>
+		<text>
+			Umechaguliwa kupata ushauri wa kawaida wa upimaji wa Virusi Vya UKIMWI ambao watu hupokea nchini Kenya. Kama mshauri wako, nitakupa ushauri nasaha baada ya kupima.
+			Tafadhali kumbuka kurudi hapa kwa ajili ya kipimo kingine cha Virusi Vya UKIMWI katika muda wa miezi 3 hadi 6 kuanzia sasa. Kipimo ni bure na matokeo yatakuwa siri. Tafadhali nijulishe ikiwa una maswali yoyote.
+
+			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
+		</text>
+		<preskip>
+			<skip fieldname='arm' condition = '&lt;&gt;' response='12' response_type='fixed' skiptofieldname ='information_screen1'></skip>
+			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='information_screen_soc_luo'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'information_screen_soc_luo' fieldtype = 'n/a'>
+		<text>
+			Oyieri mondo iyud hocho mar pim mar kute mag ayaki maji yudo ge e Kenya. Ka ja hocho mari, abiro chiwo hoch bang pim ne in.
+
+			Akwayo ni ipar iduogi kama otim ni e pim kae e dweche 3 nyaka 6 chakre sani. Pim itimo nono maonge chudo kendo duoko biro bedo maling ling. Akwayo ni mondo ang’e ka in gi penjo moro a mora.”
+			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
+		</text>
+		<preskip>
+			<skip fieldname='arm' condition = '&lt;&gt;' response='12' response_type='fixed' skiptofieldname ='information_screen1'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'information_screen_sfi_en' fieldtype = 'n/a'>
+		<text>
+			You have been selected to receive a small payment if you return for another HIV test in the future. If you come back for an HIV test at this location in 3 to 6 months from now, you will receive [Ksh 700/[UGX 20,000].
+
+			You may only receive this payment one time, and only at this location.
+
+			The payment will not be made if you go for HIV testing at other locations, or if you come back for testing outside of the 3 to 6 month window.
+
+			You must be the one to claim this payment. You cannot have another person receive this payment on your behalf.
+
+			Please remember to come back to this location for another HIV test in 3 to 6 months from now to receive your payment of [Ksh 700/UGX 20,000]. The test is free and the results will be confidential. Please let me know if you have any questions.
+
+			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
+		</text>
+		<preskip>
+			<skip fieldname='arm' condition = '&lt;&gt;' response='11' response_type='fixed' skiptofieldname ='information_screen1'></skip>
+			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='information_screen_sfi_sw'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'information_screen_sfi_sw' fieldtype = 'n/a'>
+		<text>
+			Umechaguliwa kupokea malipo kidogo kwa ajili ya kipimo kingine cha Virusi Vya UKIMWI siku za usoni. Ukirudi hapa kwa ajili ya kipimo cha Virusi Vya UKIMWI katika muda wa miezi 3 hadi 6 kuanzia sasa, utapata shilingi 700.
+			Unaweza kupokea malipo haya mara moja tu, na mahali hapa pekee.
+			Malipo hayalipwa ukienda kupima Virusi Vya UKIMWI sehemu nyingine, au ukirudi kupima nje ya muda wa miezi 3 hadi 6.
+			Ni lazima uje mwenyewe kudai malipo haya. Huruhusiwi kumtuma mtu mwingine kupokea malipo haya kwa niaba yako.
+			Tafadhali kumbuka kurudi hapa kwa ajili ya kipimo kingine cha Virusi Vya UKIMWI katika muda wa miezi 3 hadi 6 kuanzia sasa ili upate malipo yako ya shilingi 700.
+			Kipimo ni bure na matokeo yatakuwa siri. Tafadhali nijulishe ikiwa una maswali yoyote.
+
+			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
+		</text>
+		<preskip>
+			<skip fieldname='arm' condition = '&lt;&gt;' response='11' response_type='fixed' skiptofieldname ='information_screen1'></skip>
+			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='information_screen_sfi_luo'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'information_screen_sfi_luo' fieldtype = 'n/a'>
+		<text>
+			Oyieri ni mondo iyud chudo moro matin ka iduogo ne pim moro mar kute mag ayaki e ndalo ma biro. Ka iduogo ne pim mar kute mag ayaki kama otim ni e pim kae e dweche 3 nyaka 6 chakre sani, Ibiro chuli siling 700.
+
+			Inyalo yudo mana chudo ni dichiel, kendo mana kama otim ni e pim kae.
+
+			Chudo ok be chiw ka idhi kuonde ma moko mag pim mag kute mag ayaki, kata ka ibiro e pim oko mar kinde mar dweche 3 nyaka 6.
+
+			In emanyaka ibi kaw chudo mari. Ok inyal bedo gi ng’at moro makawo chudo ne in.
+
+			Akwayo ni ipar iduogi kama otim ni e pim kae e dweche 3 nyaka 6 chakre sani mondo iyud chudoni mar siling 700. Pim itimo nono maonge chudo kendo duoko biro bedo maling ling. Akwayo ni mondo ang’e ka in gi penjo moro a mora.
+
+			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
+		</text>
+		<preskip>
+			<skip fieldname='arm' condition = '&lt;&gt;' response='11' response_type='fixed' skiptofieldname ='information_screen1'></skip>
 		</preskip>
 	</question>
 
@@ -958,6 +1059,9 @@
 
 	<question type = 'information' fieldname = 'information_screen_interviewer' fieldtype = 'n/a'>
 		<text>Please answer a few questions about this survey experience.</text>
+		<preskip>
+			<skip fieldname='consent' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='uniqueid'></skip>
+		</preskip>
 	</question>
 
 

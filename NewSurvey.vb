@@ -1111,6 +1111,16 @@ Public Class NewSurvey
                         Exit Function
                     End If
                     ConnectionString.Close()
+
+                    Dim country As String = GetValue("countrycode")
+
+                    'check the number of
+                    If country = 2 And CurrentValue <> "-6" And (Len(Trim(CurrentValue)) > 8 Or Len(Trim(CurrentValue)) < 5) Then
+                        IsValidResponse = False
+                        MsgBox("This national_id number should be more at least 5 characters and not more than 8 characters.", vbCritical, "Error national_id number!")
+                        Exit Function
+
+                    End If
                 End If
             End If
 
@@ -2744,7 +2754,7 @@ Public Class NewSurvey
                     ' Add parameters in the exact order they appear in the query
                     command.Parameters.AddWithValue("?", randarmtext)
 
-                    If randarmtext = "Social norms" Then
+                    If randarmtext = "Social norms - sex-age-matched" Then
                         command.Parameters.AddWithValue("?", sex)
                         command.Parameters.AddWithValue("?", If(age <= 30, 1, 2))
                     End If

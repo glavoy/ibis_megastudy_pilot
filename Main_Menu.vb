@@ -891,7 +891,7 @@ Public Class Main_Menu
 
                             ' For troubleshooting the SQL command
                             commandText = commandText.TrimEnd(","c) & ")"
-                            'Console.WriteLine(commandText)
+                            Console.WriteLine(commandText)
 
                             insertCmd.ExecuteNonQuery()
                             csvRecordCount += 1
@@ -923,7 +923,7 @@ Public Class Main_Menu
     Function FormatDate(dateStr As String) As String
         Dim parsedDate As DateTime
         Dim formats As String() = {"dd/MM/yyyy", "dd/MM/yyyy HH:mm:ss", "d/M/yyyy", "d/M/yyyy HH:mm:ss",
-                               "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss"}
+                               "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "dd/MM/yyyy", "dd/MM/yyyy HH:mm:ss", "MM/dd/yy", "MM/dd/yy HH:mm:ss"}
 
         ' First, attempt to parse with the expected format
         If DateTime.TryParseExact(dateStr, "dd/MM/yyyy", Globalization.CultureInfo.InvariantCulture, Globalization.DateTimeStyles.None, parsedDate) Then
@@ -936,6 +936,13 @@ Public Class Main_Menu
                 Return parsedDate.ToString("dd/MM/yyyy")
             Else
                 Return parsedDate.ToString("dd/MM/yyyy HH:mm:ss")
+            End If
+        ElseIf dateStr = "nan" Or dateStr = "01/00/00 00:00:00" Then
+            If DateTime.TryParseExact("01/01/1900", "dd/MM/yyyy", Globalization.CultureInfo.InvariantCulture, Globalization.DateTimeStyles.None, parsedDate) Then
+                Return parsedDate.ToString("dd/MM/yyyy")
+            Else
+                Console.WriteLine($"Invalid date format: {dateStr}")
+                Return String.Empty
             End If
         Else
             ' Handle invalid date format
