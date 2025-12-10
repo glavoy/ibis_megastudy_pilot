@@ -866,7 +866,7 @@
 			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
 		</text>
 		<preskip>
-			<skip fieldname='arm' condition = '&lt;&gt;' response='12' response_type='fixed' skiptofieldname ='information_screen1'></skip>
+			<skip fieldname='arm' condition = '&lt;&gt;' response='12' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
 			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='information_screen_soc_sw'></skip>
 		</preskip>
 	</question>
@@ -880,7 +880,7 @@
 			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
 		</text>
 		<preskip>
-			<skip fieldname='arm' condition = '&lt;&gt;' response='12' response_type='fixed' skiptofieldname ='information_screen1'></skip>
+			<skip fieldname='arm' condition = '&lt;&gt;' response='12' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
 			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='information_screen_soc_luo'></skip>
 		</preskip>
 	</question>
@@ -894,7 +894,7 @@
 			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
 		</text>
 		<preskip>
-			<skip fieldname='arm' condition = '&lt;&gt;' response='12' response_type='fixed' skiptofieldname ='information_screen1'></skip>
+			<skip fieldname='arm' condition = '&lt;&gt;' response='12' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
 		</preskip>
 	</question>
 
@@ -914,7 +914,7 @@
 			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
 		</text>
 		<preskip>
-			<skip fieldname='arm' condition = '&lt;&gt;' response='11' response_type='fixed' skiptofieldname ='information_screen1'></skip>
+			<skip fieldname='arm' condition = '&lt;&gt;' response='11' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
 			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='information_screen_sfi_sw'></skip>
 		</preskip>
 	</question>
@@ -932,7 +932,7 @@
 			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
 		</text>
 		<preskip>
-			<skip fieldname='arm' condition = '&lt;&gt;' response='11' response_type='fixed' skiptofieldname ='information_screen1'></skip>
+			<skip fieldname='arm' condition = '&lt;&gt;' response='11' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
 			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='information_screen_sfi_luo'></skip>
 		</preskip>
 	</question>
@@ -953,7 +953,7 @@
 			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
 		</text>
 		<preskip>
-			<skip fieldname='arm' condition = '&lt;&gt;' response='11' response_type='fixed' skiptofieldname ='information_screen1'></skip>
+			<skip fieldname='arm' condition = '&lt;&gt;' response='11' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
 		</preskip>
 	</question>
 
@@ -1061,6 +1061,8 @@
 		<text>Please answer a few questions about this survey experience.</text>
 		<preskip>
 			<skip fieldname='consent' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='uniqueid'></skip>
+			<skip fieldname='arm' condition = '=' response='11' response_type='fixed' skiptofieldname ='uniqueid'></skip>
+			<skip fieldname='arm' condition = '=' response='12' response_type='fixed' skiptofieldname ='uniqueid'></skip>
 		</preskip>
 	</question>
 
