@@ -1061,6 +1061,7 @@
 		<text>Please answer a few questions about this survey experience.</text>
 		<preskip>
 			<skip fieldname='consent' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='uniqueid'></skip>
+			<skip fieldname='consent' condition = '=' response='1' response_type='fixed' skiptofieldname ='uniqueid'></skip>
 			<skip fieldname='arm' condition = '=' response='11' response_type='fixed' skiptofieldname ='uniqueid'></skip>
 			<skip fieldname='arm' condition = '=' response='12' response_type='fixed' skiptofieldname ='uniqueid'></skip>
 		</preskip>
