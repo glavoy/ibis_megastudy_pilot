@@ -269,7 +269,7 @@
 			<response value = '2'>No</response>
 		</responses>
 		<preskip>
-			<skip fieldname='eligibility_check1' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='comments'></skip>
+			<skip fieldname='eligibility_check1' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='eligibility_check2'></skip>
 		</preskip>
 	</question>
 
@@ -404,6 +404,9 @@
 
 
 	<question type = 'automatic' fieldname = 'eligibility_check2' fieldtype = 'integer'>
+		<postskip>
+			<skip fieldname='eligibility_check1' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='comments'></skip>
+		</postskip>
 	</question>
 
 
