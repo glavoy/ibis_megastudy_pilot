@@ -658,7 +658,7 @@ Public Class Main_Menu
         ModifyingSurvey = False
         Survey = "followup"
 
-        If DoesSUBJIDExistInLookup() = True And DoesSUBJIDExistInFollowup() = False Then
+        If DoesSUBJIDExistInLookup() Or DoesSUBJIDExistInFollowup() Then
             MessageBox.Show("This Participant has already had a followup visit in a different tablet. To prevent a duplicate entry, further action is not allowed.")
             Exit Sub
 

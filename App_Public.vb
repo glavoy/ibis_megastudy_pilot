@@ -288,7 +288,7 @@ Module IBIS_Public
 
     End Function
 
-    ' Checks if the current SUBJID exists in the followup table.
+    ' Checks if the current SUBJID exists in the followup table and has already had the primary endpoint visit.
     ' Returns: True if SUBJID exists in followup table, False if not found or on error.
     ' Uses the global followup variable for checking existence in the database.
     Public Function DoesSUBJIDExistInFollowup() As Boolean
@@ -297,7 +297,7 @@ Module IBIS_Public
                 Connection.Open()
 
                 ' Check if HHID exists in census table
-                Dim strSQL As String = "SELECT COUNT(*) FROM followup WHERE subjid = @subjid"
+                Dim strSQL As String = "SELECT COUNT(*) FROM followup WHERE primary_endpoint_visit = 1 AND subjid = @subjid"
                 Using cmd As New OleDbCommand(strSQL, Connection)
                     cmd.Parameters.AddWithValue("@subjid", SUBJID)
                     Dim count As Integer = Convert.ToInt32(cmd.ExecuteScalar())
@@ -315,7 +315,7 @@ Module IBIS_Public
     End Function
 
 
-    ' Checks if the current SUBJID exists in the lookup table.
+    ' Checks if the current SUBJID exists in the lookup table and has already had the primary endpoint visit.
     ' Returns: True if SUBJID exists in lookup table, False if not found or on error.
     ' Uses the global SUBJID variable for checking existence in the lookup.
     Public Function DoesSUBJIDExistInLookup() As Boolean
@@ -327,13 +327,13 @@ Module IBIS_Public
                 Connection.Open()
 
                 ' Check if HHID exists in census table
-                Dim strSQL As String = "SELECT COUNT(*) FROM followup_lookup WHERE subjid = @subjid"
+                Dim strSQL As String = "SELECT COUNT(*) FROM followup_lookup WHERE primary_endpoint_visit = 1 AND subjid = @subjid"
                 Using cmd As New OleDbCommand(strSQL, Connection)
                     cmd.Parameters.AddWithValue("@subjid", SUBJID)
                     census_lookup = Convert.ToInt32(cmd.ExecuteScalar())
 
                     ' Return true if count > 0, meaning HHID exists in census table
-                    Return census_lookup
+                    Return census_lookup > 0
                 End Using
             End Using
 
@@ -344,6 +344,56 @@ Module IBIS_Public
 
         ' Default return if an exception occurs
         Return False
+    End Function
+
+    Public Function EndpointVisitWindow() As Boolean
+        Try
+
+
+            Dim visit_date As DateTime = DateTime.ParseExact(GetValue("starttime").ToString(), "dd/MM/yyyy HH:mm:ss", Globalization.CultureInfo.InvariantCulture).Date   ' normalize time
+            Dim nextAppt3m As DateTime? = Nothing
+            Dim nextAppt6m As DateTime? = Nothing
+
+            Using Connection As OleDbConnection = GetDBConnection()
+                Connection.Open()
+
+                ' Check if HHID exists in census table
+                Dim strSQL As String = "SELECT subjid, next_appt_3m, next_appt_6m FROM baseline_lookup WHERE subjid = ? " &
+                "UNION " &
+                "SELECT subjid, next_appt_3m, next_appt_6m FROM baseline WHERE subjid = ?"
+
+                Using cmd As New OleDbCommand(strSQL, Connection)
+                    cmd.Parameters.AddWithValue("?", SUBJID)
+                    cmd.Parameters.AddWithValue("?", SUBJID)
+
+                    Using reader = cmd.ExecuteReader()
+                        If reader.Read() Then
+                            If Not IsDBNull(reader("next_appt_3m")) Then
+                                nextAppt3m = reader.GetDateTime(reader.GetOrdinal("next_appt_3m")).Date
+                            End If
+                            If Not IsDBNull(reader("next_appt_6m")) Then
+                                nextAppt6m = reader.GetDateTime(reader.GetOrdinal("next_appt_6m")).Date
+                            End If
+                        End If
+                    End Using
+
+                    ' Validate before comparison
+                    If nextAppt3m.HasValue AndAlso nextAppt6m.HasValue Then
+                        Return visit_date >= nextAppt3m.Value AndAlso visit_date <= nextAppt6m.Value
+                    End If
+
+                    Return False
+
+                End Using
+            End Using
+
+
+        Catch ex As Exception
+            MessageBox.Show("Error checking if SUBJID exists in baseline: " & ex.Message)
+            ' Default return if an exception occurs
+            Return False
+        End Try
+
     End Function
 
 
