@@ -249,6 +249,21 @@ Module AutomaticVariables
                 Case Is = "sms_schedule_11weeks"
                     CurrentAutoValue = SetAppointmentDateByMonths(11, True)
 
+
+                Case Is = "primary_endpoint_visit"
+
+                    If ModifyingSurvey = True Then
+                        CurrentAutoValue = GetValue("primary_endpoint_visit")
+                    Else
+                        If EndpointVisitWindow() Then
+                            CurrentAutoValue = 1
+                        Else
+                            CurrentAutoValue = 0
+                        End If
+                    End If
+
+
+
             End Select
         Catch ex As Exception
             MessageBox.Show(ex.Message)

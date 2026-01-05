@@ -414,6 +414,9 @@
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
+		<preskip>
+			<skip fieldname='prep_pep_eligible' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='information_screen_interviewer'></skip>
+		</preskip>
 	</question>
 
 
@@ -435,6 +438,10 @@
 		<logic_check>
 			<logic fieldname='subjid2' condition = '&lt;&gt;' response = 'subjid' response_type = 'dynamic' condition2 = '=' currentresponse = '1' message = 'This does not match your previous entry!'></logic>
 		</logic_check>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'primary_endpoint_visit' fieldtype = 'integer'>
 	</question>
 
 

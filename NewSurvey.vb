@@ -1114,7 +1114,7 @@ Public Class NewSurvey
 
                     Dim country As String = GetValue("countrycode")
 
-                    'check the number of
+                    'check the number of characters
                     If country = 2 And CurrentValue <> "-6" And (Len(Trim(CurrentValue)) > 8 Or Len(Trim(CurrentValue)) < 5) Then
                         IsValidResponse = False
                         MsgBox("This national_id number should be more at least 5 characters and not more than 8 characters.", vbCritical, "Error national_id number!")
@@ -1126,7 +1126,7 @@ Public Class NewSurvey
 
 
 
-            'check to see if national ID is duplicate
+            'check to see if respondants_age matches the dob
             If IsValidResponse = True Then
                 If QuestionInfoArray(CurrentQuestion).FieldName = "respondants_age" And ModifyingSurvey = False Then
                     'Get the current value from the textbox
