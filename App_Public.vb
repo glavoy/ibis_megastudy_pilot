@@ -296,7 +296,7 @@ Module IBIS_Public
             Using Connection As OleDbConnection = GetDBConnection()
                 Connection.Open()
 
-                ' Check if HHID exists in census table
+                ' Check if subjid has a primary endpoint visit in the followup table
                 Dim strSQL As String = "SELECT COUNT(*) FROM followup WHERE primary_endpoint_visit = 1 AND subjid = @subjid"
                 Using cmd As New OleDbCommand(strSQL, Connection)
                     cmd.Parameters.AddWithValue("@subjid", SUBJID)
@@ -326,7 +326,7 @@ Module IBIS_Public
             Using Connection As OleDbConnection = GetDBConnection()
                 Connection.Open()
 
-                ' Check if HHID exists in census table
+                ' Check if subjid exists in the followup lookup table
                 Dim strSQL As String = "SELECT COUNT(*) FROM followup_lookup WHERE primary_endpoint_visit = 1 AND subjid = @subjid"
                 Using cmd As New OleDbCommand(strSQL, Connection)
                     cmd.Parameters.AddWithValue("@subjid", SUBJID)
@@ -346,6 +346,40 @@ Module IBIS_Public
         Return False
     End Function
 
+
+    ' Checks if the participants name and dob matches others in the baseline and lookup tables.
+    ' Returns: True if the participants name and dob matches others in the baseline and lookup tables, False if not found or on error.
+    ' Uses the parameter variables for checking existence in the lookup.
+    Public Function CheckNamesandDOB(p_dob As Date, pName As String) As Boolean
+        Try
+            Using Connection As OleDbConnection = GetDBConnection()
+                Connection.Open()
+
+                Dim strSQL As String =
+                "SELECT COUNT(*) FROM (" &
+                "   SELECT participants_name FROM baseline " &
+                "   WHERE participants_name LIKE ? AND dob = ? " &
+                "   UNION ALL " &
+                "   SELECT participants_name FROM baseline_lookup " &
+                "   WHERE participants_name LIKE ? " &
+                ") AS t;"
+
+                Using cmd As New OleDbCommand(strSQL, Connection)
+                    cmd.Parameters.AddWithValue("?", "%" & pName & "%")  ' baseline name
+                    cmd.Parameters.AddWithValue("?", p_dob)              ' baseline dob
+                    cmd.Parameters.AddWithValue("?", "%" & pName & "%")  ' lookup name
+
+                    Dim n_names As Integer = Convert.ToInt32(cmd.ExecuteScalar())
+                    Return n_names > 0
+                End Using
+            End Using
+
+        Catch ex As Exception
+            MessageBox.Show("Error checking if Name exists: " & ex.Message)
+            Return False
+        End Try
+    End Function
+
     Public Function EndpointVisitWindow() As Boolean
         Try
 
@@ -357,7 +391,7 @@ Module IBIS_Public
             Using Connection As OleDbConnection = GetDBConnection()
                 Connection.Open()
 
-                ' Check if HHID exists in census table
+                ' Check if subjid exists in baseline and baseline_lookup tables
                 Dim strSQL As String = "SELECT subjid, next_appt_3m, next_appt_6m FROM baseline_lookup WHERE subjid = ? " &
                 "UNION " &
                 "SELECT subjid, next_appt_3m, next_appt_6m FROM baseline WHERE subjid = ?"
