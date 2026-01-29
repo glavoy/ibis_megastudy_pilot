@@ -1115,9 +1115,9 @@ Public Class NewSurvey
                     Dim country As String = GetValue("countrycode")
 
                     'check the number of characters
-                    If country = 2 And CurrentValue <> "-6" And (Len(Trim(CurrentValue)) > 8 Or Len(Trim(CurrentValue)) < 5) Then
+                    If country = 2 And CurrentValue <> "-6" And (Len(Trim(CurrentValue)) > 11 Or Len(Trim(CurrentValue)) < 5) Then
                         IsValidResponse = False
-                        MsgBox("This national_id number should be more at least 5 characters and not more than 8 characters.", vbCritical, "Error national_id number!")
+                        MsgBox("This national_id number should be more at least 5 characters and not more than 11 characters.", vbCritical, "Error national_id number!")
                         Exit Function
 
                     End If
@@ -1226,6 +1226,16 @@ Public Class NewSurvey
                         IsValidResponse = False
                         MsgBox("Participant cannot be born in the future! Please revise the year/month/day born", vbCritical, "Invalid DOB")
                     End If
+
+                    CurrentValue = GetValue("participants_name")
+
+                    'Check if name and dob matches an existing record
+                    If CheckNamesandDOB(CurrentValueDate, CurrentValue) Then
+                        IsValidResponse = False
+                        MsgBox("This name and date of birth matches an already existing participant. Double Check these details ", vbCritical, "Duplicate Name and DOB!")
+                        Exit Function
+                    End If
+
                 End If
             End If
 
