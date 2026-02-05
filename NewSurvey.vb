@@ -1230,7 +1230,7 @@ Public Class NewSurvey
                     CurrentValue = GetValue("participants_name")
 
                     'Check if name and dob matches an existing record
-                    If CheckNamesandDOB(CurrentValueDate, CurrentValue) Then
+                    If CheckNamesandDOB(CurrentValueDate, CurrentValue) And ModifyingSurvey = False Then
                         IsValidResponse = False
                         MsgBox("This name and date of birth matches an already existing participant. Double Check these details ", vbCritical, "Duplicate Name and DOB!")
                         Exit Function
