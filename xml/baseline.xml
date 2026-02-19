@@ -882,7 +882,6 @@
 			Tafadhali kumbuka kurudi hapa kwa ajili ya kipimo kingine cha Virusi Vya UKIMWI katika muda wa miezi 3 hadi 6 kuanzia sasa. Kipimo ni bure na matokeo yatakuwa siri. Tafadhali nijulishe ikiwa una maswali yoyote.
 
 			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
-			[NOTE TO COUNSELOR: This participant has been assigned to a study group without a video message. Proceed with reading the script below before concluding the visit.]
 		</text>
 		<preskip>
 			<skip fieldname='arm' condition = '&lt;&gt;' response='12' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
@@ -896,7 +895,6 @@
 			Oyieri mondo iyud hocho mar pim mar kute mag ayaki maji yudo ge e Kenya. Ka ja hocho mari, abiro chiwo hoch bang pim ne in.
 
 			Akwayo ni ipar iduogi kama otim ni e pim kae e dweche 3 nyaka 6 chakre sani. Pim itimo nono maonge chudo kendo duoko biro bedo maling ling. Akwayo ni mondo ang’e ka in gi penjo moro a mora.”
-
 			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
 			[NOTE TO COUNSELOR: This participant has been assigned to a study group without a video message. Proceed with reading the script below before concluding the visit.]
 		</text>
@@ -1057,6 +1055,53 @@
 			<response value = '11'>November</response>
 			<response value = '12'>December</response>
 		</responses>
+	</question>
+
+
+	<question type = 'information' fieldname = 'whitelist_sms_en' fieldtype = 'n/a'>
+		<text>
+			IBIS Megastudy Enrollment Visit Provider Conclusion Script
+			Before we finish, I want to mention a quick detail about our study communication. We will be sending you two messages during the study, sometimes these messages are blocked by mobile networks if you have "promotional blocking" turned on and they may not arrive.
+			If you would like to receive them, you can unblock messages by dialing:
+			-	Safaricom: *456*9*5# and select option 5 to "activate all promo messages"
+			-	Airtel: *100# go to "my account", and choose the option to enable promotional messages.
+			This is entirely optional and won’t affect your participation.
+			Please let me know if you have any questions.
+		</text>
+		<preskip>
+			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='3' response_type='fixed' skiptofieldname ='whitelist_sms_swa'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'whitelist_sms_swa' fieldtype = 'n/a'>
+		<text>
+			HATI YA KUMALIZIA YA MTOA HUDUMA WA ZIARA YA USAJILI WA IBIS-MEGASTUDY
+			Kabla ya kumaliza, ningependa kutaja maelezo kidogo kuhusu mawasiliano yetu ya utafiti. Tutakutumia jumbe mbili wakati wa utafiti huu, lakini wakati mwingine jumbe hizi huzuiliwa na mitandao ya simu ikiwa umewasha huduma ya "kuzuia jumbe za matangazo" (promotional blocking) na huenda zisikufikie.
+			Ikiwa ungependa kuzipokea, unaweza kuruhusu ujumbe kwa:
+			-	Safaricom: Bonyeza *456*9*5# kisha uchague chaguo la tano(5) ili "kuwasha jumbe zote za matangazo" (activate all promo messages).
+			-	Airtel: Bonyeza *100#, nenda kwenye "akaunti yangu" (my account), na uchague chaguo la kuruhusu ujumbe wa matangazo(enable promotional messages).
+			Hatua hii ni ya hiari kabisa na haitaathiri ushiriki wako kwa vyovyote. Tafadhali nijulishe ikiwa una maswali yoyote
+		</text>
+		<preskip>
+			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='whitelist_sms_luo'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'whitelist_sms_luo' fieldtype = 'n/a'>
+		<text>
+			Nonro maduong’ mar chenro manyasani mag paro, Ndiko mogik mar rwako jachiw e limbe mag nonro
+			Ka pok watieko, adwaro ni awach weche mapiyo kuom weche mar nonro wa ni. Wabiro oroni weche ariyo e kinde mag nonro, seche moko wechegi inyalo din gi mbui mar simu ka iseketo gima "dino ote mag lendo" to nyalo bedo ni ok gichopo.
+			Ka diher yudo gi, inyalo golo gima dino weche kuom goyo:
+			-	Safaricom: *456*9*5# kaeto iyiero 5 mondo "iket ote duto mag lendo"
+			-	Airtel: *100# dhi e "akaunt mara", mondo iyier keto thuolo mar yudo ote duto mag lendo.
+			Ma en duto kuom yiero mari kendo ok bi ketho bedo ni e nonro.
+			Akwayo ni inyisa ka in gi penjo moro a mora.
+		</text>
+		<preskip>
+			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='comments'></skip>
+		</preskip>
 	</question>
 
 
