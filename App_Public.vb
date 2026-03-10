@@ -11,6 +11,7 @@ Module IBIS_Public
     Public VDATE As String = "01/01/1899"                   'used to store the Visit Date
     Public Community As String                              'used to store the Community
     Public Village As String                                'selected village - from MainMenu
+    Public EndpointCompleted As String                                'selected village - from MainMenu
     Public ModifyingSurvey As Boolean = False               'keeps track of wether or not we are doing a new survey or modifying an existing one
     Public CurrentAutoValue As String                       'the current auto value of an automatic varaible
     Public DontKnow_Value As String                         'stores the current "Don't Know' value for a question
@@ -430,5 +431,52 @@ Module IBIS_Public
 
     End Function
 
+    Public Function OutSideEndpointVisitWindow() As Boolean
+        Try
+
+
+            Dim visit_date As DateTime = DateTime.ParseExact(Now().ToString(), "dd/MM/yyyy HH:mm:ss", Globalization.CultureInfo.InvariantCulture).Date   ' normalize time
+            Dim nextAppt3m As DateTime? = Nothing
+            Dim nextAppt8m As DateTime? = Nothing
+
+            Using Connection As OleDbConnection = GetDBConnection()
+                Connection.Open()
+
+                ' Check if subjid exists in baseline and baseline_lookup tables
+                Dim strSQL As String = "SELECT subjid, next_appt_3m, next_appt_6m, appt_w2_8m FROM baseline_lookup WHERE subjid = ? " &
+                "UNION " &
+                "SELECT subjid, next_appt_3m, next_appt_6m, appt_w2_8m FROM baseline WHERE subjid = ?"
+
+                Using cmd As New OleDbCommand(strSQL, Connection)
+                    cmd.Parameters.AddWithValue("?", SUBJID)
+                    cmd.Parameters.AddWithValue("?", SUBJID)
+
+                    Using reader = cmd.ExecuteReader()
+                        If reader.Read() Then
+
+                            If Not IsDBNull(reader("appt_w2_8m")) Then
+                                nextAppt8m = reader.GetDateTime(reader.GetOrdinal("appt_w2_8m")).Date
+                            End If
+                        End If
+                    End Using
+
+                    ' Validate before comparison
+                    If nextAppt8m.HasValue Then
+                        Return visit_date > nextAppt8m.Value
+                    End If
+
+                    Return False
+
+                End Using
+            End Using
+
+
+        Catch ex As Exception
+            MessageBox.Show("Error checking if SUBJID exists in baseline: " & ex.Message)
+            ' Default return if an exception occurs
+            Return False
+        End Try
+
+    End Function
 
 End Module

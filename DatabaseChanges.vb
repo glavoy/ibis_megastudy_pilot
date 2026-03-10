@@ -66,7 +66,9 @@ Module DatabaseChanges
                 New ChangeSet("werick", "Add columns followup", CreateAlterTableSQL("followup", "index_client Integer, risk_group_affiliation Integer"), Guid.NewGuid().ToString(), "Add new columns to the followup crf"),
                 New ChangeSet("werick", "Add columns followup", CreateAlterTableSQL("followup", "pep_eligible Integer"), Guid.NewGuid().ToString(), "Add new column to the followup crf"),
                 New ChangeSet("werick", "Add columns followup", CreateAlterTableSQL("followup", "primary_endpoint_visit Integer"), Guid.NewGuid().ToString(), "Add new column to the followup table"),
-                New ChangeSet("werick", "Add columns followup_lookup", CreateAlterTableSQL("followup_lookup", "primary_endpoint_visit Integer"), Guid.NewGuid().ToString(), "Add new column to the followup table")
+                New ChangeSet("werick", "Add columns followup_lookup", CreateAlterTableSQL("followup_lookup", "primary_endpoint_visit Integer"), Guid.NewGuid().ToString(), "Add new column to the followup table"),
+                New ChangeSet("werick", "Add columns followup", CreateAlterTableSQL("followup", "preferred_language_ke Integer, preferred_language_ug Integer, preferred_language_other TEXT(80), preferred_language Integer"), Guid.NewGuid().ToString(), "Add new column to the followup table"),
+                New ChangeSet("werick", "Add columns followup", CreateAlterTableSQL("followup", "started_art Integer, started_prep_pep Integer"), Guid.NewGuid().ToString(), "Add new column to the followup crf")
             }
 
             'phonenum_lab

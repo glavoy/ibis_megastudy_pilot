@@ -1074,7 +1074,7 @@ Public Class NewSurvey
                         End Select
                     Next
 
-                    Dim strSQL As String = "select mobile_number from " & Survey & " where mobile_number = '" & CurrentValue & "' UNION " & "select mobile_number from baseline_lookup where mobile_number = '" & CurrentValue & "'"
+                    Dim strSQL As String = "select mobile_number from " & Survey & " where mobile_number = '" & CurrentValue & "' UNION " & "select mobile_number from baseline_lookup where mobile_number = '" & CurrentValue & "' or mobile_number = '" & Microsoft.VisualBasic.Right(CurrentValue, Len(CurrentValue) - 1) & "'"
                     Dim ConnectionString As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
                     Dim da As New OleDbDataAdapter(strSQL, ConnectionString)
                     Dim ds As New DataSet
@@ -1441,6 +1441,97 @@ Public Class NewSurvey
                         End If
                         ConnectionString.Close()
                 End Select
+            End If
+
+            ' Check response options for PREP/PEP
+            ' ensure age is > 15 yrs
+            If IsValidResponse = True Then
+                If QuestionInfoArray(CurrentQuestion).FieldName = "prep_pep_referral_accept" Then
+                    For Each aControl In Me.Controls
+                        Select Case TypeName(aControl)
+                            Case "GroupBox"
+                                For Each aGroupControl In CType(aControl, GroupBox).Controls
+                                    'Radio buttons
+                                    If TypeOf aGroupControl Is RadioButton Then
+                                        If CType(aGroupControl, RadioButton).Checked Then
+
+                                            CurrentValue = aGroupControl.tag
+                                        End If
+                                    End If
+                                Next
+                        End Select
+                    Next
+
+
+                    Dim prep_pep_eligible As Integer = CInt(GetValue("prep_pep_eligible"))
+                    If prep_pep_eligible = 1 And CurrentValue = 2 Then
+                        IsValidResponse = False
+                        MsgBox("Participant marked as eligible for PrEP. PEP referral cannot be made. Please review your previous selection.", vbCritical, "Invalid Response")
+                    ElseIf prep_pep_eligible = 2 And CurrentValue = 1 Then
+                        IsValidResponse = False
+                        MsgBox("Participant marked as eligible for PEP. PrEP referral cannot be made. Please review your previous selection.", vbCritical, "Invalid Response")
+                    End If
+                End If
+            End If
+
+            ' PEP/PREP Start response
+            If IsValidResponse = True Then
+                If QuestionInfoArray(CurrentQuestion).FieldName = "started_prep_pep" Then
+                    For Each aControl In Me.Controls
+                        Select Case TypeName(aControl)
+                            Case "GroupBox"
+                                For Each aGroupControl In CType(aControl, GroupBox).Controls
+                                    'Radio buttons
+                                    If TypeOf aGroupControl Is RadioButton Then
+                                        If CType(aGroupControl, RadioButton).Checked Then
+
+                                            CurrentValue = aGroupControl.tag
+                                        End If
+                                    End If
+                                Next
+                        End Select
+                    Next
+
+
+                    Dim prep_pep_referral As Integer = CInt(GetValue("prep_pep_referral_accept"))
+                    If prep_pep_referral = 1 And CurrentValue = 2 Then
+                        IsValidResponse = False
+                        MsgBox("Participant marked as referred for PrEP. PEP initiation cannot be recorded. Please review your previous selection.", vbCritical, "Invalid Response")
+                    ElseIf prep_pep_referral = 2 And CurrentValue = 1 Then
+                        IsValidResponse = False
+                        MsgBox("Participant marked as referred for PEP. PrEP initiation cannot be recorded. Please review your previous selection.", vbCritical, "Invalid Response")
+                    End If
+                End If
+            End If
+
+            ' PEP Eligibility
+            If IsValidResponse = True Then
+                If QuestionInfoArray(CurrentQuestion).FieldName = "pep_eligible" Then
+                    For Each aControl In Me.Controls
+                        Select Case TypeName(aControl)
+                            Case "GroupBox"
+                                For Each aGroupControl In CType(aControl, GroupBox).Controls
+                                    'Radio buttons
+                                    If TypeOf aGroupControl Is RadioButton Then
+                                        If CType(aGroupControl, RadioButton).Checked Then
+
+                                            CurrentValue = aGroupControl.tag
+                                        End If
+                                    End If
+                                Next
+                        End Select
+                    Next
+
+
+                    Dim hivtest_result_today As Integer = CInt(GetValue("hivtest_result_today"))
+                    If hivtest_result_today = 1 And CurrentValue = 1 Then
+                        IsValidResponse = False
+                        MsgBox("Participant marked as HIV positive and is not eligible for PEP. Please review your previous selection.", vbCritical, "Invalid Response")
+                    ElseIf hivtest_result_today = 2 And CurrentValue = 1 Then
+                        IsValidResponse = False
+                        MsgBox("Participant HIV Test Result is Indeterminate and is not eligible for PEP. Please review your previous selection.", vbCritical, "Invalid Response")
+                    End If
+                End If
             End If
 
             'test to see if the multiple selection questions have valid responses

@@ -1069,6 +1069,8 @@
 			Please let me know if you have any questions.
 		</text>
 		<preskip>
+			<skip fieldname='arm' condition = '=' response='11' response_type='fixed' skiptofieldname ='comments'></skip>
+			<skip fieldname='arm' condition = '=' response='12' response_type='fixed' skiptofieldname ='comments'></skip>
 			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='3' response_type='fixed' skiptofieldname ='whitelist_sms_swa'></skip>
 		</preskip>
 	</question>
@@ -1079,11 +1081,13 @@
 			HATI YA KUMALIZIA YA MTOA HUDUMA WA ZIARA YA USAJILI WA IBIS-MEGASTUDY
 			Kabla ya kumaliza, ningependa kutaja maelezo kidogo kuhusu mawasiliano yetu ya utafiti. Tutakutumia jumbe mbili wakati wa utafiti huu, lakini wakati mwingine jumbe hizi huzuiliwa na mitandao ya simu ikiwa umewasha huduma ya "kuzuia jumbe za matangazo" (promotional blocking) na huenda zisikufikie.
 			Ikiwa ungependa kuzipokea, unaweza kuruhusu ujumbe kwa:
-			-	Safaricom: Bonyeza *456*9*5# kisha uchague chaguo la tano(5) ili "kuwasha jumbe zote za matangazo" (activate all promo messages).
+			-	Safaricom: Bonyeza *456*9*5# kisha uchague chaguo la tano(5) ili "kuwasha jumbe zote za matangazo"" (activate all promo messages).
 			-	Airtel: Bonyeza *100#, nenda kwenye "akaunti yangu" (my account), na uchague chaguo la kuruhusu ujumbe wa matangazo(enable promotional messages).
 			Hatua hii ni ya hiari kabisa na haitaathiri ushiriki wako kwa vyovyote. Tafadhali nijulishe ikiwa una maswali yoyote
 		</text>
 		<preskip>
+			<skip fieldname='arm' condition = '=' response='11' response_type='fixed' skiptofieldname ='comments'></skip>
+			<skip fieldname='arm' condition = '=' response='12' response_type='fixed' skiptofieldname ='comments'></skip>
 			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='whitelist_sms_luo'></skip>
 		</preskip>
 	</question>
@@ -1100,6 +1104,8 @@
 			Akwayo ni inyisa ka in gi penjo moro a mora.
 		</text>
 		<preskip>
+			<skip fieldname='arm' condition = '=' response='11' response_type='fixed' skiptofieldname ='comments'></skip>
+			<skip fieldname='arm' condition = '=' response='12' response_type='fixed' skiptofieldname ='comments'></skip>
 			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='comments'></skip>
 		</preskip>
 	</question>

@@ -395,28 +395,56 @@
 	</question>
 
 
-	<question type = 'radio' fieldname = 'prep_pep_eligible' fieldtype = 'integer'>
-		<text>[IF HIV result = negative AND not currently taking PrEP (Q5)] Was the participant eligible for PrEP or PEP?</text>
+	<question type = 'radio' fieldname = 'started_art' fieldtype = 'integer'>
+		<text>[IF HIV result – positive] Did this participant start ART today?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
+			<response value = '3'>Already On ART</response>
+		</responses>
+		<preskip>
+			<skip fieldname='hiv_positive_referral_accept' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='prep_pep_eligible'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'prep_pep_eligible' fieldtype = 'integer'>
+		<text>[IF HIV result = negative AND not currently taking PrEP (Q5)] Was the participant eligible for PrEP or PEP?</text>
+		<responses>
+			<response value = '1'>Yes, Eligible for PrEP</response>
+			<response value = '2'>Yes, Eligible for PEP</response>
+			<response value = '3'>No, Not Eligible</response>
 		</responses>
 		<preskip>
 			<skip fieldname='on_prep' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='information_screen_interviewer'></skip>
 			<skip fieldname='hivtest_result_today' condition = '&lt;&gt;' response='0' response_type='fixed' skiptofieldname ='information_screen_interviewer'></skip>
 		</preskip>
+		<postskip>
+			<skip fieldname='prep_pep_eligible' condition = '=' response='3' response_type='fixed' skiptofieldname ='information_screen_interviewer'></skip>
+		</postskip>
 	</question>
 
 
 	<question type = 'radio' fieldname = 'prep_pep_referral_accept' fieldtype = 'integer'>
 		<text>[If PrEP/PEP eligible = yes] Did this participant accept referral for PrEP or PEP</text>
 		<responses>
-			<response value = '1'>Yes</response>
-			<response value = '2'>No</response>
+			<response value = '1'>Accepted Referral for PrEP</response>
+			<response value = '2'>Accepted Referral of PEP</response>
+			<response value = '3'>No, did not Accept Referral</response>
 		</responses>
-		<preskip>
-			<skip fieldname='prep_pep_eligible' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='information_screen_interviewer'></skip>
-		</preskip>
+		<postskip>
+			<skip fieldname='prep_pep_referral_accept' condition = '=' response='3' response_type='fixed' skiptofieldname ='information_screen_interviewer'></skip>
+		</postskip>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'started_prep_pep' fieldtype = 'integer'>
+		<text>[IF accept referral = yes] Did this participant start PrEP or PEP today?</text>
+		<responses>
+			<response value = '1'>Started PrEP Today</response>
+			<response value = '2'>Started PEP Today</response>
+			<response value = '3'>Did not Sart PrEP or PEP Today</response>
+		</responses>
 	</question>
 
 
@@ -442,6 +470,120 @@
 
 
 	<question type = 'automatic' fieldname = 'primary_endpoint_visit' fieldtype = 'integer'>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'preferred_language_ke' fieldtype = 'integer'>
+		<text>What is your preferred language?</text>
+		<responses>
+			<response value = '1'>Dholuo</response>
+			<response value = '2'>Swahili</response>
+			<response value = '3'>English</response>
+			<response value = '97'>Other</response>
+			<response value = '7'>None</response>
+		</responses>
+		<preskip>
+			<skip fieldname='countrycode' condition = '=' response='1' response_type='fixed' skiptofieldname ='preferred_language_ug'></skip>
+		</preskip>
+		<postskip>
+			<skip fieldname='preferred_language_ke' condition = '=' response='97' response_type='fixed' skiptofieldname ='preferred_language_other'></skip>
+		</postskip>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'preferred_language_ug' fieldtype = 'integer'>
+		<text>What is your preferred language?</text>
+		<responses>
+			<response value = '4'>Runyonkole</response>
+			<response value = '5'>Luganda</response>
+			<response value = '3'>English</response>
+			<response value = '97'>Other</response>
+			<response value = '7'>None</response>
+		</responses>
+		<preskip>
+			<skip fieldname='countrycode' condition = '=' response='2' response_type='fixed' skiptofieldname ='preferred_language'></skip>
+		</preskip>
+		<postskip>
+			<skip fieldname='preferred_language_ug' condition = '&lt;&gt;' response='97' response_type='fixed' skiptofieldname ='preferred_language'></skip>
+		</postskip>
+	</question>
+
+
+	<question type = 'text' fieldname = 'preferred_language_other' fieldtype = 'text'>
+		<text>Specify other language</text>
+		<maxCharacters>80</maxCharacters>
+	</question>
+
+
+	<question type = 'automatic' fieldname = 'preferred_language' fieldtype = 'integer'>
+	</question>
+
+
+	<question type = 'information' fieldname = 'info_end_endpoint_en' fieldtype = 'n/a'>
+		<text>
+			Thank you for completing this visit.
+			This marks your final appointment for the IBIS study.
+			Your participation has been incredibly valuable to our research.
+			Although your time in the study is now complete, we encourage you to continue routine testing.
+			Please let me know if you have any questions.
+		</text>
+		<preskip>
+			<skip fieldname='primary_endpoint_visit' condition = '=' response='0' response_type='fixed' skiptofieldname ='info_noend_endpoint_en'></skip>
+			<skip fieldname='preferred_language' condition = '&lt;&gt;' response='3' response_type='fixed' skiptofieldname ='info_end_endpoint_sw'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'info_end_endpoint_sw' fieldtype = 'n/a'>
+		<text>
+			Asante kwa kukamilisha ziara hii.
+			Hii ni ziara yako ya mwisho kwa ajili ya utafiti wa IBIS.
+			Ushiriki wako umekuwa wa thamani kubwa sana katika utafiti wetu.
+			Ingawa muda wako kwenye utafiti huu umekamilika, tunakuhimiza uendelee kufanya vipimo.
+			Tafadhali nijulishe kama una maswali yoyote.
+		</text>
+		<preskip>
+			<skip fieldname='preferred_language' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='info_end_endpoint_luo'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'info_end_endpoint_luo' fieldtype = 'n/a'>
+		<text>
+			Asante kwa kukamilisha ziara hii.
+			Hii ni ziara yako ya mwisho kwa ajili ya utafiti wa IBIS.
+			Ushiriki wako umekuwa wa thamani kubwa sana katika utafiti wetu.
+			Ingawa muda wako kwenye utafiti huu umekamilika, tunakuhimiza uendelee kufanya vipimo.
+			Tafadhali nijulishe kama una maswali yoyote.
+		</text>
+		<preskip>
+			<skip fieldname='preferred_language' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='info_noend_endpoint_en'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'info_noend_endpoint_en' fieldtype = 'n/a'>
+		<text>Thank you for completing this visit. Please come back as scheduled in the appointment card for your final study visit. Please let me know if you have any questions.</text>
+		<preskip>
+			<skip fieldname='primary_endpoint_visit' condition = '=' response='1' response_type='fixed' skiptofieldname ='uniqueid'></skip>
+			<skip fieldname='preferred_language' condition = '&lt;&gt;' response='3' response_type='fixed' skiptofieldname ='info_noend_endpoint_sw'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'info_noend_endpoint_sw' fieldtype = 'n/a'>
+		<text>Asante kwa kukamilisha ziara hii. Tafadhali rudi kama ulivyopangiwa kwenye kadi kwa ajili ya ziara ya mwisho ya utafiti. Tafadhali nijulishe ikiwa una maswali yoyote.</text>
+		<preskip>
+			<skip fieldname='preferred_language' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='info_noend_endpoint_luo'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'info_noend_endpoint_luo' fieldtype = 'n/a'>
+		<text>Asante kwa kukamilisha ziara hii. Tafadhali rudi kama ulivyopangiwa kwenye kadi kwa ajili ya ziara ya mwisho ya utafiti. Tafadhali nijulishe ikiwa una maswali yoyote.</text>
+		<preskip>
+			<skip fieldname='preferred_language' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='uniqueid'></skip>
+		</preskip>
 	</question>
 
 

@@ -85,6 +85,7 @@ Partial Class Main_Menu
         Me.LabelFuAllow = New System.Windows.Forms.Label()
         Me.ButtonEditFollowup = New System.Windows.Forms.Button()
         Me.ButtonGetData = New System.Windows.Forms.Button()
+        Me.lblEndpoint = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -95,7 +96,7 @@ Partial Class Main_Menu
         Me.Label1.Location = New System.Drawing.Point(331, 37)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(400, 58)
+        Me.Label1.Size = New System.Drawing.Size(320, 46)
         Me.Label1.TabIndex = 14
         Me.Label1.Text = "IBIS MegaStudy"
         '
@@ -625,13 +626,26 @@ Partial Class Main_Menu
         Me.ButtonGetData.Text = "Get Data"
         Me.ButtonGetData.UseVisualStyleBackColor = False
         '
+        'lblEndpoint
+        '
+        Me.lblEndpoint.AutoSize = True
+        Me.lblEndpoint.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblEndpoint.Location = New System.Drawing.Point(1057, 424)
+        Me.lblEndpoint.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblEndpoint.Name = "lblEndpoint"
+        Me.lblEndpoint.Size = New System.Drawing.Size(223, 20)
+        Me.lblEndpoint.TabIndex = 57
+        Me.lblEndpoint.Text = "EndPoint Visit Completed"
+        Me.lblEndpoint.Visible = False
+        '
         'Main_Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Silver
-        Me.ClientSize = New System.Drawing.Size(1268, 962)
+        Me.ClientSize = New System.Drawing.Size(1421, 962)
         Me.ControlBox = False
+        Me.Controls.Add(Me.lblEndpoint)
         Me.Controls.Add(Me.ButtonGetData)
         Me.Controls.Add(Me.ButtonEditFollowup)
         Me.Controls.Add(Me.LabelFuAllow)
@@ -727,4 +741,5 @@ Partial Class Main_Menu
     Friend WithEvents LabelFuAllow As Label
     Friend WithEvents ButtonEditFollowup As Button
     Friend WithEvents ButtonGetData As Button
+    Friend WithEvents lblEndpoint As Label
 End Class

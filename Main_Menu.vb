@@ -389,11 +389,12 @@ Public Class Main_Menu
 
                 ' Query to fetch household details from precensus
                 Dim strSQL As String = "
-                SELECT subjid,screening_id, respondants_age, participants_name, 
+                SELECT b.subjid,screening_id, respondants_age, participants_name, 
                        NickName, mobile_number, client_sex, health_facility, county,
-                        subcounty, village, next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m
-                FROM baseline
-                WHERE subjid = @subjid"
+                        subcounty, village, next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit
+                FROM baseline as b
+                LEFT OUTER JOIN (SELECT subjid, primary_endpoint_visit FROM followup WHERE primary_endpoint_visit = 1) as  f on b.subjid=f.subjid
+                WHERE b.subjid = @subjid"
 
                 Using cmd As New OleDbCommand(strSQL, Connection)
                     cmd.Parameters.AddWithValue("@subjid", SUBJID)
@@ -410,6 +411,7 @@ Public Class Main_Menu
                             County = reader("county").ToString()
                             Subcounty = reader("subcounty").ToString()
                             Village = reader("village").ToString()
+                            EndpointCompleted = reader("primary_endpoint_visit").ToString()
 
                             ' Populate Labels
                             LabelSubjid.Text = "SUBJID: " & SUBJID
@@ -422,6 +424,7 @@ Public Class Main_Menu
                             LabelVillage.Text = "Village: " & Village
                             LabelFuwindow.Text = "Target follow-up window: " & Microsoft.VisualBasic.Left(reader("next_appt_3m").ToString(), 10) & " to " & Microsoft.VisualBasic.Left(reader("next_appt_6m").ToString(), 10)
                             LabelFuAllow.Text = "Allowable follow-up window: " & Microsoft.VisualBasic.Left(reader("appt_w1_2m").ToString(), 10) & " to " & Microsoft.VisualBasic.Left(reader("appt_w2_8m").ToString(), 10)
+                            lblEndpoint.Text = "Endpoint Visit Completed: " & If(EndpointCompleted = "1", "Yes", "No")
 
 
                             ' Handle NULL values for phone numbers
@@ -456,6 +459,7 @@ Public Class Main_Menu
         LabelVillage.Visible = True
         LabelFuAllow.Visible = True
         LabelFuwindow.Visible = True
+        lblEndpoint.Visible = True
     End Sub
 
     ' Hide Control-specific labels
@@ -471,6 +475,7 @@ Public Class Main_Menu
         LabelVillage.Visible = False
         LabelFuAllow.Visible = False
         LabelFuwindow.Visible = False
+        lblEndpoint.Visible = False
     End Sub
 
     Private Sub ButtonCannotFind_Click(sender As Object, e As EventArgs) Handles ButtonCannotFind.Click
@@ -533,10 +538,12 @@ Public Class Main_Menu
                 connection.Open()
 
                 ' Query to search by phone number
-                Dim query As String = "SELECT subjid, health_facility, participants_name, NickName, " &
+                Dim query As String = "SELECT b.subjid, health_facility, participants_name, NickName, " &
                                      "respondants_age, client_sex, county, subcounty, village, mobile_number, " &
-                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m " &
-                                     "FROM baseline WHERE mobile_number = ? or mobile_number = ?"
+                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit " &
+                                     "FROM baseline as b " &
+                                     "LEFT OUTER JOIN (SELECT subjid, primary_endpoint_visit FROM followup WHERE primary_endpoint_visit = 1) f on b.subjid=f.subjid " &
+                                     "WHERE mobile_number = ? or mobile_number = ?"
 
                 Using command As New OleDbCommand(query, connection)
                     command.Parameters.AddWithValue("?", phoneNumber)
@@ -554,6 +561,7 @@ Public Class Main_Menu
                             County = reader("county").ToString()
                             Subcounty = reader("subcounty").ToString()
                             Village = reader("village").ToString()
+                            EndpointCompleted = reader("primary_endpoint_visit").ToString()
 
                             ' Populate Labels
                             LabelSubjid.Text = "SUBJID: " & SUBJID
@@ -566,6 +574,7 @@ Public Class Main_Menu
                             LabelVillage.Text = "Village: " & Village
                             LabelFuwindow.Text = "Target follow-up window: " & Microsoft.VisualBasic.Left(reader("next_appt_3m").ToString(), 10) & " to " & Microsoft.VisualBasic.Left(reader("next_appt_6m").ToString(), 10)
                             LabelFuAllow.Text = "Allowable follow-up window: " & Microsoft.VisualBasic.Left(reader("appt_w1_2m").ToString(), 10) & " to " & Microsoft.VisualBasic.Left(reader("appt_w2_8m").ToString(), 10)
+                            lblEndpoint.Text = "Endpoint Visit Completed: " & If(EndpointCompleted = "1", "Yes", "No")
 
                             ' Handle NULL values for phone number
                             Dim phone1 As String = If(IsDBNull(reader("mobile_number")), "N/A", reader("mobile_number").ToString())
@@ -660,6 +669,12 @@ Public Class Main_Menu
 
         If DoesSUBJIDExistInLookup() Or DoesSUBJIDExistInFollowup() Then
             MessageBox.Show("This Participant has already had a followup visit. To prevent a duplicate entry, further action is not allowed.")
+            Exit Sub
+
+        End If
+
+        If OutSideEndpointVisitWindow() Then
+            MessageBox.Show("The allowable visit date for this participant has passed. No further actions can be performed.")
             Exit Sub
 
         End If
