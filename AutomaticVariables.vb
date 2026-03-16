@@ -124,6 +124,7 @@ Module AutomaticVariables
                     End If
 
                 Case Is = "eligibility_check2"
+                    Dim country As Integer = CInt(GetValue("countrycode"))
                     Dim eligibility_check1 As Integer = CInt(GetValue("eligibility_check1"))
                     Dim multiple_partners As Integer = CInt(GetValue("multiple_partners"))
                     Dim new_partner As Integer = CInt(GetValue("new_partner"))
@@ -141,9 +142,16 @@ Module AutomaticVariables
                     Dim recent_hiv_exposure As Integer = CInt(GetValue("recent_hiv_exposure"))
 
                     CurrentAutoValue = 0
-                    If eligibility_check1 = 1 And (multiple_partners = 1 Or new_partner = 1 Or unprotected_sex = 1 Or hiv_positive_partner = 1 Or sti_history = 1 Or tb_history = 1 Or sex_for_compensation = 1 Or paid_for_sex = 1 Or dice_clinic = 1 Or on_prep = 1 Or on_pep = 1 Or recent_hiv_exposure = 1 Or index_client = 1 Or risk_group_affiliation = 1) Then
-                        CurrentAutoValue = 1
+                    If country = 1 Then
+                        If eligibility_check1 = 1 And (multiple_partners = 1 Or new_partner = 1 Or unprotected_sex = 1 Or hiv_positive_partner = 1 Or sti_history = 1 Or tb_history = 1 Or sex_for_compensation = 1 Or paid_for_sex = 1 Or dice_clinic = 1 Or on_prep = 1 Or on_pep = 1 Or recent_hiv_exposure = 1 Or index_client = 1 Or risk_group_affiliation = 1) Then
+                            CurrentAutoValue = 1
+                        End If
+                    Else
+                        If eligibility_check1 = 1 And (multiple_partners = 1 Or new_partner = 1 Or hiv_positive_partner = 1 Or sti_history = 1 Or tb_history = 1 Or sex_for_compensation = 1 Or paid_for_sex = 1 Or dice_clinic = 1 Or on_prep = 1 Or on_pep = 1 Or recent_hiv_exposure = 1 Or index_client = 1 Or risk_group_affiliation = 1) Then
+                            CurrentAutoValue = 1
+                        End If
                     End If
+
 
                 Case Is = "uniqueid"
                     If ModifyingSurvey = True Then

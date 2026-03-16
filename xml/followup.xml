@@ -550,11 +550,11 @@
 
 	<question type = 'information' fieldname = 'info_end_endpoint_luo' fieldtype = 'n/a'>
 		<text>
-			Asante kwa kukamilisha ziara hii.
-			Hii ni ziara yako ya mwisho kwa ajili ya utafiti wa IBIS.
-			Ushiriki wako umekuwa wa thamani kubwa sana katika utafiti wetu.
-			Ingawa muda wako kwenye utafiti huu umekamilika, tunakuhimiza uendelee kufanya vipimo.
-			Tafadhali nijulishe kama una maswali yoyote.
+			Ero kamano kuom tieko limbe gi
+			Mae en romo mogik mar nonro mar IBIS
+			Bedo ni e nonro ne en gima maduong ahinya ne nonro wa ni.
+			Kata obedo ni kinde gi mag bedo e nonro oserumo, wajiwi ni mondo idhi mbele gi pim mar kinde ka kinde.
+			Akwayo ni iwachna ka in gi penjo moro a mora.
 		</text>
 		<preskip>
 			<skip fieldname='preferred_language' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='info_noend_endpoint_en'></skip>
@@ -580,7 +580,7 @@
 
 
 	<question type = 'information' fieldname = 'info_noend_endpoint_luo' fieldtype = 'n/a'>
-		<text>Asante kwa kukamilisha ziara hii. Tafadhali rudi kama ulivyopangiwa kwenye kadi kwa ajili ya ziara ya mwisho ya utafiti. Tafadhali nijulishe ikiwa una maswali yoyote.</text>
+		<text>Ero kamano kuom tieko limbe ni. Wakwayi ni iduogi kaka ochan e kadi mar limbe e limbe ni mogik mar nonro. Akwayo ni iwach na ka in gi penjo moro a mora.</text>
 		<preskip>
 			<skip fieldname='preferred_language' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='uniqueid'></skip>
 		</preskip>

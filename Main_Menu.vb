@@ -219,8 +219,12 @@ Public Class Main_Menu
         If selectedMonth > 0 Then
             Using connection As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
                 ' Update query to include subjid
-                Dim query As String = "SELECT participants_name, subjid FROM baseline WHERE UCASE(participants_name) LIKE ? OR month_of_birth = ? ORDER BY participants_name"
+                Dim query As String = "SELECT participants_name, subjid FROM baseline WHERE UCASE(participants_name) LIKE ? OR month_of_birth = ? " &
+                    "UNION " &
+                    "SELECT participants_name, subjid FROM baseline_lookup WHERE UCASE(participants_name) LIKE ? OR month_of_birth = ? "
                 Using command As New OleDbCommand(query, connection)
+                    command.Parameters.AddWithValue("?", "%" & filterText & "%")
+                    command.Parameters.AddWithValue("?", selectedMonth)
                     command.Parameters.AddWithValue("?", "%" & filterText & "%")
                     command.Parameters.AddWithValue("?", selectedMonth)
 
@@ -276,7 +280,12 @@ Public Class Main_Menu
 
         ' Add day filter if selected
         If selectedDay > 0 Then
-            query += " AND day_of_birth = ?"
+            query += " AND day_of_birth = ? "
+        End If
+
+        query += " UNION SELECT participants_name FROM baseline_lookup WHERE UCASE(participants_name) LIKE ?"
+        If selectedDay > 0 Then
+            query += " AND day_of_birth = ? "
         End If
 
         ' Create connection and command
@@ -284,8 +293,10 @@ Public Class Main_Menu
             Using command As New OleDbCommand(query, connection)
                 ' Add parameters
                 command.Parameters.AddWithValue("?", "%" & filterText & "%")
+                command.Parameters.AddWithValue("?", "%" & filterText & "%")
 
                 If selectedDay > 0 Then
+                    command.Parameters.AddWithValue("?", selectedDay)
                     command.Parameters.AddWithValue("?", selectedDay)
                 End If
 
@@ -394,9 +405,17 @@ Public Class Main_Menu
                         subcounty, village, next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit
                 FROM baseline as b
                 LEFT OUTER JOIN (SELECT subjid, primary_endpoint_visit FROM followup WHERE primary_endpoint_visit = 1) as  f on b.subjid=f.subjid
+                WHERE b.subjid = @subjid
+                UNION
+                SELECT b.subjid,screening_id, respondants_age, participants_name, 
+                       NickName, mobile_number, client_sex, health_facility, county,
+                        subcounty, village, next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit
+                FROM baseline_lookup as b
+                LEFT OUTER JOIN (SELECT subjid, primary_endpoint_visit FROM followup WHERE primary_endpoint_visit = 1) as  f on b.subjid=f.subjid
                 WHERE b.subjid = @subjid"
 
                 Using cmd As New OleDbCommand(strSQL, Connection)
+                    cmd.Parameters.AddWithValue("@subjid", SUBJID)
                     cmd.Parameters.AddWithValue("@subjid", SUBJID)
 
                     Using reader As OleDbDataReader = cmd.ExecuteReader()
@@ -543,9 +562,18 @@ Public Class Main_Menu
                                      "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit " &
                                      "FROM baseline as b " &
                                      "LEFT OUTER JOIN (SELECT subjid, primary_endpoint_visit FROM followup WHERE primary_endpoint_visit = 1) f on b.subjid=f.subjid " &
-                                     "WHERE mobile_number = ? or mobile_number = ?"
+                                     "WHERE mobile_number = ? or mobile_number = ? " &
+                                     "UNION " &
+                                     "SELECT b.subjid, health_facility, participants_name, NickName, " &
+                                     "respondants_age, client_sex, county, subcounty, village, mobile_number, " &
+                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit " &
+                                     "FROM baseline_lookup as b " &
+                                     "LEFT OUTER JOIN (SELECT subjid, primary_endpoint_visit FROM followup WHERE primary_endpoint_visit = 1) f on b.subjid=f.subjid " &
+                                     "WHERE mobile_number = ? or mobile_number = ? "
 
                 Using command As New OleDbCommand(query, connection)
+                    command.Parameters.AddWithValue("?", phoneNumber)
+                    command.Parameters.AddWithValue("?", Microsoft.VisualBasic.Right(phoneNumber, 9))
                     command.Parameters.AddWithValue("?", phoneNumber)
                     command.Parameters.AddWithValue("?", Microsoft.VisualBasic.Right(phoneNumber, 9))
 
@@ -666,6 +694,11 @@ Public Class Main_Menu
     Private Sub ButtonFollowupSurvey_Click(sender As Object, e As EventArgs) Handles ButtonFollowupSurvey.Click
         ModifyingSurvey = False
         Survey = "followup"
+        If SUBJID.StartsWith("SCRN") Then
+            MessageBox.Show("This Participant was not Enrolled in the IBIS Study and therefore no further action is not allowed.")
+            Exit Sub
+
+        End If
 
         If DoesSUBJIDExistInLookup() Or DoesSUBJIDExistInFollowup() Then
             MessageBox.Show("This Participant has already had a followup visit. To prevent a duplicate entry, further action is not allowed.")
