@@ -431,6 +431,9 @@ Module IBIS_Public
 
     End Function
 
+    ' Checks if the participant is within the accepatable endpoind window.
+    ' Returns: True if the participant has completed more than  months from the baseline enrollment, False if less than eight months.
+    ' Uses the subjid for checking existence in the baselinelookup/baseline.
     Public Function OutSideEndpointVisitWindow() As Boolean
         Try
 
@@ -477,6 +480,106 @@ Module IBIS_Public
             Return False
         End Try
 
+    End Function
+
+    ' Checks if the participant is due for retesting data entry.
+    ' Returns: True if the participant is 6 months from the baseline enrollment dater.
+    ' Uses the subjid for getting the 6 month next appointment date.
+    Public Function DueForRetesting() As Boolean
+        Try
+
+
+            Dim visit_date As DateTime = DateTime.ParseExact(Now().ToString(), "dd/MM/yyyy HH:mm:ss", Globalization.CultureInfo.InvariantCulture).Date   ' normalize time
+            Dim nextAppt3m As DateTime? = Nothing
+            Dim nextAppt6m As DateTime? = Nothing
+
+            Using Connection As OleDbConnection = GetDBConnection()
+                Connection.Open()
+
+                ' Check if subjid exists in baseline and baseline_lookup tables
+                Dim strSQL As String = "SELECT subjid, next_appt_3m, next_appt_6m, appt_w2_8m FROM baseline_lookup WHERE subjid = ? " &
+                "UNION " &
+                "SELECT subjid, next_appt_3m, next_appt_6m, appt_w2_8m FROM baseline WHERE subjid = ?"
+
+                Using cmd As New OleDbCommand(strSQL, Connection)
+                    cmd.Parameters.AddWithValue("?", SUBJID)
+                    cmd.Parameters.AddWithValue("?", SUBJID)
+
+                    Using reader = cmd.ExecuteReader()
+                        If reader.Read() Then
+
+                            If Not IsDBNull(reader("next_appt_6m")) Then
+                                nextAppt6m = reader.GetDateTime(reader.GetOrdinal("next_appt_6m")).Date
+                            End If
+                        End If
+                    End Using
+
+                    ' Validate before comparison
+                    If nextAppt6m.HasValue Then
+                        Return visit_date <= nextAppt6m.Value
+                    End If
+
+                    Return False
+
+                End Using
+            End Using
+
+
+        Catch ex As Exception
+            MessageBox.Show("Error checking if SUBJID exists in baseline: " & ex.Message)
+            ' Default return if an exception occurs
+            Return False
+        End Try
+
+    End Function
+
+    ' Checks if the current SUBJID exists in the followup table and has already had the primary endpoint visit.
+    ' Returns: True if SUBJID exists in followup table, False if not found or on error.
+    ' Uses the global followup variable for checking existence in the database.
+    Public Function DoesSUBJIDExistInRetesting() As Boolean
+        Try
+            Using Connection As OleDbConnection = GetDBConnection()
+                Connection.Open()
+
+                ' Check if subjid has a retesting entry in the retesting table where a visit
+                Dim strSQL As String = "SELECT COUNT(*) FROM retesting WHERE subjid = @subjid"
+                Using cmd As New OleDbCommand(strSQL, Connection)
+                    cmd.Parameters.AddWithValue("@subjid", SUBJID)
+                    Dim count As Integer = Convert.ToInt32(cmd.ExecuteScalar())
+
+                    ' Return true if count > 0, meaning HHID exists in census table
+                    Return count > 0
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error checking if SUBJID exists in Retesting: " & ex.Message)
+        End Try
+
+        ' Default return if an exception occurs
+        Return False
+    End Function
+
+    Public Function DoesSUBJIDExistInRetestingLookup() As Boolean
+        Try
+            Using Connection As OleDbConnection = GetDBConnection()
+                Connection.Open()
+
+                ' Check if subjid has a retesting entry in the retesting table where a visit
+                Dim strSQL As String = "SELECT COUNT(*) FROM retesting_lookup WHERE subjid = @subjid"
+                Using cmd As New OleDbCommand(strSQL, Connection)
+                    cmd.Parameters.AddWithValue("@subjid", SUBJID)
+                    Dim count As Integer = Convert.ToInt32(cmd.ExecuteScalar())
+
+                    ' Return true if count > 0, meaning HHID exists in census table
+                    Return count > 0
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error checking if SUBJID exists in Retesting: " & ex.Message)
+        End Try
+
+        ' Default return if an exception occurs
+        Return False
     End Function
 
 End Module

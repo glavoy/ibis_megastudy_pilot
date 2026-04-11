@@ -32,7 +32,7 @@ Module AutomaticVariables
                 Case Is = "subjid"
 
                     Dim studyid As String = GetValue("subjid")
-                    If Survey = "followup" Then
+                    If Survey = "followup" Or Survey = "retesting" Then
                         CurrentAutoValue = SUBJID
 
                     ElseIf ModifyingSurvey = True And studyid <> "-9" Then

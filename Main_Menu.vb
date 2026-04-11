@@ -71,6 +71,7 @@ Public Class Main_Menu
         TextBoxPhoneNumber.ForeColor = Color.Gray
         TextBoxPhoneNumber.Font = New Font(TextBoxPhoneNumber.Font, FontStyle.Italic)
         ButtonFollowupSurvey.Text = "Follow-up Survey"
+        ButtonRetestingSurvey.Text = "Retesting Survey"
 
         Dim originalFont = TextBoxPhoneNumber.Parent.Font  ' Use parent font as reference
         Dim smallerFont = New Font(originalFont.FontFamily, originalFont.Size - 2, FontStyle.Italic)
@@ -342,9 +343,16 @@ Public Class Main_Menu
             ButtonFollowupSurvey.Text = "Follow-up Survey for:" & vbNewLine & selectedName
             ButtonFollowupSurvey.Enabled = True
             ButtonEditFollowup.Enabled = True
+
+            ButtonRetestingSurvey.Text = "Retesting Survey for:" & vbNewLine & selectedName
+            ButtonRetestingSurvey.Enabled = True
+            ButtonEditRetesting.Enabled = True
         Else
             ' Reset button text and SUBJID if "SELECT NAME" is selected
             ButtonFollowupSurvey.Text = "Follow-up Survey"
+            ButtonRetestingSurvey.Enabled = False
+            ButtonEditRetesting.Enabled = False
+            ButtonRetestingSurvey.Text = "Retesting Survey"
             SUBJID = ""
             HideLabels()
             ButtonBaseline.Enabled = True
@@ -521,6 +529,7 @@ Public Class Main_Menu
 
         ' Reset button text and variables as requested
         ButtonFollowupSurvey.Text = "Follow-up Survey"
+        ButtonRetestingSurvey.Text = "Retesting Survey"
         SUBJID = ""
 
         ' Hide labels
@@ -615,6 +624,10 @@ Public Class Main_Menu
                             ButtonFollowupSurvey.Text = "Follow-up Survey for:" & vbNewLine & ParticipantsName
                             ButtonFollowupSurvey.Enabled = True
                             ButtonEditFollowup.Enabled = True
+
+                            ButtonRetestingSurvey.Text = "Retesting Survey for:" & vbNewLine & ParticipantsName
+                            ButtonRetestingSurvey.Enabled = True
+                            ButtonEditRetesting.Enabled = True
                             ' Disable baseline button since we've found a participant
                             ButtonBaseline.Enabled = False
                         Else
@@ -1013,5 +1026,53 @@ Public Class Main_Menu
                 Return "-9"
         End Select
     End Function
+
+    Private Sub ButtonRetestingSurvey_Click(sender As Object, e As EventArgs) Handles ButtonRetestingSurvey.Click
+        ModifyingSurvey = False
+        Survey = "retesting"
+        If SUBJID.StartsWith("SCRN") Then
+            MessageBox.Show("This Participant was not Enrolled in the IBIS Study and therefore no further action is not allowed.")
+            Exit Sub
+
+        End If
+
+        If DoesSUBJIDExistInLookup() Or DoesSUBJIDExistInFollowup() Then
+            MessageBox.Show("This Participant has already had a followup visit. To prevent a duplicate entry, further action is not allowed.")
+            Exit Sub
+
+        End If
+
+        If DueForRetesting() Then
+            MessageBox.Show("This Participant is not Due for Retesting Data Entry. The Retesting entry is only allowed after 6 months from the time of enrollment.")
+            Exit Sub
+
+        End If
+
+        NewSurvey.ShowDialog()
+        NewSurvey.Dispose()
+
+    End Sub
+
+    Private Sub ButtonEditRetesting_Click(sender As Object, e As EventArgs) Handles ButtonEditRetesting.Click
+        Try
+            ModifyingSurvey = True
+            Survey = "retesting"
+            If DoesSUBJIDExistInRetesting() = True Then
+                ModifyingSurvey = True
+            ElseIf DoesSUBJIDExistInRetestingLookup() = True And DoesSUBJIDExistInRetesting() = False Then
+                MessageBox.Show("This Participant has already had a retesting survey in a different tablet. To Edit, use the computer where the entry was done.")
+                Exit Sub
+            End If
+            SelectFormToEdit.ShowDialog()
+            SelectFormToEdit.Dispose()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub ButtonPendingFuList_Click(sender As Object, e As EventArgs) Handles ButtonPendingFuList.Click
+        PendingFollowup.ShowDialog()
+        PendingFollowup.Dispose()
+    End Sub
 End Class
 

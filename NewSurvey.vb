@@ -1917,7 +1917,7 @@ Public Class NewSurvey
             Show()
 
             'show labels
-            If Survey = "followup" Then
+            If Survey = "followup" Or Survey = "retesting" Then
                 LabelHHID.Visible = True
                 LabelHHID.Text = "Study ID: " & SUBJID
 

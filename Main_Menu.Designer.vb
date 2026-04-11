@@ -86,6 +86,9 @@ Partial Class Main_Menu
         Me.ButtonEditFollowup = New System.Windows.Forms.Button()
         Me.ButtonGetData = New System.Windows.Forms.Button()
         Me.lblEndpoint = New System.Windows.Forms.Label()
+        Me.ButtonPendingFuList = New System.Windows.Forms.Button()
+        Me.ButtonRetestingSurvey = New System.Windows.Forms.Button()
+        Me.ButtonEditRetesting = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -311,7 +314,7 @@ Partial Class Main_Menu
         Me.ButtonSMSSchedule.BackColor = System.Drawing.Color.LightGray
         Me.ButtonSMSSchedule.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonSMSSchedule.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonSMSSchedule.Location = New System.Drawing.Point(292, 667)
+        Me.ButtonSMSSchedule.Location = New System.Drawing.Point(83, 635)
         Me.ButtonSMSSchedule.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ButtonSMSSchedule.Name = "ButtonSMSSchedule"
         Me.ButtonSMSSchedule.Size = New System.Drawing.Size(263, 57)
@@ -554,7 +557,7 @@ Partial Class Main_Menu
         Me.ButtonFollowupSurvey.Enabled = False
         Me.ButtonFollowupSurvey.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonFollowupSurvey.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonFollowupSurvey.Location = New System.Drawing.Point(83, 762)
+        Me.ButtonFollowupSurvey.Location = New System.Drawing.Point(83, 711)
         Me.ButtonFollowupSurvey.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ButtonFollowupSurvey.Name = "ButtonFollowupSurvey"
         Me.ButtonFollowupSurvey.Size = New System.Drawing.Size(263, 68)
@@ -605,7 +608,7 @@ Partial Class Main_Menu
         Me.ButtonEditFollowup.Enabled = False
         Me.ButtonEditFollowup.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonEditFollowup.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonEditFollowup.Location = New System.Drawing.Point(484, 762)
+        Me.ButtonEditFollowup.Location = New System.Drawing.Point(485, 711)
         Me.ButtonEditFollowup.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ButtonEditFollowup.Name = "ButtonEditFollowup"
         Me.ButtonEditFollowup.Size = New System.Drawing.Size(263, 68)
@@ -638,6 +641,47 @@ Partial Class Main_Menu
         Me.lblEndpoint.Text = "EndPoint Visit Completed"
         Me.lblEndpoint.Visible = False
         '
+        'ButtonPendingFuList
+        '
+        Me.ButtonPendingFuList.BackColor = System.Drawing.Color.LightGray
+        Me.ButtonPendingFuList.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.ButtonPendingFuList.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonPendingFuList.Location = New System.Drawing.Point(485, 635)
+        Me.ButtonPendingFuList.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.ButtonPendingFuList.Name = "ButtonPendingFuList"
+        Me.ButtonPendingFuList.Size = New System.Drawing.Size(263, 57)
+        Me.ButtonPendingFuList.TabIndex = 58
+        Me.ButtonPendingFuList.Text = "Outcome QC Report"
+        Me.ButtonPendingFuList.UseVisualStyleBackColor = False
+        '
+        'ButtonRetestingSurvey
+        '
+        Me.ButtonRetestingSurvey.BackColor = System.Drawing.Color.LightGray
+        Me.ButtonRetestingSurvey.Enabled = False
+        Me.ButtonRetestingSurvey.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.ButtonRetestingSurvey.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonRetestingSurvey.Location = New System.Drawing.Point(83, 801)
+        Me.ButtonRetestingSurvey.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.ButtonRetestingSurvey.Name = "ButtonRetestingSurvey"
+        Me.ButtonRetestingSurvey.Size = New System.Drawing.Size(263, 68)
+        Me.ButtonRetestingSurvey.TabIndex = 59
+        Me.ButtonRetestingSurvey.Text = "Retesting Survey"
+        Me.ButtonRetestingSurvey.UseVisualStyleBackColor = False
+        '
+        'ButtonEditRetesting
+        '
+        Me.ButtonEditRetesting.BackColor = System.Drawing.Color.LightGray
+        Me.ButtonEditRetesting.Enabled = False
+        Me.ButtonEditRetesting.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.ButtonEditRetesting.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonEditRetesting.Location = New System.Drawing.Point(484, 801)
+        Me.ButtonEditRetesting.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.ButtonEditRetesting.Name = "ButtonEditRetesting"
+        Me.ButtonEditRetesting.Size = New System.Drawing.Size(263, 68)
+        Me.ButtonEditRetesting.TabIndex = 60
+        Me.ButtonEditRetesting.Text = "Edit Resting Survey"
+        Me.ButtonEditRetesting.UseVisualStyleBackColor = False
+        '
         'Main_Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -645,6 +689,9 @@ Partial Class Main_Menu
         Me.BackColor = System.Drawing.Color.Silver
         Me.ClientSize = New System.Drawing.Size(1421, 962)
         Me.ControlBox = False
+        Me.Controls.Add(Me.ButtonEditRetesting)
+        Me.Controls.Add(Me.ButtonRetestingSurvey)
+        Me.Controls.Add(Me.ButtonPendingFuList)
         Me.Controls.Add(Me.lblEndpoint)
         Me.Controls.Add(Me.ButtonGetData)
         Me.Controls.Add(Me.ButtonEditFollowup)
@@ -742,4 +789,7 @@ Partial Class Main_Menu
     Friend WithEvents ButtonEditFollowup As Button
     Friend WithEvents ButtonGetData As Button
     Friend WithEvents lblEndpoint As Label
+    Friend WithEvents ButtonPendingFuList As Button
+    Friend WithEvents ButtonRetestingSurvey As Button
+    Friend WithEvents ButtonEditRetesting As Button
 End Class
