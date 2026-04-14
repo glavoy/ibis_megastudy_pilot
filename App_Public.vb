@@ -30,7 +30,7 @@ Module IBIS_Public
     Public ParticipantsPhone As Integer
     Public Subcounty As String
     Public County As String
-    Public csvFiles As String() = {"followup_lookup.csv", "baseline_lookup.csv"}
+    Public csvFiles As String() = {"followup_lookup.csv", "baseline_lookup.csv", "retesting_lookup.csv"}
 
     '*****************************************************
     ' Function to get the next line number
