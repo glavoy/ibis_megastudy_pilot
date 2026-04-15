@@ -325,7 +325,7 @@
 			<response value = '2'>No</response>
 		</responses>
 		<preskip>
-			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='on_pep'></skip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='dice_clinic'></skip>
 		</preskip>
 	</question>
 
