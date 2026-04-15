@@ -1036,7 +1036,7 @@ Public Class Main_Menu
 
         End If
 
-        If DoesSUBJIDExistInLookup() Or DoesSUBJIDExistInFollowup() Then
+        If DoesSUBJIDExistInRetesting() Or DoesSUBJIDExistInRetestingLookup() Then
             MessageBox.Show("This Participant has already had a followup visit. To prevent a duplicate entry, further action is not allowed.")
             Exit Sub
 

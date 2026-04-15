@@ -141,14 +141,16 @@ Public Class PendingFollowup
                 Dim query As String = "SELECT subjid, participants_name, nickname, client_sex, mobile_number, health_facility, next_appt_6m " &
                                   "FROM baseline " &
                                   "WHERE subjid <> '-9'  AND next_appt_6m < now() AND " &
-                                  "((subjid NOT IN (select subjid from followup where primary_endpoint_visit = 1 )) OR (subjid NOT IN (select subjid from followup_lookup where primary_endpoint_visit = 1)))  AND " &
-                                  "(next_appt_6m  IS NOT NULL AND next_appt_6m  BETWEEN #" & startDateStr & "# AND #" & endDateStr & "#) " &
+                                  "((subjid NOT IN (select subjid from followup where primary_endpoint_visit = 1 )) AND (subjid NOT IN (select subjid from followup_lookup where primary_endpoint_visit = 1)))  AND " &
+                                  "(next_appt_6m  IS NOT NULL AND next_appt_6m  BETWEEN #" & startDateStr & "# AND #" & endDateStr & "#) AND " &
+                                  "((subjid NOT IN (select subjid from retesting )) AND (subjid NOT IN (select subjid from retesting_lookup)))  " &
                                   "UNION " &
                                   "SELECT subjid, participants_name, nickname, client_sex, mobile_number, health_facility, next_appt_6m " &
                                   "FROM baseline_lookup " &
                                   "WHERE subjid <> '-9'  AND next_appt_6m < now() AND " &
-                                  "((subjid NOT IN (select subjid from followup where primary_endpoint_visit = 1 )) OR (subjid NOT IN (select subjid from followup_lookup where primary_endpoint_visit = 1)))  AND " &
-                                  "(next_appt_6m  IS NOT NULL AND next_appt_6m  BETWEEN #" & startDateStr & "# AND #" & endDateStr & "#) "
+                                  "((subjid NOT IN (select subjid from followup where primary_endpoint_visit = 1 )) AND (subjid NOT IN (select subjid from followup_lookup where primary_endpoint_visit = 1)))  AND " &
+                                  "(next_appt_6m  IS NOT NULL AND next_appt_6m  BETWEEN #" & startDateStr & "# AND #" & endDateStr & "#) AND " &
+                                  "((subjid NOT IN (select subjid from retesting )) AND (subjid NOT IN (select subjid from retesting_lookup)))  "
 
                 ' Create data adapter and table
                 dataAdapter = New OleDbDataAdapter(query, connection)
