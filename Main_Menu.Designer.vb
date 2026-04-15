@@ -665,7 +665,7 @@ Partial Class Main_Menu
         Me.ButtonRetestingSurvey.Name = "ButtonRetestingSurvey"
         Me.ButtonRetestingSurvey.Size = New System.Drawing.Size(263, 68)
         Me.ButtonRetestingSurvey.TabIndex = 59
-        Me.ButtonRetestingSurvey.Text = "Retesting Survey"
+        Me.ButtonRetestingSurvey.Text = "QC Survey"
         Me.ButtonRetestingSurvey.UseVisualStyleBackColor = False
         '
         'ButtonEditRetesting
@@ -679,7 +679,7 @@ Partial Class Main_Menu
         Me.ButtonEditRetesting.Name = "ButtonEditRetesting"
         Me.ButtonEditRetesting.Size = New System.Drawing.Size(263, 68)
         Me.ButtonEditRetesting.TabIndex = 60
-        Me.ButtonEditRetesting.Text = "Edit Resting Survey"
+        Me.ButtonEditRetesting.Text = "Edit QC Survey"
         Me.ButtonEditRetesting.UseVisualStyleBackColor = False
         '
         'Main_Menu

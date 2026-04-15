@@ -71,7 +71,7 @@ Public Class Main_Menu
         TextBoxPhoneNumber.ForeColor = Color.Gray
         TextBoxPhoneNumber.Font = New Font(TextBoxPhoneNumber.Font, FontStyle.Italic)
         ButtonFollowupSurvey.Text = "Follow-up Survey"
-        ButtonRetestingSurvey.Text = "Retesting Survey"
+        ButtonRetestingSurvey.Text = "QC Survey"
 
         Dim originalFont = TextBoxPhoneNumber.Parent.Font  ' Use parent font as reference
         Dim smallerFont = New Font(originalFont.FontFamily, originalFont.Size - 2, FontStyle.Italic)
@@ -344,7 +344,7 @@ Public Class Main_Menu
             ButtonFollowupSurvey.Enabled = True
             ButtonEditFollowup.Enabled = True
 
-            ButtonRetestingSurvey.Text = "Retesting Survey for:" & vbNewLine & selectedName
+            ButtonRetestingSurvey.Text = "QC Survey for:" & vbNewLine & selectedName
             ButtonRetestingSurvey.Enabled = True
             ButtonEditRetesting.Enabled = True
         Else
@@ -352,7 +352,7 @@ Public Class Main_Menu
             ButtonFollowupSurvey.Text = "Follow-up Survey"
             ButtonRetestingSurvey.Enabled = False
             ButtonEditRetesting.Enabled = False
-            ButtonRetestingSurvey.Text = "Retesting Survey"
+            ButtonRetestingSurvey.Text = "QC Survey"
             SUBJID = ""
             HideLabels()
             ButtonBaseline.Enabled = True
@@ -529,7 +529,7 @@ Public Class Main_Menu
 
         ' Reset button text and variables as requested
         ButtonFollowupSurvey.Text = "Follow-up Survey"
-        ButtonRetestingSurvey.Text = "Retesting Survey"
+        ButtonRetestingSurvey.Text = "QC Survey"
         SUBJID = ""
 
         ' Hide labels
@@ -625,7 +625,7 @@ Public Class Main_Menu
                             ButtonFollowupSurvey.Enabled = True
                             ButtonEditFollowup.Enabled = True
 
-                            ButtonRetestingSurvey.Text = "Retesting Survey for:" & vbNewLine & ParticipantsName
+                            ButtonRetestingSurvey.Text = "QC Survey for:" & vbNewLine & ParticipantsName
                             ButtonRetestingSurvey.Enabled = True
                             ButtonEditRetesting.Enabled = True
                             ' Disable baseline button since we've found a participant
@@ -1043,7 +1043,7 @@ Public Class Main_Menu
         End If
 
         If DueForRetesting() Then
-            MessageBox.Show("This Participant is not Due for Retesting Data Entry. The Retesting entry is only allowed after 6 months from the time of enrollment.")
+            MessageBox.Show("This Participant is not Due for QC Data Entry. The QC entry is only allowed after 6 months from the time of enrollment.")
             Exit Sub
 
         End If
@@ -1060,7 +1060,7 @@ Public Class Main_Menu
             If DoesSUBJIDExistInRetesting() = True Then
                 ModifyingSurvey = True
             ElseIf DoesSUBJIDExistInRetestingLookup() = True And DoesSUBJIDExistInRetesting() = False Then
-                MessageBox.Show("This Participant has already had a retesting survey in a different tablet. To Edit, use the computer where the entry was done.")
+                MessageBox.Show("This Participant has already had a QC survey in a different tablet. To Edit, use the computer where the entry was done.")
                 Exit Sub
             End If
             SelectFormToEdit.ShowDialog()
