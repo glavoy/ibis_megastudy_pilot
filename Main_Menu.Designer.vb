@@ -86,7 +86,15 @@ Partial Class Main_Menu
         Me.ButtonEditFollowup = New System.Windows.Forms.Button()
         Me.ButtonGetData = New System.Windows.Forms.Button()
         Me.lblEndpoint = New System.Windows.Forms.Label()
+        Me.ButtonPendingFuList = New System.Windows.Forms.Button()
+        Me.ButtonRetestingSurvey = New System.Windows.Forms.Button()
+        Me.ButtonEditRetesting = New System.Windows.Forms.Button()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.RadioButtonStudyid = New System.Windows.Forms.RadioButton()
+        Me.RadioButtonNationalId = New System.Windows.Forms.RadioButton()
+        Me.RadioButtonPhoneNumber = New System.Windows.Forms.RadioButton()
         Me.GroupBox1.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
@@ -311,7 +319,7 @@ Partial Class Main_Menu
         Me.ButtonSMSSchedule.BackColor = System.Drawing.Color.LightGray
         Me.ButtonSMSSchedule.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonSMSSchedule.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonSMSSchedule.Location = New System.Drawing.Point(292, 667)
+        Me.ButtonSMSSchedule.Location = New System.Drawing.Point(83, 635)
         Me.ButtonSMSSchedule.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ButtonSMSSchedule.Name = "ButtonSMSSchedule"
         Me.ButtonSMSSchedule.Size = New System.Drawing.Size(263, 57)
@@ -431,12 +439,11 @@ Partial Class Main_Menu
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.GroupBox2)
         Me.GroupBox1.Controls.Add(Me.ButtonCannotFind)
         Me.GroupBox1.Controls.Add(Me.ComboBoxMonthOfBirth)
         Me.GroupBox1.Controls.Add(Me.Label2)
-        Me.GroupBox1.Controls.Add(Me.ButtonSearchPhone)
         Me.GroupBox1.Controls.Add(Me.TextBoxFilter)
-        Me.GroupBox1.Controls.Add(Me.TextBoxPhoneNumber)
         Me.GroupBox1.Controls.Add(Me.Label7)
         Me.GroupBox1.Controls.Add(Me.ComboBoxName)
         Me.GroupBox1.Controls.Add(Me.Label8)
@@ -490,7 +497,7 @@ Partial Class Main_Menu
         Me.ButtonSearchPhone.BackColor = System.Drawing.Color.LightGray
         Me.ButtonSearchPhone.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonSearchPhone.Font = New System.Drawing.Font("Segoe UI", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonSearchPhone.Location = New System.Drawing.Point(575, 82)
+        Me.ButtonSearchPhone.Location = New System.Drawing.Point(212, 111)
         Me.ButtonSearchPhone.Margin = New System.Windows.Forms.Padding(4)
         Me.ButtonSearchPhone.Name = "ButtonSearchPhone"
         Me.ButtonSearchPhone.Size = New System.Drawing.Size(189, 42)
@@ -510,7 +517,7 @@ Partial Class Main_Menu
         'TextBoxPhoneNumber
         '
         Me.TextBoxPhoneNumber.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBoxPhoneNumber.Location = New System.Drawing.Point(563, 25)
+        Me.TextBoxPhoneNumber.Location = New System.Drawing.Point(212, 36)
         Me.TextBoxPhoneNumber.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.TextBoxPhoneNumber.Name = "TextBoxPhoneNumber"
         Me.TextBoxPhoneNumber.Size = New System.Drawing.Size(189, 34)
@@ -554,7 +561,7 @@ Partial Class Main_Menu
         Me.ButtonFollowupSurvey.Enabled = False
         Me.ButtonFollowupSurvey.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonFollowupSurvey.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonFollowupSurvey.Location = New System.Drawing.Point(83, 762)
+        Me.ButtonFollowupSurvey.Location = New System.Drawing.Point(83, 711)
         Me.ButtonFollowupSurvey.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ButtonFollowupSurvey.Name = "ButtonFollowupSurvey"
         Me.ButtonFollowupSurvey.Size = New System.Drawing.Size(263, 68)
@@ -605,7 +612,7 @@ Partial Class Main_Menu
         Me.ButtonEditFollowup.Enabled = False
         Me.ButtonEditFollowup.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ButtonEditFollowup.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonEditFollowup.Location = New System.Drawing.Point(484, 762)
+        Me.ButtonEditFollowup.Location = New System.Drawing.Point(485, 711)
         Me.ButtonEditFollowup.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ButtonEditFollowup.Name = "ButtonEditFollowup"
         Me.ButtonEditFollowup.Size = New System.Drawing.Size(263, 68)
@@ -638,6 +645,93 @@ Partial Class Main_Menu
         Me.lblEndpoint.Text = "EndPoint Visit Completed"
         Me.lblEndpoint.Visible = False
         '
+        'ButtonPendingFuList
+        '
+        Me.ButtonPendingFuList.BackColor = System.Drawing.Color.LightGray
+        Me.ButtonPendingFuList.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.ButtonPendingFuList.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonPendingFuList.Location = New System.Drawing.Point(485, 635)
+        Me.ButtonPendingFuList.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.ButtonPendingFuList.Name = "ButtonPendingFuList"
+        Me.ButtonPendingFuList.Size = New System.Drawing.Size(263, 57)
+        Me.ButtonPendingFuList.TabIndex = 58
+        Me.ButtonPendingFuList.Text = "Outcome QC Report"
+        Me.ButtonPendingFuList.UseVisualStyleBackColor = False
+        '
+        'ButtonRetestingSurvey
+        '
+        Me.ButtonRetestingSurvey.BackColor = System.Drawing.Color.LightGray
+        Me.ButtonRetestingSurvey.Enabled = False
+        Me.ButtonRetestingSurvey.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.ButtonRetestingSurvey.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonRetestingSurvey.Location = New System.Drawing.Point(83, 801)
+        Me.ButtonRetestingSurvey.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.ButtonRetestingSurvey.Name = "ButtonRetestingSurvey"
+        Me.ButtonRetestingSurvey.Size = New System.Drawing.Size(263, 68)
+        Me.ButtonRetestingSurvey.TabIndex = 59
+        Me.ButtonRetestingSurvey.Text = "QC Survey"
+        Me.ButtonRetestingSurvey.UseVisualStyleBackColor = False
+        '
+        'ButtonEditRetesting
+        '
+        Me.ButtonEditRetesting.BackColor = System.Drawing.Color.LightGray
+        Me.ButtonEditRetesting.Enabled = False
+        Me.ButtonEditRetesting.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.ButtonEditRetesting.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonEditRetesting.Location = New System.Drawing.Point(484, 801)
+        Me.ButtonEditRetesting.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.ButtonEditRetesting.Name = "ButtonEditRetesting"
+        Me.ButtonEditRetesting.Size = New System.Drawing.Size(263, 68)
+        Me.ButtonEditRetesting.TabIndex = 60
+        Me.ButtonEditRetesting.Text = "Edit QC Survey"
+        Me.ButtonEditRetesting.UseVisualStyleBackColor = False
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.RadioButtonPhoneNumber)
+        Me.GroupBox2.Controls.Add(Me.RadioButtonNationalId)
+        Me.GroupBox2.Controls.Add(Me.RadioButtonStudyid)
+        Me.GroupBox2.Controls.Add(Me.TextBoxPhoneNumber)
+        Me.GroupBox2.Controls.Add(Me.ButtonSearchPhone)
+        Me.GroupBox2.Location = New System.Drawing.Point(604, 31)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(421, 199)
+        Me.GroupBox2.TabIndex = 161
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "Select Search Category"
+        '
+        'RadioButtonStudyid
+        '
+        Me.RadioButtonStudyid.AutoSize = True
+        Me.RadioButtonStudyid.Location = New System.Drawing.Point(26, 34)
+        Me.RadioButtonStudyid.Name = "RadioButtonStudyid"
+        Me.RadioButtonStudyid.Size = New System.Drawing.Size(163, 30)
+        Me.RadioButtonStudyid.TabIndex = 158
+        Me.RadioButtonStudyid.Text = "IBIS Study ID"
+        Me.RadioButtonStudyid.UseVisualStyleBackColor = True
+        '
+        'RadioButtonNationalId
+        '
+        Me.RadioButtonNationalId.AutoSize = True
+        Me.RadioButtonNationalId.Location = New System.Drawing.Point(26, 73)
+        Me.RadioButtonNationalId.Name = "RadioButtonNationalId"
+        Me.RadioButtonNationalId.Size = New System.Drawing.Size(141, 30)
+        Me.RadioButtonNationalId.TabIndex = 159
+        Me.RadioButtonNationalId.Text = "National ID"
+        Me.RadioButtonNationalId.UseVisualStyleBackColor = True
+        '
+        'RadioButtonPhoneNumber
+        '
+        Me.RadioButtonPhoneNumber.AutoSize = True
+        Me.RadioButtonPhoneNumber.Checked = True
+        Me.RadioButtonPhoneNumber.Location = New System.Drawing.Point(26, 118)
+        Me.RadioButtonPhoneNumber.Name = "RadioButtonPhoneNumber"
+        Me.RadioButtonPhoneNumber.Size = New System.Drawing.Size(176, 30)
+        Me.RadioButtonPhoneNumber.TabIndex = 160
+        Me.RadioButtonPhoneNumber.TabStop = True
+        Me.RadioButtonPhoneNumber.Text = "Phone Number"
+        Me.RadioButtonPhoneNumber.UseVisualStyleBackColor = True
+        '
         'Main_Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -645,6 +739,9 @@ Partial Class Main_Menu
         Me.BackColor = System.Drawing.Color.Silver
         Me.ClientSize = New System.Drawing.Size(1421, 962)
         Me.ControlBox = False
+        Me.Controls.Add(Me.ButtonEditRetesting)
+        Me.Controls.Add(Me.ButtonRetestingSurvey)
+        Me.Controls.Add(Me.ButtonPendingFuList)
         Me.Controls.Add(Me.lblEndpoint)
         Me.Controls.Add(Me.ButtonGetData)
         Me.Controls.Add(Me.ButtonEditFollowup)
@@ -675,6 +772,8 @@ Partial Class Main_Menu
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -742,4 +841,11 @@ Partial Class Main_Menu
     Friend WithEvents ButtonEditFollowup As Button
     Friend WithEvents ButtonGetData As Button
     Friend WithEvents lblEndpoint As Label
+    Friend WithEvents ButtonPendingFuList As Button
+    Friend WithEvents ButtonRetestingSurvey As Button
+    Friend WithEvents ButtonEditRetesting As Button
+    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents RadioButtonPhoneNumber As RadioButton
+    Friend WithEvents RadioButtonNationalId As RadioButton
+    Friend WithEvents RadioButtonStudyid As RadioButton
 End Class

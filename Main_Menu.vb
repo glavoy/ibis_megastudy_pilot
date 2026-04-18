@@ -71,6 +71,7 @@ Public Class Main_Menu
         TextBoxPhoneNumber.ForeColor = Color.Gray
         TextBoxPhoneNumber.Font = New Font(TextBoxPhoneNumber.Font, FontStyle.Italic)
         ButtonFollowupSurvey.Text = "Follow-up Survey"
+        ButtonRetestingSurvey.Text = "QC Survey"
 
         Dim originalFont = TextBoxPhoneNumber.Parent.Font  ' Use parent font as reference
         Dim smallerFont = New Font(originalFont.FontFamily, originalFont.Size - 2, FontStyle.Italic)
@@ -85,7 +86,9 @@ Public Class Main_Menu
         allSubjectIDs.Clear()
 
         Using connection As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
-            Dim query As String = "SELECT participants_name, subjid FROM baseline ORDER BY participants_name"
+            Dim query As String = "SELECT participants_name, subjid FROM baseline " &
+                "UNION SELECT participants_name, subjid FROM baseline_lookup " &
+            "ORDER BY participants_name"
             Using command As New OleDbCommand(query, connection)
                 connection.Open()
                 Dim reader As OleDbDataReader = command.ExecuteReader()
@@ -342,9 +345,16 @@ Public Class Main_Menu
             ButtonFollowupSurvey.Text = "Follow-up Survey for:" & vbNewLine & selectedName
             ButtonFollowupSurvey.Enabled = True
             ButtonEditFollowup.Enabled = True
+
+            ButtonRetestingSurvey.Text = "QC Survey for:" & vbNewLine & selectedName
+            ButtonRetestingSurvey.Enabled = True
+            ButtonEditRetesting.Enabled = True
         Else
             ' Reset button text and SUBJID if "SELECT NAME" is selected
             ButtonFollowupSurvey.Text = "Follow-up Survey"
+            ButtonRetestingSurvey.Enabled = False
+            ButtonEditRetesting.Enabled = False
+            ButtonRetestingSurvey.Text = "QC Survey"
             SUBJID = ""
             HideLabels()
             ButtonBaseline.Enabled = True
@@ -521,6 +531,7 @@ Public Class Main_Menu
 
         ' Reset button text and variables as requested
         ButtonFollowupSurvey.Text = "Follow-up Survey"
+        ButtonRetestingSurvey.Text = "QC Survey"
         SUBJID = ""
 
         ' Hide labels
@@ -535,12 +546,23 @@ Public Class Main_Menu
 
         ' Ensure phone number is entered before searching
         If phoneNumber = "" Then
-            MessageBox.Show("Please enter a phone number.", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBox.Show("Please enter a phone number/National ID/IBIS Study ID.", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
 
         ' Call the search function
-        SearchByPhoneNumber(phoneNumber)
+        If RadioButtonPhoneNumber.Checked Then
+            SearchByPhoneNumber(phoneNumber)
+        End If
+
+        If RadioButtonStudyid.Checked Then
+            SearchByIBISID(phoneNumber)
+        End If
+
+        If RadioButtonNationalId.Checked Then
+            SearchByNationalID(phoneNumber)
+        End If
+
     End Sub
 
 
@@ -551,6 +573,7 @@ Public Class Main_Menu
             MessageBox.Show("Invalid phone number format. Phone number should be 10 digits and start with 0.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
+
 
         Try
             Using connection As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
@@ -615,6 +638,10 @@ Public Class Main_Menu
                             ButtonFollowupSurvey.Text = "Follow-up Survey for:" & vbNewLine & ParticipantsName
                             ButtonFollowupSurvey.Enabled = True
                             ButtonEditFollowup.Enabled = True
+
+                            ButtonRetestingSurvey.Text = "QC Survey for:" & vbNewLine & ParticipantsName
+                            ButtonRetestingSurvey.Enabled = True
+                            ButtonEditRetesting.Enabled = True
                             ' Disable baseline button since we've found a participant
                             ButtonBaseline.Enabled = False
                         Else
@@ -629,9 +656,193 @@ Public Class Main_Menu
         End Try
     End Sub
 
+    Private Sub SearchByIBISID(ibisid As String)
+        ' Validate IBIS ID format
+        If Not IsValidIBISID(ibisid) Then
+            MessageBox.Show("Invalid IBIS ID format. The IBIS Study ID should be at least 13 Characters and starts with IBIS.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+
+        Try
+            Using connection As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
+                connection.Open()
+
+                ' Query to search by phone number
+                Dim query As String = "SELECT b.subjid, health_facility, participants_name, NickName, " &
+                                     "respondants_age, client_sex, county, subcounty, village, mobile_number, " &
+                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit " &
+                                     "FROM baseline as b " &
+                                     "LEFT OUTER JOIN (SELECT subjid, primary_endpoint_visit FROM followup WHERE primary_endpoint_visit = 1) f on b.subjid=f.subjid " &
+                                     "WHERE b.subjid = ? " &
+                                     "UNION " &
+                                     "SELECT b.subjid, health_facility, participants_name, NickName, " &
+                                     "respondants_age, client_sex, county, subcounty, village, mobile_number, " &
+                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit " &
+                                     "FROM baseline_lookup as b " &
+                                     "LEFT OUTER JOIN (SELECT subjid, primary_endpoint_visit FROM followup WHERE primary_endpoint_visit = 1) f on b.subjid=f.subjid " &
+                                     "WHERE b.subjid = ?  "
+
+                Using command As New OleDbCommand(query, connection)
+                    command.Parameters.AddWithValue("?", ibisid)
+                    command.Parameters.AddWithValue("?", ibisid)
+
+                    Using reader As OleDbDataReader = command.ExecuteReader()
+                        If reader.Read() Then
+                            ' Participant found - update the global variables
+                            SUBJID = reader("subjid").ToString()
+                            Community = reader("health_facility").ToString()
+                            ParticipantsName = reader("participants_name").ToString()
+                            ParticipantsOtherName = reader("NickName").ToString()
+                            ParticipantsAge = reader("respondants_age").ToString()
+                            ParticipantsGender = reader("client_sex").ToString()
+                            County = reader("county").ToString()
+                            Subcounty = reader("subcounty").ToString()
+                            Village = reader("village").ToString()
+                            EndpointCompleted = reader("primary_endpoint_visit").ToString()
+
+                            ' Populate Labels
+                            LabelSubjid.Text = "SUBJID: " & SUBJID
+                            LabelParticipants_name.Text = "Participants Name: " & ParticipantsName
+                            LabelNickname.Text = "Other Names: " & ParticipantsOtherName
+                            LabelAge.Text = "Age: " & ParticipantsAge
+                            LabelSex.Text = "Gender: " & If(ParticipantsGender = "1", "Male", "Female")
+                            LabelCounty.Text = "County: " & County
+                            LabelSubcounty.Text = "Sub County: " & Subcounty
+                            LabelVillage.Text = "Village: " & Village
+                            LabelFuwindow.Text = "Target follow-up window: " & Microsoft.VisualBasic.Left(reader("next_appt_3m").ToString(), 10) & " to " & Microsoft.VisualBasic.Left(reader("next_appt_6m").ToString(), 10)
+                            LabelFuAllow.Text = "Allowable follow-up window: " & Microsoft.VisualBasic.Left(reader("appt_w1_2m").ToString(), 10) & " to " & Microsoft.VisualBasic.Left(reader("appt_w2_8m").ToString(), 10)
+                            lblEndpoint.Text = "Endpoint Visit Completed: " & If(EndpointCompleted = "1", "Yes", "No")
+
+                            ' Handle NULL values for phone number
+                            Dim phone1 As String = If(IsDBNull(reader("mobile_number")), "N/A", reader("mobile_number").ToString())
+                            LabelPhone_number.Text = "Phone Number: " & phone1
+
+                            ' Show the labels
+                            ShowLabels()
+
+                            ' Update the button text with the found name
+                            ButtonFollowupSurvey.Text = "Follow-up Survey for:" & vbNewLine & ParticipantsName
+                            ButtonFollowupSurvey.Enabled = True
+                            ButtonEditFollowup.Enabled = True
+
+                            ButtonRetestingSurvey.Text = "QC Survey for:" & vbNewLine & ParticipantsName
+                            ButtonRetestingSurvey.Enabled = True
+                            ButtonEditRetesting.Enabled = True
+                            ' Disable baseline button since we've found a participant
+                            ButtonBaseline.Enabled = False
+                        Else
+                            ' No participant found with that IBIS ID
+                            MessageBox.Show("No participant found with the IBIS Study ID: " & ibisid, "No Results", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        End If
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error searching for participant: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub SearchByNationalID(nationalid As String)
+        ' Validate National ID format
+        If Not IsValidNationalID(nationalid) Then
+            MessageBox.Show("Invalid National ID format. The National ID should be at least 8 Characters.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+
+        Try
+            Using connection As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
+                connection.Open()
+
+                ' Query to search by phone number
+                Dim query As String = "SELECT b.subjid, health_facility, participants_name, NickName, " &
+                                     "respondants_age, client_sex, county, subcounty, village, mobile_number, " &
+                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit " &
+                                     "FROM baseline as b " &
+                                     "LEFT OUTER JOIN (SELECT subjid, primary_endpoint_visit FROM followup WHERE primary_endpoint_visit = 1) f on b.subjid=f.subjid " &
+                                     "WHERE national_id = ? " &
+                                     "UNION " &
+                                     "SELECT b.subjid, health_facility, participants_name, NickName, " &
+                                     "respondants_age, client_sex, county, subcounty, village, mobile_number, " &
+                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit " &
+                                     "FROM baseline_lookup as b " &
+                                     "LEFT OUTER JOIN (SELECT subjid, primary_endpoint_visit FROM followup WHERE primary_endpoint_visit = 1) f on b.subjid=f.subjid " &
+                                     "WHERE national_id = ?  "
+
+                Using command As New OleDbCommand(query, connection)
+                    command.Parameters.AddWithValue("?", nationalid)
+                    command.Parameters.AddWithValue("?", nationalid)
+
+                    Using reader As OleDbDataReader = command.ExecuteReader()
+                        If reader.Read() Then
+                            ' Participant found - update the global variables
+                            SUBJID = reader("subjid").ToString()
+                            Community = reader("health_facility").ToString()
+                            ParticipantsName = reader("participants_name").ToString()
+                            ParticipantsOtherName = reader("NickName").ToString()
+                            ParticipantsAge = reader("respondants_age").ToString()
+                            ParticipantsGender = reader("client_sex").ToString()
+                            County = reader("county").ToString()
+                            Subcounty = reader("subcounty").ToString()
+                            Village = reader("village").ToString()
+                            EndpointCompleted = reader("primary_endpoint_visit").ToString()
+
+                            ' Populate Labels
+                            LabelSubjid.Text = "SUBJID: " & SUBJID
+                            LabelParticipants_name.Text = "Participants Name: " & ParticipantsName
+                            LabelNickname.Text = "Other Names: " & ParticipantsOtherName
+                            LabelAge.Text = "Age: " & ParticipantsAge
+                            LabelSex.Text = "Gender: " & If(ParticipantsGender = "1", "Male", "Female")
+                            LabelCounty.Text = "County: " & County
+                            LabelSubcounty.Text = "Sub County: " & Subcounty
+                            LabelVillage.Text = "Village: " & Village
+                            LabelFuwindow.Text = "Target follow-up window: " & Microsoft.VisualBasic.Left(reader("next_appt_3m").ToString(), 10) & " to " & Microsoft.VisualBasic.Left(reader("next_appt_6m").ToString(), 10)
+                            LabelFuAllow.Text = "Allowable follow-up window: " & Microsoft.VisualBasic.Left(reader("appt_w1_2m").ToString(), 10) & " to " & Microsoft.VisualBasic.Left(reader("appt_w2_8m").ToString(), 10)
+                            lblEndpoint.Text = "Endpoint Visit Completed: " & If(EndpointCompleted = "1", "Yes", "No")
+
+                            ' Handle NULL values for phone number
+                            Dim phone1 As String = If(IsDBNull(reader("mobile_number")), "N/A", reader("mobile_number").ToString())
+                            LabelPhone_number.Text = "Phone Number: " & phone1
+
+                            ' Show the labels
+                            ShowLabels()
+
+                            ' Update the button text with the found name
+                            ButtonFollowupSurvey.Text = "Follow-up Survey for:" & vbNewLine & ParticipantsName
+                            ButtonFollowupSurvey.Enabled = True
+                            ButtonEditFollowup.Enabled = True
+
+                            ButtonRetestingSurvey.Text = "QC Survey for:" & vbNewLine & ParticipantsName
+                            ButtonRetestingSurvey.Enabled = True
+                            ButtonEditRetesting.Enabled = True
+                            ' Disable baseline button since we've found a participant
+                            ButtonBaseline.Enabled = False
+                        Else
+                            ' No participant found with that national id
+                            MessageBox.Show("No participant found with this National ID: " & nationalid, "No Results", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        End If
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error searching for participant: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
     Private Function IsValidPhoneNumber(phoneNumber As String) As Boolean
         ' Check if the phone number is exactly 10 digits and starts with 0
         Return phoneNumber.Length = 10 AndAlso phoneNumber.StartsWith("0") AndAlso IsNumeric(phoneNumber)
+    End Function
+
+    Private Function IsValidIBISID(ibisid As String) As Boolean
+        ' Check if the IBIS ID contains at least 13 characters, starts with IBIS and contains a hyphen
+        Return ibisid.Length >= 13 AndAlso ibisid.StartsWith("IBIS") AndAlso ibisid.Contains("-")
+    End Function
+
+    Private Function IsValidNationalID(nationalid As String) As Boolean
+        ' Check if the National ID contains at least 8 characters
+        Return nationalid.Length >= 8
     End Function
 
     Private Sub ButtonBackupDB_Click(sender As Object, e As EventArgs) Handles ButtonBackupDB.Click
@@ -1013,5 +1224,77 @@ Public Class Main_Menu
                 Return "-9"
         End Select
     End Function
+
+    Private Sub ButtonRetestingSurvey_Click(sender As Object, e As EventArgs) Handles ButtonRetestingSurvey.Click
+        ModifyingSurvey = False
+        Survey = "retesting"
+        If SUBJID.StartsWith("SCRN") Then
+            MessageBox.Show("This Participant was not Enrolled in the IBIS Study and therefore no further action is not allowed.")
+            Exit Sub
+
+        End If
+
+        If DoesSUBJIDExistInRetesting() Or DoesSUBJIDExistInRetestingLookup() Then
+            MessageBox.Show("This Participant has already had a followup visit. To prevent a duplicate entry, further action is not allowed.")
+            Exit Sub
+
+        End If
+
+        If NotDueForRetesting() Then
+            MessageBox.Show("This Participant is not Due for QC Data Entry. The QC entry is only allowed after 6 months from the time of enrollment.")
+            Exit Sub
+
+        End If
+
+        NewSurvey.ShowDialog()
+        NewSurvey.Dispose()
+
+    End Sub
+
+    Private Sub ButtonEditRetesting_Click(sender As Object, e As EventArgs) Handles ButtonEditRetesting.Click
+        Try
+            ModifyingSurvey = True
+            Survey = "retesting"
+            If DoesSUBJIDExistInRetesting() = True Then
+                ModifyingSurvey = True
+            ElseIf DoesSUBJIDExistInRetestingLookup() = True And DoesSUBJIDExistInRetesting() = False Then
+                MessageBox.Show("This Participant has already had a QC survey in a different tablet. To Edit, use the computer where the entry was done.")
+                Exit Sub
+            End If
+            SelectFormToEdit.ShowDialog()
+            SelectFormToEdit.Dispose()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub ButtonPendingFuList_Click(sender As Object, e As EventArgs) Handles ButtonPendingFuList.Click
+        PendingFollowup.ShowDialog()
+        PendingFollowup.Dispose()
+    End Sub
+
+    Private Sub RadioButtonPhoneNumber_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButtonPhoneNumber.CheckedChanged
+        ButtonSearchPhone.Text = "Search By Phone Number"
+        ' Setup placeholder text for TextBoxPhoneNumber
+        TextBoxPhoneNumber.Text = "ENTER PHONE NUMBER"
+        TextBoxPhoneNumber.ForeColor = Color.Gray
+        TextBoxPhoneNumber.Font = New Font(TextBoxPhoneNumber.Font, FontStyle.Italic)
+    End Sub
+
+    Private Sub RadioButtonNationalId_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButtonNationalId.CheckedChanged
+        ButtonSearchPhone.Text = "Search By National ID"
+        ' Setup placeholder text for TextBoxPhoneNumber
+        TextBoxPhoneNumber.Text = "Enter National ID"
+        TextBoxPhoneNumber.ForeColor = Color.Gray
+        TextBoxPhoneNumber.Font = New Font(TextBoxPhoneNumber.Font, FontStyle.Italic)
+    End Sub
+
+    Private Sub RadioButtonStudyid_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButtonStudyid.CheckedChanged
+        ButtonSearchPhone.Text = "Search By IBIS Study ID"
+        ' Setup placeholder text for TextBoxPhoneNumber
+        TextBoxPhoneNumber.Text = "Enter IBIS Study ID"
+        TextBoxPhoneNumber.ForeColor = Color.Gray
+        TextBoxPhoneNumber.Font = New Font(TextBoxPhoneNumber.Font, FontStyle.Italic)
+    End Sub
 End Class
 

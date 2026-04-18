@@ -779,6 +779,10 @@
 			<response value = '3'>Fearful of Getting Sick</response>
 			<response value = '4'>Other</response>
 		</responses>
+		<preskip>
+			<skip fieldname='hiv_test_likelihood' condition = '=' response='5' response_type='fixed' skiptofieldname ='participant_randarm'></skip>
+			<skip fieldname='hiv_test_likelihood' condition = '=' response='6' response_type='fixed' skiptofieldname ='participant_randarm'></skip>
+		</preskip>
 	</question>
 
 
