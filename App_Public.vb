@@ -485,7 +485,7 @@ Module IBIS_Public
     ' Checks if the participant is due for retesting data entry.
     ' Returns: True if the participant is 6 months from the baseline enrollment dater.
     ' Uses the subjid for getting the 6 month next appointment date.
-    Public Function DueForRetesting() As Boolean
+    Public Function NotDueForRetesting() As Boolean
         Try
 
 
