@@ -465,7 +465,7 @@ Module IBIS_Public
 
                     ' Validate before comparison
                     If nextAppt8m.HasValue Then
-                        Return visit_date > nextAppt8m.Value
+                        Return visit_date.Date > nextAppt8m.Value.Date
                     End If
 
                     Return False
@@ -516,7 +516,7 @@ Module IBIS_Public
 
                     ' Validate before comparison
                     If nextAppt6m.HasValue Then
-                        Return visit_date <= nextAppt6m.Value
+                        Return visit_date.Date <= nextAppt6m.Value.Date
                     End If
 
                     Return False
