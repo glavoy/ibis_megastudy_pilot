@@ -414,7 +414,7 @@ Module IBIS_Public
 
                     ' Validate before comparison
                     If nextAppt3m.HasValue AndAlso nextAppt6m.HasValue Then
-                        Return visit_date >= nextAppt3m.Value AndAlso visit_date <= nextAppt6m.Value
+                        Return visit_date.Date >= nextAppt3m.Value.Date AndAlso visit_date <= nextAppt6m.Value.Date
                     End If
 
                     Return False
