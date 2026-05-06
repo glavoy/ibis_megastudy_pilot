@@ -412,14 +412,14 @@ Public Class Main_Menu
                 Dim strSQL As String = "
                 SELECT b.subjid,screening_id, respondants_age, participants_name, 
                        NickName, mobile_number, client_sex, health_facility, county,
-                        subcounty, village, next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit
+                        subcounty, village, next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit, arm_text
                 FROM baseline as b
                 LEFT OUTER JOIN (SELECT subjid, primary_endpoint_visit FROM followup WHERE primary_endpoint_visit = 1) as  f on b.subjid=f.subjid
                 WHERE b.subjid = @subjid
                 UNION
                 SELECT b.subjid,screening_id, respondants_age, participants_name, 
                        NickName, mobile_number, client_sex, health_facility, county,
-                        subcounty, village, next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit
+                        subcounty, village, next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit, arm_text
                 FROM baseline_lookup as b
                 LEFT OUTER JOIN (SELECT subjid, primary_endpoint_visit FROM followup WHERE primary_endpoint_visit = 1) as  f on b.subjid=f.subjid
                 WHERE b.subjid = @subjid"
@@ -441,12 +441,13 @@ Public Class Main_Menu
                             Subcounty = reader("subcounty").ToString()
                             Village = reader("village").ToString()
                             EndpointCompleted = reader("primary_endpoint_visit").ToString()
+                            Arm_Text = reader("arm_text").ToString()
 
                             ' Populate Labels
                             LabelSubjid.Text = "SUBJID: " & SUBJID
                             LabelParticipants_name.Text = "Participants Name: " & ParticipantsName
                             LabelNickname.Text = "Other Names: " & ParticipantsOtherName
-                            LabelAge.Text = "Age: " & ParticipantsAge
+                            LabelAge.Text = "Age: " & ParticipantsAge & "   Study Arm:  " & Arm_Text
                             LabelSex.Text = "Gender: " & If(ParticipantsGender = "1", "Male", "Female")
                             LabelCounty.Text = "County: " & County
                             LabelSubcounty.Text = "Sub County: " & Subcounty
@@ -582,14 +583,14 @@ Public Class Main_Menu
                 ' Query to search by phone number
                 Dim query As String = "SELECT b.subjid, health_facility, participants_name, NickName, " &
                                      "respondants_age, client_sex, county, subcounty, village, mobile_number, " &
-                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit " &
+                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit, arm_text " &
                                      "FROM baseline as b " &
                                      "LEFT OUTER JOIN (SELECT subjid, primary_endpoint_visit FROM followup WHERE primary_endpoint_visit = 1) f on b.subjid=f.subjid " &
                                      "WHERE mobile_number = ? or mobile_number = ? " &
                                      "UNION " &
                                      "SELECT b.subjid, health_facility, participants_name, NickName, " &
                                      "respondants_age, client_sex, county, subcounty, village, mobile_number, " &
-                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit " &
+                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit, arm_text " &
                                      "FROM baseline_lookup as b " &
                                      "LEFT OUTER JOIN (SELECT subjid, primary_endpoint_visit FROM followup WHERE primary_endpoint_visit = 1) f on b.subjid=f.subjid " &
                                      "WHERE mobile_number = ? or mobile_number = ? "
@@ -613,12 +614,13 @@ Public Class Main_Menu
                             Subcounty = reader("subcounty").ToString()
                             Village = reader("village").ToString()
                             EndpointCompleted = reader("primary_endpoint_visit").ToString()
+                            Arm_Text = reader("arm_text").ToString()
 
                             ' Populate Labels
                             LabelSubjid.Text = "SUBJID: " & SUBJID
                             LabelParticipants_name.Text = "Participants Name: " & ParticipantsName
                             LabelNickname.Text = "Other Names: " & ParticipantsOtherName
-                            LabelAge.Text = "Age: " & ParticipantsAge
+                            LabelAge.Text = "Age: " & ParticipantsAge & "  Study Arm: " & Arm_Text
                             LabelSex.Text = "Gender: " & If(ParticipantsGender = "1", "Male", "Female")
                             LabelCounty.Text = "County: " & County
                             LabelSubcounty.Text = "Sub County: " & Subcounty
@@ -671,14 +673,14 @@ Public Class Main_Menu
                 ' Query to search by phone number
                 Dim query As String = "SELECT b.subjid, health_facility, participants_name, NickName, " &
                                      "respondants_age, client_sex, county, subcounty, village, mobile_number, " &
-                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit " &
+                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit, arm_text " &
                                      "FROM baseline as b " &
                                      "LEFT OUTER JOIN (SELECT subjid, primary_endpoint_visit FROM followup WHERE primary_endpoint_visit = 1) f on b.subjid=f.subjid " &
                                      "WHERE b.subjid = ? " &
                                      "UNION " &
                                      "SELECT b.subjid, health_facility, participants_name, NickName, " &
                                      "respondants_age, client_sex, county, subcounty, village, mobile_number, " &
-                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit " &
+                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit, arm_text " &
                                      "FROM baseline_lookup as b " &
                                      "LEFT OUTER JOIN (SELECT subjid, primary_endpoint_visit FROM followup WHERE primary_endpoint_visit = 1) f on b.subjid=f.subjid " &
                                      "WHERE b.subjid = ?  "
@@ -700,12 +702,13 @@ Public Class Main_Menu
                             Subcounty = reader("subcounty").ToString()
                             Village = reader("village").ToString()
                             EndpointCompleted = reader("primary_endpoint_visit").ToString()
+                            Arm_Text = reader("arm_text").ToString()
 
                             ' Populate Labels
                             LabelSubjid.Text = "SUBJID: " & SUBJID
                             LabelParticipants_name.Text = "Participants Name: " & ParticipantsName
                             LabelNickname.Text = "Other Names: " & ParticipantsOtherName
-                            LabelAge.Text = "Age: " & ParticipantsAge
+                            LabelAge.Text = "Age: " & ParticipantsAge & "  Study arm:  " & Arm_Text
                             LabelSex.Text = "Gender: " & If(ParticipantsGender = "1", "Male", "Female")
                             LabelCounty.Text = "County: " & County
                             LabelSubcounty.Text = "Sub County: " & Subcounty
@@ -758,14 +761,14 @@ Public Class Main_Menu
                 ' Query to search by phone number
                 Dim query As String = "SELECT b.subjid, health_facility, participants_name, NickName, " &
                                      "respondants_age, client_sex, county, subcounty, village, mobile_number, " &
-                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit " &
+                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit, arm_text " &
                                      "FROM baseline as b " &
                                      "LEFT OUTER JOIN (SELECT subjid, primary_endpoint_visit FROM followup WHERE primary_endpoint_visit = 1) f on b.subjid=f.subjid " &
                                      "WHERE national_id = ? " &
                                      "UNION " &
                                      "SELECT b.subjid, health_facility, participants_name, NickName, " &
                                      "respondants_age, client_sex, county, subcounty, village, mobile_number, " &
-                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit " &
+                                     "next_appt_3m, next_appt_6m, appt_w1_2m, appt_w2_8m, primary_endpoint_visit, arm_text " &
                                      "FROM baseline_lookup as b " &
                                      "LEFT OUTER JOIN (SELECT subjid, primary_endpoint_visit FROM followup WHERE primary_endpoint_visit = 1) f on b.subjid=f.subjid " &
                                      "WHERE national_id = ?  "
@@ -787,12 +790,13 @@ Public Class Main_Menu
                             Subcounty = reader("subcounty").ToString()
                             Village = reader("village").ToString()
                             EndpointCompleted = reader("primary_endpoint_visit").ToString()
+                            Arm_Text = reader("arm_text").ToString()
 
                             ' Populate Labels
                             LabelSubjid.Text = "SUBJID: " & SUBJID
                             LabelParticipants_name.Text = "Participants Name: " & ParticipantsName
                             LabelNickname.Text = "Other Names: " & ParticipantsOtherName
-                            LabelAge.Text = "Age: " & ParticipantsAge
+                            LabelAge.Text = "Age: " & ParticipantsAge & "  Study Arm:  " & Arm_Text
                             LabelSex.Text = "Gender: " & If(ParticipantsGender = "1", "Male", "Female")
                             LabelCounty.Text = "County: " & County
                             LabelSubcounty.Text = "Sub County: " & Subcounty

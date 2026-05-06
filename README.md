@@ -11,3 +11,7 @@
 
 # version 2026.04.23
 # Fix primary endpoint visit check error. Dropped the time from the date coz it could be causing the error in checking the date range
+
+# version 2026.05.06
+# Add dob to the baseline_lookup table and add it the duplicate names QC
+# Add Participant Study arm as part of the information displayed on the dashboard_

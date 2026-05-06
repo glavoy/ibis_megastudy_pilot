@@ -11,7 +11,8 @@ Module IBIS_Public
     Public VDATE As String = "01/01/1899"                   'used to store the Visit Date
     Public Community As String                              'used to store the Community
     Public Village As String                                'selected village - from MainMenu
-    Public EndpointCompleted As String                                'selected village - from MainMenu
+    Public EndpointCompleted As String                      'Has completed endpoint visit
+    Public Arm_Text As String                               'Randomization arm
     Public ModifyingSurvey As Boolean = False               'keeps track of wether or not we are doing a new survey or modifying an existing one
     Public CurrentAutoValue As String                       'the current auto value of an automatic varaible
     Public DontKnow_Value As String                         'stores the current "Don't Know' value for a question
@@ -362,13 +363,14 @@ Module IBIS_Public
                 "   WHERE participants_name LIKE ? AND dob = ? " &
                 "   UNION ALL " &
                 "   SELECT participants_name FROM baseline_lookup " &
-                "   WHERE participants_name LIKE ? " &
+                "   WHERE participants_name LIKE ?  AND dob = ? " &
                 ") AS t;"
 
                 Using cmd As New OleDbCommand(strSQL, Connection)
                     cmd.Parameters.AddWithValue("?", "%" & pName & "%")  ' baseline name
                     cmd.Parameters.AddWithValue("?", p_dob)              ' baseline dob
                     cmd.Parameters.AddWithValue("?", "%" & pName & "%")  ' lookup name
+                    cmd.Parameters.AddWithValue("?", p_dob)              ' baseline dob
 
                     Dim n_names As Integer = Convert.ToInt32(cmd.ExecuteScalar())
                     Return n_names > 0
