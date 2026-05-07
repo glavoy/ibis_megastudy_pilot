@@ -843,7 +843,7 @@
 		<responses>
 			<response value = '1'>Started PrEP Today</response>
 			<response value = '2'>Started PEP Today</response>
-			<response value = '3'>Did not Sart PrEP or PEP Today</response>
+			<response value = '3'>Did not Start PrEP or PEP Today</response>
 		</responses>
 	</question>
 
