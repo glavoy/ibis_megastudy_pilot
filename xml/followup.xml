@@ -347,6 +347,7 @@
 		</responses>
 		<preskip>
 			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='on_pep'></skip>
+			<skip fieldname='countrycode' condition = '=' response='2' response_type='fixed' skiptofieldname ='on_pep'></skip>
 		</preskip>
 	</question>
 
