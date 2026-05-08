@@ -347,6 +347,7 @@
 		</responses>
 		<preskip>
 			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='on_pep'></skip>
+			<skip fieldname='countrycode' condition = '=' response='2' response_type='fixed' skiptofieldname ='on_pep'></skip>
 		</preskip>
 	</question>
 
@@ -443,7 +444,7 @@
 		<responses>
 			<response value = '1'>Started PrEP Today</response>
 			<response value = '2'>Started PEP Today</response>
-			<response value = '3'>Did not Sart PrEP or PEP Today</response>
+			<response value = '3'>Did not Start PrEP or PEP Today</response>
 		</responses>
 	</question>
 

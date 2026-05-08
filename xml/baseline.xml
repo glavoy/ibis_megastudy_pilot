@@ -124,6 +124,8 @@
 			<response value = '1'>OPD</response>
 			<response value = '2'>ANC/MCH</response>
 			<response value = '3'>DICE/Key Pops</response>
+			<response value = '4'>Outreach</response>
+			<response value = '5'>VCT</response>
 			<response value = '99'>Other</response>
 		</responses>
 	</question>
@@ -144,18 +146,56 @@
 	</question>
 
 
-	<question type = 'text' fieldname = 'county' fieldtype = 'text'>
+	<question type = 'radio' fieldname = 'county_rd' fieldtype = 'integer'>
 		<text>County</text>
-		<maxCharacters>80</maxCharacters>
+		<responses>
+			<response value = '1'>Homa Bay</response>
+			<response value = '2'>Kisumu</response>
+			<response value = '3'>Siaya</response>
+			<response value = '4'>Busia</response>
+			<response value = '5'>Migori</response>
+			<response value = '6'>Kisii</response>
+			<response value = '99'>Other Specify</response>
+		</responses>
 		<preskip>
 			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='district'></skip>
 		</preskip>
 	</question>
 
 
+	<question type = 'text' fieldname = 'county' fieldtype = 'text'>
+		<text>County</text>
+		<maxCharacters>80</maxCharacters>
+		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='district'></skip>
+			<skip fieldname='county_rd' condition = '&lt;&gt;' response='99' response_type='fixed' skiptofieldname ='subcounty_rd'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'subcounty_rd' fieldtype = 'integer'>
+		<text>Subcounty</text>
+		<responses>
+			<response value = '1'>Rachuonyo South</response>
+			<response value = '2'>Rachuonyo East</response>
+			<response value = '3'>Rachuonyo North</response>
+			<response value = '4'>Suba South</response>
+			<response value = '5'>Suba North</response>
+			<response value = '6'>Suba West</response>
+			<response value = '7'>Ndhiwa</response>
+			<response value = '8'>Rangwe</response>
+			<response value = '9'>Homa Bay Town</response>
+			<response value = '99'>Other Specify</response>
+		</responses>
+	</question>
+
+
 	<question type = 'text' fieldname = 'subcounty' fieldtype = 'text'>
 		<text>Subcounty</text>
 		<maxCharacters>80</maxCharacters>
+		<preskip>
+			<skip fieldname='subcounty_rd' condition = '&lt;&gt;' response='99' response_type='fixed' skiptofieldname ='district'></skip>
+		</preskip>
 	</question>
 
 
@@ -372,6 +412,7 @@
 		</responses>
 		<preskip>
 			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='on_prep'></skip>
+			<skip fieldname='countrycode' condition = '=' response='2' response_type='fixed' skiptofieldname ='on_prep'></skip>
 		</preskip>
 	</question>
 
@@ -521,6 +562,7 @@
 		<responses>
 			<response value = '1'>Safaricom</response>
 			<response value = '2'>Airtel</response>
+			<response value = '3'>MTN Uganda</response>
 			<response value = '97'>Other Specify</response>
 		</responses>
 		<dont_know>-7</dont_know>
@@ -604,6 +646,7 @@
 			<response value = '12'>Commercial sex worker</response>
 			<response value = '13'>Office job</response>
 			<response value = '14'>No job including retired, disabled</response>
+			<response value = '15'>Salon</response>
 			<response value = '97'>Other</response>
 		</responses>
 	</question>
@@ -780,8 +823,8 @@
 			<response value = '4'>Other</response>
 		</responses>
 		<preskip>
-			<skip fieldname='hiv_test_likelihood' condition = '=' response='5' response_type='fixed' skiptofieldname ='participant_randarm'></skip>
-			<skip fieldname='hiv_test_likelihood' condition = '=' response='6' response_type='fixed' skiptofieldname ='participant_randarm'></skip>
+			<skip fieldname='hiv_test_likelihood' condition = '=' response='5' response_type='fixed' skiptofieldname ='started_prep_pep'></skip>
+			<skip fieldname='hiv_test_likelihood' condition = '=' response='6' response_type='fixed' skiptofieldname ='started_prep_pep'></skip>
 		</preskip>
 	</question>
 
@@ -790,8 +833,18 @@
 		<text>Specify other motivation that might be for getting another HIV test in the future</text>
 		<maxCharacters>80</maxCharacters>
 		<preskip>
-			<skip fieldname='motivation_hiv_test' condition = '&lt;&gt;' response='4' response_type='fixed' skiptofieldname ='participant_randarm'></skip>
+			<skip fieldname='motivation_hiv_test' condition = '&lt;&gt;' response='4' response_type='fixed' skiptofieldname ='started_prep_pep'></skip>
 		</preskip>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'started_prep_pep' fieldtype = 'integer'>
+		<text>[HTS Counselor/RA] Did this participant start PrEP or PEP today?</text>
+		<responses>
+			<response value = '1'>Started PrEP Today</response>
+			<response value = '2'>Started PEP Today</response>
+			<response value = '3'>Did not Start PrEP or PEP Today</response>
+		</responses>
 	</question>
 
 

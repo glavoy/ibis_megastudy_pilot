@@ -14,4 +14,9 @@
 
 # version 2026.05.06
 # Add dob to the baseline_lookup table and add it the duplicate names QC
-# Add Participant Study arm as part of the information displayed on the dashboard_
+# Add Participant Study arm as part of the information displayed on the dashboard
+
+# version 2026.05.07
+# Added New columns to the baseline table county_rd, subcounty_rd, and started_prep_pep
+# Updated entry point question added Outreach and VCT to the list of options
+# Dropped Dice from the surveys both Baseline and Followup - added so that the question is not asked
