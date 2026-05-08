@@ -387,9 +387,16 @@ Module IBIS_Public
         Try
 
 
-            Dim visit_date As DateTime = DateTime.ParseExact(GetValue("starttime").ToString(), "dd/MM/yyyy HH:mm:ss", Globalization.CultureInfo.InvariantCulture).Date   ' normalize time
+            Dim raw_date As String = GetValue("starttime").ToString()
+            Dim visit_date As DateTime ' = DateTime.ParseExact(GetValue("starttime").ToString(), "dd/MM/yyyy HH:mm:ss", Globalization.CultureInfo.InvariantCulture).Date   ' normalize time
             Dim nextAppt3m As DateTime? = Nothing
             Dim nextAppt6m As DateTime? = Nothing
+
+            If raw_date.Contains("PM") Or raw_date.Contains("AM") Then
+                visit_date = DateTime.ParseExact(raw_date, "dd/MM/yyyy HH:mm:ss tt", Globalization.CultureInfo.InvariantCulture).Date   ' normalize time
+            Else
+                visit_date = DateTime.ParseExact(raw_date, "dd/MM/yyyy HH:mm:ss", Globalization.CultureInfo.InvariantCulture).Date   ' normalize time
+            End If
 
             Using Connection As OleDbConnection = GetDBConnection()
                 Connection.Open()
@@ -439,10 +446,18 @@ Module IBIS_Public
     Public Function OutSideEndpointVisitWindow() As Boolean
         Try
 
-
-            Dim visit_date As DateTime = DateTime.ParseExact(Now().ToString(), "dd/MM/yyyy HH:mm:ss", Globalization.CultureInfo.InvariantCulture).Date   ' normalize time
+            Dim raw_date As String = Now().ToString()
+            Dim visit_date As DateTime '= DateTime.ParseExact(Now().ToString(), "dd/MM/yyyy HH:mm:ss", Globalization.CultureInfo.InvariantCulture).Date   ' normalize time
             Dim nextAppt3m As DateTime? = Nothing
             Dim nextAppt8m As DateTime? = Nothing
+
+
+            If raw_date.Contains("PM") Or raw_date.Contains("AM") Then
+                visit_date = DateTime.ParseExact(raw_date, "dd/MM/yyyy HH:mm:ss tt", Globalization.CultureInfo.InvariantCulture).Date   ' normalize time
+            Else
+                visit_date = DateTime.ParseExact(raw_date, "dd/MM/yyyy HH:mm:ss", Globalization.CultureInfo.InvariantCulture).Date   ' normalize time
+            End If
+
 
             Using Connection As OleDbConnection = GetDBConnection()
                 Connection.Open()
