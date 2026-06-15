@@ -72,7 +72,8 @@ Module DatabaseChanges
                 New ChangeSet("werick", "Add columns baseline_lookup", CreateAlterTableSQL("baseline_lookup", "month_of_birth Integer"), Guid.NewGuid().ToString(), "Add new column to the baseline_lookup table"),
                 New ChangeSet("werick", "Add columns baseline_lookup", CreateAlterTableSQL("baseline_lookup", "dob DATETIME"), Guid.NewGuid().ToString(), "Add new column to the baseline_lookup table"),
                 New ChangeSet("werick", "Add columns baseline_lookup", CreateAlterTableSQL("baseline_lookup", "arm_text TEXT(80)"), Guid.NewGuid().ToString(), "Add new column to the baseline_lookup table"),
-                New ChangeSet("werick", "Add columns baseline", CreateAlterTableSQL("baseline", "county_rd Integer, subcounty_rd Integer, started_prep_pep Integer"), Guid.NewGuid().ToString(), "Add new column to the baseline crf")
+                New ChangeSet("werick", "Add columns baseline", CreateAlterTableSQL("baseline", "county_rd Integer, subcounty_rd Integer, started_prep_pep Integer"), Guid.NewGuid().ToString(), "Add new column to the baseline crf"),
+                New ChangeSet("werick", "Add columns retesting", CreateAlterTableSQL("retesting", "qc_source TEXT(20)"), Guid.NewGuid().ToString(), "Add new column to the retesting crf")
             }
 
             'phonenum_lab

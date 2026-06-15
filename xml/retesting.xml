@@ -82,14 +82,25 @@
 	</question>
 
 
+	<question type = 'checkbox' fieldname = 'qc_source' fieldtype = 'text'>
+		<text>QC source</text>
+		<responses>
+			<response value = '1'>EMR</response>
+			<response value = '2'>Self Report</response>
+			<response value = '3'>Manual Records Review</response>
+		</responses>
+	</question>
+
+
 	<question type = 'radio' fieldname = 'hadfu_visit' fieldtype = 'integer'>
 		<text>Did this participant return to clinic for HIV retesting? (Yes - retesting visit found; No- no retesting visit found)</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
+			<response value = '3'>Participant could not be reached</response>
 		</responses>
 		<postskip>
-			<skip fieldname='hadfu_visit' condition = '=' response='2' response_type='fixed' skiptofieldname ='comments'></skip>
+			<skip fieldname='hadfu_visit' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='comments'></skip>
 		</postskip>
 	</question>
 

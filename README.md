@@ -20,3 +20,6 @@
 # Added New columns to the baseline table county_rd, subcounty_rd, and started_prep_pep
 # Updated entry point question added Outreach and VCT to the list of options
 # Dropped Dice from the surveys both Baseline and Followup - added so that the question is not asked
+
+# version 2026.06.15
+# Updating Retesting QC crf. Added column to document data source
