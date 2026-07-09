@@ -23,3 +23,6 @@
 
 # version 2026.06.15
 # Updating Retesting QC crf. Added column to document data source
+
+# ver2026.07.09
+# Trimmed any spaces on the phone number and national_id to avoid duplicates

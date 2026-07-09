@@ -1070,7 +1070,7 @@ Public Class NewSurvey
                     For Each aControl In Me.Controls
                         Select Case TypeName(aControl)
                             Case "TextBox"
-                                CurrentValue = aControl.Text
+                                CurrentValue = Trim(aControl.Text)
                         End Select
                     Next
 
@@ -1096,7 +1096,7 @@ Public Class NewSurvey
                     For Each aControl In Me.Controls
                         Select Case TypeName(aControl)
                             Case "TextBox"
-                                CurrentValue = aControl.Text
+                                CurrentValue = Trim(aControl.Text)
                         End Select
                     Next
 
