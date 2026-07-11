@@ -1239,6 +1239,56 @@ Public Class NewSurvey
                 End If
             End If
 
+            ' Ensure the correct appointment date is entered - dflt_appt_arm_schd_appt_date
+            If IsValidResponse = True Then
+                If QuestionInfoArray(CurrentQuestion).FieldName = "dflt_appt_arm_schd_appt_date" Then
+                    'Get the current value of selected date
+                    Dim CurrentValueDate As Date = CurrentDateSelected
+
+                    Dim format As String = "d/MM/yyyy"
+                    Dim provider As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
+                    Dim date2 As Date = Date.ParseExact(CurrentValueDate, format, provider)
+                    Dim date1 As Date = Now
+                    Dim raw_date As String = Now().ToString()
+
+                    If CurrentValueDate.ToString().Contains("PM") Or CurrentValueDate.ToString().Contains("AM") Then
+                        date2 = DateTime.ParseExact(CurrentValueDate.ToString(), "dd/MM/yyyy h:mm:ss tt", Globalization.CultureInfo.InvariantCulture).Date   ' normalize time
+                    Else
+                        date2 = DateTime.ParseExact(CurrentValueDate.ToString(), "dd/MM/yyyy HH:mm:ss", Globalization.CultureInfo.InvariantCulture).Date   ' normalize time
+                    End If
+
+                    CurrentValue = GetValue("next_appt_3m")
+                    If CurrentValue.ToString().Contains("PM") Or CurrentValue.ToString().Contains("AM") Then
+                        date1 = DateTime.ParseExact(CurrentValue.ToString(), "dd/MM/yyyy h:mm:ss tt", Globalization.CultureInfo.InvariantCulture).Date   ' normalize time
+                    Else
+                        date1 = Date.ParseExact(CurrentValue, format, provider)
+                    End If
+
+                    ' Determine the number of days between the two dates.
+                    Dim span As TimeSpan = date2.Subtract(date1)
+                    Dim numHours As Integer = span.TotalHours()
+
+                    If date1 > date2 Then
+                        IsValidResponse = False
+                        MsgBox("The Default Appointment Date Must be Greater than on or equal to " & CurrentValue, vbCritical, "Invalid Default Appointment Date")
+                    End If
+
+                    CurrentValue = GetValue("next_appt_6m")
+                    If CurrentValue.ToString().Contains("PM") Or CurrentValue.ToString().Contains("AM") Then
+                        date1 = DateTime.ParseExact(CurrentValue.ToString(), "dd/MM/yyyy h:mm:ss tt", Globalization.CultureInfo.InvariantCulture).Date   ' normalize time
+                    Else
+                        date1 = Date.ParseExact(CurrentValue, format, provider)
+                    End If
+
+                    If date2 > date1 Then
+                        IsValidResponse = False
+                        MsgBox("The Default Appointment Date Must Not be Greater than " & CurrentValue, vbCritical, "Invalid Default Appointment Date")
+                    End If
+                End If
+            End If
+
+
+
 
             ' ensure age is > 15 yrs
             If IsValidResponse = True Then
