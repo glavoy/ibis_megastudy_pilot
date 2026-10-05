@@ -499,16 +499,15 @@ Module IBIS_Public
 
     End Function
 
-    ' Checks if the participant is due for retesting data entry.
-    ' Returns: True if the participant is 6 months from the baseline enrollment dater.
-    ' Uses the subjid for getting the 6 month next appointment date.
+    ' Checks if the participant is due for retesting (QC) data entry.
+    ' Returns: True if today is on or before the 6-month next-appointment date (i.e. the QC visit
+    ' would be happening early/on schedule). False once that date has passed, has no value, or on error.
+    ' This is used only to warn staff about an off-schedule entry; it no longer blocks entry.
     Public Function NotDueForRetesting() As Boolean
         Try
 
-
             Dim raw_date As String = Now().ToString()
             Dim visit_date As DateTime
-            Dim nextAppt3m As DateTime? = Nothing
             Dim nextAppt6m As DateTime? = Nothing
 
             If raw_date.Contains("PM") Or raw_date.Contains("AM") Then
@@ -521,9 +520,9 @@ Module IBIS_Public
                 Connection.Open()
 
                 ' Check if subjid exists in baseline and baseline_lookup tables
-                Dim strSQL As String = "SELECT subjid, next_appt_3m, next_appt_6m, appt_w2_8m FROM baseline_lookup WHERE subjid = ? " &
+                Dim strSQL As String = "SELECT subjid, next_appt_6m FROM baseline_lookup WHERE subjid = ? " &
                 "UNION " &
-                "SELECT subjid, next_appt_3m, next_appt_6m, appt_w2_8m FROM baseline WHERE subjid = ?"
+                "SELECT subjid, next_appt_6m FROM baseline WHERE subjid = ?"
 
                 Using cmd As New OleDbCommand(strSQL, Connection)
                     cmd.Parameters.AddWithValue("?", SUBJID)
@@ -547,7 +546,6 @@ Module IBIS_Public
 
                 End Using
             End Using
-
 
         Catch ex As Exception
             MessageBox.Show("Error checking if SUBJID exists in baseline: " & ex.Message)

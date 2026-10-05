@@ -1239,14 +1239,17 @@ Public Class Main_Menu
         End If
 
         If DoesSUBJIDExistInRetesting() Or DoesSUBJIDExistInRetestingLookup() Then
-            MessageBox.Show("This Participant has already had a followup visit. To prevent a duplicate entry, further action is not allowed.")
+            MessageBox.Show("This Participant has already had a QC survey. To prevent a duplicate entry, further action is not allowed.")
             Exit Sub
 
         End If
 
         If NotDueForRetesting() Then
-            MessageBox.Show("This Participant is not Due for QC Data Entry. The QC entry is only allowed after 6 months from the time of enrollment.")
-            Exit Sub
+            Dim result = MessageBox.Show("This Participant is not yet due for QC Data Entry (the 6-month mark from enrollment hasn't been reached). Record this QC visit anyway?",
+                "QC Entry Off-Schedule", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+            If result = DialogResult.No Then
+                Exit Sub
+            End If
 
         End If
 
