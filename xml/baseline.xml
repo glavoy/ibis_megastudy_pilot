@@ -110,11 +110,9 @@
 
 
 	<question type = 'information' fieldname = 'ibisid_info' fieldtype = 'n/a'>
-		<text>
-			Please record the IBIS Screening ID for this participant:
+		<text>Please record the IBIS Screening ID for this participant:
 
-			[[screening_id]]
-		</text>
+[[screening_id]]</text>
 	</question>
 
 
@@ -155,10 +153,10 @@
 			<response value = '4'>Busia</response>
 			<response value = '5'>Migori</response>
 			<response value = '6'>Kisii</response>
-			<response value = '99'>Other Specify</response>
+			<response value = '99'>Other</response>
 		</responses>
 		<preskip>
-			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='district'></skip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='district_rd'></skip>
 		</preskip>
 	</question>
 
@@ -167,7 +165,6 @@
 		<text>County</text>
 		<maxCharacters>80</maxCharacters>
 		<preskip>
-			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='district'></skip>
 			<skip fieldname='county_rd' condition = '&lt;&gt;' response='99' response_type='fixed' skiptofieldname ='subcounty_rd'></skip>
 		</preskip>
 	</question>
@@ -184,8 +181,7 @@
 			<response value = '6'>Suba West</response>
 			<response value = '7'>Ndhiwa</response>
 			<response value = '8'>Rangwe</response>
-			<response value = '9'>Homa Bay Town</response>
-			<response value = '99'>Other Specify</response>
+			<response value = '99'>Other</response>
 		</responses>
 	</question>
 
@@ -194,7 +190,28 @@
 		<text>Subcounty</text>
 		<maxCharacters>80</maxCharacters>
 		<preskip>
-			<skip fieldname='subcounty_rd' condition = '&lt;&gt;' response='99' response_type='fixed' skiptofieldname ='district'></skip>
+			<skip fieldname='subcounty_rd' condition = '&lt;&gt;' response='99' response_type='fixed' skiptofieldname ='district_rd'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'radio' fieldname = 'district_rd' fieldtype = 'integer'>
+		<text>District</text>
+		<responses>
+			<response value = '1'>Ibanda</response>
+			<response value = '2'>Bushenyi</response>
+			<response value = '3'>Sheema</response>
+			<response value = '4'>Kitagwenda</response>
+			<response value = '5'>Motooma</response>
+			<response value = '6'>Kazo</response>
+			<response value = '7'>Ruburizi</response>
+			<response value = '8'>Mbarara</response>
+			<response value = '9'>Kiruhura</response>
+			<response value = '10'>Buhweju</response>
+			<response value = '99'>Other</response>
+		</responses>
+		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='village'></skip>
 		</preskip>
 	</question>
 
@@ -203,7 +220,7 @@
 		<text>District</text>
 		<maxCharacters>80</maxCharacters>
 		<preskip>
-			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='village'></skip>
+			<skip fieldname='district_rd' condition = '&lt;&gt;' response='99' response_type='fixed' skiptofieldname ='parish'></skip>
 		</preskip>
 	</question>
 
@@ -276,10 +293,8 @@
 
 
 	<question type = 'radio' fieldname = 'reading_language' fieldtype = 'integer'>
-		<text>
-			Do you feel comfortable reading short messages in at least one of the following languages: Dholuo, Swahili, or English?
-			Or do you have someone who can help you read messages in any of the following languages: Dholuo, Swahili, or English?
-		</text>
+		<text>Do you feel comfortable reading short messages in at least one of the following languages: Luganda, Runyankore, or English?
+Or do you have someone who can help you read messages in any of the following languages: Luganda, Runyankore, or English?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
@@ -303,13 +318,13 @@
 
 
 	<question type = 'radio' fieldname = 'multiple_partners' fieldtype = 'integer'>
-		<text>Have you had more than one sexual partner in the past 6 months?</text>
+		<text>Have you had unprotected sex with more than one partner in the past 6 months?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
 		</responses>
 		<preskip>
-			<skip fieldname='eligibility_check1' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='eligibility_check2'></skip>
+			<skip fieldname='eligibility_check1' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='comments'></skip>
 		</preskip>
 	</question>
 
@@ -336,7 +351,7 @@
 
 
 	<question type = 'radio' fieldname = 'hiv_positive_partner' fieldtype = 'integer'>
-		<text>In the past 6 months, have you had a sexual partner whom you know is HIV-positive?</text>
+		<text>Have you had a sexual partner who is HIV positive or whose status is unknown in the past 6 months?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
@@ -345,7 +360,7 @@
 
 
 	<question type = 'radio' fieldname = 'sti_history' fieldtype = 'integer'>
-		<text>In the past 6 months, have you been diagnosed with, treated for, or had symptoms of a sexually transmitted infection? Or, do you have a history of sexually transmitted infections?</text>
+		<text>Have you had more than one STI, or experienced STI symptoms, in the past 6 months?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
@@ -366,7 +381,7 @@
 
 
 	<question type = 'radio' fieldname = 'sex_for_compensation' fieldtype = 'integer'>
-		<text>Have you received any compensation or gifts in exchange for sex in the past 6 months?</text>
+		<text>Have you received any money, goods, or services in exchange for sex in the past 6 months?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
@@ -392,6 +407,7 @@
 		<preskip>
 			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='dice_clinic'></skip>
 		</preskip>
+		<dont_know>-7</dont_know>
 	</question>
 
 
@@ -412,13 +428,12 @@
 		</responses>
 		<preskip>
 			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='on_prep'></skip>
-			<skip fieldname='countrycode' condition = '=' response='2' response_type='fixed' skiptofieldname ='on_prep'></skip>
 		</preskip>
 	</question>
 
 
 	<question type = 'radio' fieldname = 'on_prep' fieldtype = 'integer'>
-		<text>Are you currently on PrEP (Pre-exposure prophylaxis) or are you PrEP-eligible according to MoH guidelines?</text>
+		<text>Are you currently on PrEP (Pre-exposure prophylaxis) or are you eligible for PrEP according to the Ministry of Healths guidelines?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
@@ -427,7 +442,7 @@
 
 
 	<question type = 'radio' fieldname = 'on_pep' fieldtype = 'integer'>
-		<text>Have you recently initiated PEP, (Post-exposure prophylaxis) or have you been deemed PEP-eligible at this visit?</text>
+		<text>Have you initiated PEP (Post-exposure prophylaxis) in the past 6 months?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
@@ -436,7 +451,7 @@
 
 
 	<question type = 'radio' fieldname = 'recent_hiv_exposure' fieldtype = 'integer'>
-		<text>In the past 6 months,have you had a recent HIV exposure risk (for example, had a condom break, raped someone, been raped)?</text>
+		<text>Have you experienced sexual violence, either as a victim or perpetrator in the last 6 months?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
@@ -445,20 +460,15 @@
 
 
 	<question type = 'automatic' fieldname = 'eligibility_check2' fieldtype = 'integer'>
-		<postskip>
-			<skip fieldname='eligibility_check1' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='comments'></skip>
-		</postskip>
 	</question>
 
 
 	<question type = 'radio' fieldname = 'eligibility_check' fieldtype = 'integer'>
-		<text>
-			You are eligible for the IBIS study.
+		<text>You are eligible for the IBIS study.
 
-			Are you willing to participate in the IBIS study?
+Are you willing to participate in the IBIS study?
 
-			If yes, please consent the participant
-		</text>
+If yes, please consent the participant</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
@@ -524,11 +534,9 @@
 
 
 	<question type = 'information' fieldname = 'ibisstudy_info' fieldtype = 'n/a'>
-		<text>
-			Please record the IBIS Study ID for this participant (Enter on the enrolment Log):
+		<text>Please record the IBIS Study ID for this participant (Enter on the enrolment Log):
 
-			[[subjid]]
-		</text>
+[[subjid]]</text>
 	</question>
 
 
@@ -562,7 +570,7 @@
 		<responses>
 			<response value = '1'>Safaricom</response>
 			<response value = '2'>Airtel</response>
-			<response value = '3'>MTN Uganda</response>
+			<response value = '3'>Mtn</response>
 			<response value = '97'>Other Specify</response>
 		</responses>
 		<dont_know>-7</dont_know>
@@ -585,7 +593,7 @@
 			<response value = '1'>Primary</response>
 			<response value = '2'>O-Level - Incomplete</response>
 			<response value = '3'>O-Level - Complete</response>
-			<response value = '4'>A-Level - Iincomplete</response>
+			<response value = '4'>A-Level - Incomplete</response>
 			<response value = '5'>A-Level - Complete</response>
 			<response value = '6'>Tertiary</response>
 			<response value = '7'>University</response>
@@ -630,11 +638,11 @@
 
 
 	<question type = 'radio' fieldname = 'occupation' fieldtype = 'integer'>
-		<text>What is your primary occupation?</text>
+		<text>What is your primary occupation?  [Select respondents self reported category; do not read all choices]</text>
 		<responses>
 			<response value = '1'>Farmer, or related activities</response>
 			<response value = '2'>Fisher industry</response>
-			<response value = '3'>Market vendor</response>
+			<response value = '3'>Market vendor/ShopKeeper</response>
 			<response value = '4'>Bar owner or worker</response>
 			<response value = '5'>Transport trucker, matatu, boda, special hire, etc.</response>
 			<response value = '6'>Hotel or Restaurant or tourism worker</response>
@@ -646,7 +654,7 @@
 			<response value = '12'>Commercial sex worker</response>
 			<response value = '13'>Office job</response>
 			<response value = '14'>No job including retired, disabled</response>
-			<response value = '15'>Salon</response>
+			<response value = '15'>Saloon</response>
 			<response value = '97'>Other</response>
 		</responses>
 	</question>
@@ -662,10 +670,8 @@
 
 
 	<question type = 'radio' fieldname = 'preferred_language_ke' fieldtype = 'integer'>
-		<text>
-			What is your preferred language to read in?
-			Interviewer Note: If the participant indicated that they have someone else who can read the message for them, select the language that they can read
-		</text>
+		<text>What is your preferred language to read in?
+Interviewer Note: If the participant indicated that they have someone else who can read the message for them, select the language that they can read</text>
 		<responses>
 			<response value = '1'>Dholuo</response>
 			<response value = '2'>Swahili</response>
@@ -683,10 +689,8 @@
 
 
 	<question type = 'radio' fieldname = 'preferred_language_ug' fieldtype = 'integer'>
-		<text>
-			What is your preferred language to read in?
-			Interviewer Note: If the participant indicated that they have someone else who can read the message for them, select the language that they can read
-		</text>
+		<text>What is your preferred language to read in?
+Interviewer Note: If the participant indicated that they have someone else who can read the message for them, select the language that they can read</text>
 		<responses>
 			<response value = '4'>Runyonkole</response>
 			<response value = '5'>Luganda</response>
@@ -871,11 +875,9 @@
 
 
 	<question type = 'radio' fieldname = 'video_language_ke' fieldtype = 'integer'>
-		<text>
-			We are about to play the intervention video to the participant
+		<text>We are about to play the intervention video to the participant
 
-			What is your Preferred Language for the video that we are about to play
-		</text>
+What is your Preferred Language for the video that we are about to play</text>
 		<responses>
 			<response value = '1'>Dholuo</response>
 			<response value = '2'>Swahili</response>
@@ -890,11 +892,9 @@
 
 
 	<question type = 'radio' fieldname = 'video_language_ug' fieldtype = 'integer'>
-		<text>
-			We are about to play the intervention video to the participant
+		<text>We are about to play the intervention video to the participant
 
-			What is your Preferred Language for the video that we are about to play
-		</text>
+What is your Preferred Language for the video that we are about to play</text>
 		<responses>
 			<response value = '4'>Runyankole</response>
 			<response value = '5'>Luganda</response>
@@ -918,107 +918,156 @@
 
 
 	<question type = 'information' fieldname = 'information_screen_soc_en' fieldtype = 'n/a'>
-		<text>
-			You have been selected to receive the usual HIV test counseling that people normally receive in [Kenya/Uganda]. As your counselor, I will provide post-test counseling to you.
+		<text>You have been selected to receive the usual HIV test counseling that people normally receive in [Kenya/Uganda]. As your counselor, I will provide post-test counseling to you. 
 
-			Please remember to come back to this location for another HIV test in 3 to 6 months from now. The test is free and the results will be confidential. Please let me know if you have any questions.
+Please remember to come back to this location for another HIV test in 3 to 6 months from now. The test is free and the results will be confidential. Please let me know if you have any questions.
 
-			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
-			[NOTE TO COUNSELOR: This participant has been assigned to a study group without a video message. Proceed with reading the script below before concluding the visit.]
-		</text>
+[Counselor instructions:Video Not Expected for This Arm.  Proceed with completion of standard MoH post-test counseling session]</text>
 		<preskip>
 			<skip fieldname='arm' condition = '&lt;&gt;' response='12' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
-			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='information_screen_soc_sw'></skip>
+			<skip fieldname='preferred_language' condition = '&lt;&gt;' response='3' response_type='fixed' skiptofieldname ='information_screen_soc_sw'></skip>
 		</preskip>
 	</question>
 
 
 	<question type = 'information' fieldname = 'information_screen_soc_sw' fieldtype = 'n/a'>
-		<text>
-			Umechaguliwa kupata ushauri wa kawaida wa upimaji wa Virusi Vya UKIMWI ambao watu hupokea nchini Kenya. Kama mshauri wako, nitakupa ushauri nasaha baada ya kupima.
-			Tafadhali kumbuka kurudi hapa kwa ajili ya kipimo kingine cha Virusi Vya UKIMWI katika muda wa miezi 3 hadi 6 kuanzia sasa. Kipimo ni bure na matokeo yatakuwa siri. Tafadhali nijulishe ikiwa una maswali yoyote.
+		<text>Umechaguliwa kupata ushauri wa kawaida wa upimaji wa Virusi Vya UKIMWI ambao watu hupokea nchini Kenya. Kama mshauri wako, nitakupa ushauri nasaha baada ya kupima.
+Tafadhali kumbuka kurudi hapa kwa ajili ya kipimo kingine cha Virusi Vya UKIMWI katika muda wa miezi 3 hadi 6 kuanzia sasa. Kipimo ni bure na matokeo yatakuwa siri. Tafadhali nijulishe ikiwa una maswali yoyote.
 
-			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
-		</text>
+[Counselor instructions: Video Not Expected for This Arm. Proceed with completion of standard MoH post-test counseling session]</text>
 		<preskip>
-			<skip fieldname='arm' condition = '&lt;&gt;' response='12' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='information_screen_soc_nkole'></skip>
 			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='information_screen_soc_luo'></skip>
 		</preskip>
 	</question>
 
 
 	<question type = 'information' fieldname = 'information_screen_soc_luo' fieldtype = 'n/a'>
-		<text>
-			Oyieri mondo iyud hocho mar pim mar kute mag ayaki maji yudo ge e Kenya. Ka ja hocho mari, abiro chiwo hoch bang pim ne in.
+		<text>Oyieri mondo iyud hocho mar pim mar kute mag ayaki maji yudo ge e Kenya. Ka ja hocho mari, abiro chiwo hoch bang pim ne in.
 
-			Akwayo ni ipar iduogi kama otim ni e pim kae e dweche 3 nyaka 6 chakre sani. Pim itimo nono maonge chudo kendo duoko biro bedo maling ling. Akwayo ni mondo ang’e ka in gi penjo moro a mora.”
-			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
-			[NOTE TO COUNSELOR: This participant has been assigned to a study group without a video message. Proceed with reading the script below before concluding the visit.]
-		</text>
+Akwayo ni ipar iduogi kama otim ni e pim kae e dweche 3 nyaka 6 chakre sani. Pim itimo nono maonge chudo kendo duoko biro bedo maling ling. Akwayo ni mondo ang’e ka in gi penjo moro a mora.” 
+[Counselor instructions:Video Not Expected for This Arm. Proceed with completion of standard MoH post-test counseling session]</text>
 		<preskip>
-			<skip fieldname='arm' condition = '&lt;&gt;' response='12' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='information_screen_soc_nkole'></skip>
+			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'information_screen_soc_nkole' fieldtype = 'n/a'>
+		<text>Watoranwa kutunga okurebererwa kwakakooko ka siriimu oku abantu batunga butosha omu Uganda. Nkomureberezi wawe, ninza kukuhereza okuhabura bwanyima yokukukyebera. 
+
+Nyaburawe yjuka kugaruka omumwanya ogu kugaruka kukyeberwa akakooko kasiriimu omu meezi 3 to 6 okuruga hati. Okukyeberwa nokwabusha kandi ebirikurugamu nebyekihama. Nyaburawe manyisa waba oine ekibuuzo kyoona.
+
+[Counselor instructions:Video Not Expected for This Arm. Proceed with completion of standard MoH post-test counseling session]</text>
+		<preskip>
+			<skip fieldname='preferred_language_ug' condition = '&lt;&gt;' response='4' response_type='fixed' skiptofieldname ='information_screen_soc_luganda'></skip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'information_screen_soc_luganda' fieldtype = 'n/a'>
+		<text>Olondeddwa okufuna okubudaabudibwa okwa bulijjo abantu kwebafuna mu Uganda nga bagenze okukeberebwa mukenenya. Nga counselor wo, era nja kukubudaabuda ng'omaze okukeberebwa.
+ 
+Nkusaba ojjukire okukomawo mu kifo kino okeberebwe mukenenya mu bbanga lya myezi esatu ku mukaaga okuva kati. Okukebera kwa bwereere era ebivaamu bya kyama teri mulala abimanyaako.
+Mbuulira oba olinayo ekibuuzo kyonna.
+ 
+[Counselor instructions:Video Not Expected for This Arm. Proceed with completion of standard MoH post-test counseling session]</text>
+		<preskip>
+			<skip fieldname='preferred_language_ug' condition = '&lt;&gt;' response='5' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
 		</preskip>
 	</question>
 
 
 	<question type = 'information' fieldname = 'information_screen_sfi_en' fieldtype = 'n/a'>
-		<text>
-			You have been selected to receive a small payment if you return for another HIV test in the future. If you come back for an HIV test at this location in 3 to 6 months from now, you will receive [Ksh 700/[UGX 20,000].
+		<text>You have been selected to receive a small payment if you return for another HIV test in the future. If you come back for an HIV test at this location in 3 to 6 months from now, you will receive [Ksh 700/[UGX 20,000].
 
-			You may only receive this payment one time, and only at this location.
+You may only receive this payment one time, and only at this location. 
 
-			The payment will not be made if you go for HIV testing at other locations, or if you come back for testing outside of the 3 to 6 month window.
+The payment will not be made if you go for HIV testing at other locations, or if you come back for testing outside of the 3 to 6 month window. 
 
-			You must be the one to claim this payment. You cannot have another person receive this payment on your behalf.
+You must be the one to claim this payment. You cannot have another person receive this payment on your behalf.
 
-			Please remember to come back to this location for another HIV test in 3 to 6 months from now to receive your payment of [Ksh 700/UGX 20,000]. The test is free and the results will be confidential. Please let me know if you have any questions.
+ Please remember to come back to this location for another HIV test in 3 to 6 months from now to receive your payment of [Ksh 700/UGX 20,000]. The test is free and the results will be confidential. Please let me know if you have any questions. 
 
-			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
-			[NOTE TO COUNSELOR: This participant has been assigned to a study group without a video message. Proceed with reading the script below before concluding the visit.]
-		</text>
+[Counselor instructions:Video Not Expected for This Arm. Proceed with completion of standard MoH post-test counseling session]</text>
 		<preskip>
 			<skip fieldname='arm' condition = '&lt;&gt;' response='11' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
-			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='information_screen_sfi_sw'></skip>
+			<skip fieldname='preferred_language' condition = '&lt;&gt;' response='3' response_type='fixed' skiptofieldname ='information_screen_sfi_sw'></skip>
 		</preskip>
 	</question>
 
 
 	<question type = 'information' fieldname = 'information_screen_sfi_sw' fieldtype = 'n/a'>
-		<text>
-			Umechaguliwa kupokea malipo kidogo kwa ajili ya kipimo kingine cha Virusi Vya UKIMWI siku za usoni. Ukirudi hapa kwa ajili ya kipimo cha Virusi Vya UKIMWI katika muda wa miezi 3 hadi 6 kuanzia sasa, utapata shilingi 700.
-			Unaweza kupokea malipo haya mara moja tu, na mahali hapa pekee.
-			Malipo hayalipwa ukienda kupima Virusi Vya UKIMWI sehemu nyingine, au ukirudi kupima nje ya muda wa miezi 3 hadi 6.
-			Ni lazima uje mwenyewe kudai malipo haya. Huruhusiwi kumtuma mtu mwingine kupokea malipo haya kwa niaba yako.
-			Tafadhali kumbuka kurudi hapa kwa ajili ya kipimo kingine cha Virusi Vya UKIMWI katika muda wa miezi 3 hadi 6 kuanzia sasa ili upate malipo yako ya shilingi 700.
-			Kipimo ni bure na matokeo yatakuwa siri. Tafadhali nijulishe ikiwa una maswali yoyote.
+		<text>Umechaguliwa kupokea malipo kidogo kwa ajili ya kipimo kingine cha Virusi Vya UKIMWI siku za usoni. Ukirudi hapa kwa ajili ya kipimo cha Virusi Vya UKIMWI katika muda wa miezi 3 hadi 6 kuanzia sasa, utapata shilingi 700. 
+Unaweza kupokea malipo haya mara moja tu, na mahali hapa pekee.
+Malipo hayalipwa ukienda kupima Virusi Vya UKIMWI sehemu nyingine, au ukirudi kupima nje ya muda wa miezi 3 hadi 6.
+Ni lazima uje mwenyewe kudai malipo haya. Huruhusiwi kumtuma mtu mwingine kupokea malipo haya kwa niaba yako.
+Tafadhali kumbuka kurudi hapa kwa ajili ya kipimo kingine cha Virusi Vya UKIMWI katika muda wa miezi 3 hadi 6 kuanzia sasa ili upate malipo yako ya shilingi 700.
+Kipimo ni bure na matokeo yatakuwa siri. Tafadhali nijulishe ikiwa una maswali yoyote. 
 
-			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
-			[NOTE TO COUNSELOR: This participant has been assigned to a study group without a video message. Proceed with reading the script below before concluding the visit.]
-		</text>
+[Counselor instructions:Video Not Expected for This Arm. Proceed with completion of standard MoH post-test counseling session]</text>
 		<preskip>
-			<skip fieldname='arm' condition = '&lt;&gt;' response='11' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
-			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='information_screen_sfi_luo'></skip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='information_screen_sfi_nkole'></skip>
+			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='information_screen_sfi_luo'></skip>
 		</preskip>
 	</question>
 
 
 	<question type = 'information' fieldname = 'information_screen_sfi_luo' fieldtype = 'n/a'>
-		<text>
-			Oyieri ni mondo iyud chudo moro matin ka iduogo ne pim moro mar kute mag ayaki e ndalo ma biro. Ka iduogo ne pim mar kute mag ayaki kama otim ni e pim kae e dweche 3 nyaka 6 chakre sani, Ibiro chuli siling 700.
+		<text>Oyieri ni mondo iyud chudo moro matin ka iduogo ne pim moro mar kute mag ayaki e ndalo ma biro. Ka iduogo ne pim mar kute mag ayaki kama otim ni e pim kae e dweche 3 nyaka 6 chakre sani, Ibiro chuli siling 700.
 
-			Inyalo yudo mana chudo ni dichiel, kendo mana kama otim ni e pim kae.
+ Inyalo yudo mana chudo ni dichiel, kendo mana kama otim ni e pim kae.
 
-			Chudo ok be chiw ka idhi kuonde ma moko mag pim mag kute mag ayaki, kata ka ibiro e pim oko mar kinde mar dweche 3 nyaka 6.
+Chudo ok be chiw ka idhi kuonde ma moko mag pim mag kute mag ayaki, kata ka ibiro e pim oko mar kinde mar dweche 3 nyaka 6.
+In emanyaka ibi kaw chudo mari. Ok inyal bedo gi ng at moro makawo chudo ne in.
 
-			In emanyaka ibi kaw chudo mari. Ok inyal bedo gi ng’at moro makawo chudo ne in.
+Akwayo ni ipar iduogi kama otim ni e pim kae e dweche 3 nyaka 6 chakre sani mondo iyud chudoni mar siling 700. Pim itimo nono maonge chudo kendo duoko biro bedo maling ling. Akwayo ni mondo ang e ka in gi penjo moro a mora.
 
-			Akwayo ni ipar iduogi kama otim ni e pim kae e dweche 3 nyaka 6 chakre sani mondo iyud chudoni mar siling 700. Pim itimo nono maonge chudo kendo duoko biro bedo maling ling. Akwayo ni mondo ang’e ka in gi penjo moro a mora.
-
-			[Counselor instructions: Proceed with completion of standard MoH post-test counseling session]
-			[NOTE TO COUNSELOR: This participant has been assigned to a study group without a video message. Proceed with reading the script below before concluding the visit.]
-		</text>
+[Counselor instructions:Video Not Expected for This Arm. Proceed with completion of standard MoH post-test counseling session]</text>
 		<preskip>
-			<skip fieldname='arm' condition = '&lt;&gt;' response='11' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='information_screen_sfi_nkole'></skip>
+			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'information_screen_sfi_nkole' fieldtype = 'n/a'>
+		<text>Watoranwa kutungayo akasente kakye ku oragarukye okukyebeza akakooko ka sirimu omubiro byomumeisho.  omumwanya ogu omu meezi 3 to 6, noyja kutunga 20,000/=
+
+Notunga okushashurwa oku omurundi gumwe, kandi omumwanya ogu honka. 
+
+Okushashurwa oku tikurakorwe wakyebereza omumyanya endijo, ninga wagaruka bwanyima yameezi 3 to 6. 
+
+Iwe kenyini niwe oine kubanja akasente aka. Torikubasa kwohereza ondiijo muntu omumwanya gwawe.
+
+ Nyaburawe, Yijuka kugaruka omumwanya ogu kukyebeza akakooko ka siriimu omurundi ogundi omumeezi 3 to 6 okuruga hati kutunga akasente kawe [20,000/=]. Okukyeberwa nokwabusha kandi nebrikurugamu nibiza kuba ebyekihama. Nyaburawe manyisa waba oine ekibuuzo kyoona.” 
+
+[Counselor instructions:Video Not Expected for This Arm. Proceed with completion of standard MoH post-test counseling session]</text>
+		<preskip>
+			<skip fieldname='preferred_language_ug' condition = '&lt;&gt;' response='4' response_type='fixed' skiptofieldname ='information_screen_sfi_luganda'></skip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'information_screen_sfi_luganda' fieldtype = 'n/a'>
+		<text>Olondeddwa okufunayo akasente singa onookomawo okeberebwe mukenenya gyebujja. Singa okomawo mu kifo kino okeberebwe mukenenya mu bbanga lya myezi esatu ku mukaaga okuva leero, ojja kufuna 20,000/=.
+ 
+Ensimbi zino ozifuna omulundi gumu, ate mu kifo kino kyokka.
+ Ensimbi zino tojja kuzifuna singa onogenda mu kifo ekirala okukukebera mukenenya, oba singa onokomawo ng'ebbanga ng'ebbanga eriri wakati w'emyezi esatu ku mukaaga liyseewo.
+ 
+Olina okujja mu buntu ggwe wennyini okufuna ensimbi zino. Teri muntu mulala alina kuzifuna ku lulwo.
+ 
+Nkusaba ojjukire okukomawo mu kifo kino okeberebwe mukenenya mu bbanga lya myezi esatu ku mukaaga okuva kati ofune ensimbi zo [20,000/=]. Okukebera kwa bwereere era ebivaamu bya kyama teri mulala abimanyaako.
+Mbuulira oba olinayo ekibuuzo kyonna.
+ 
+[Counselor instructions:Video Not Expected for This Arm. Proceed with completion of standard MoH post-test counseling session]</text>
+		<preskip>
+			<skip fieldname='preferred_language_ug' condition = '&lt;&gt;' response='5' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='next_appt_3m'></skip>
 		</preskip>
 	</question>
 
@@ -1048,22 +1097,20 @@
 
 
 	<question type = 'information' fieldname = 'information_screen' fieldtype = 'n/a'>
-		<text>
-			Participant ID: [[subjid]]
-			Study arm: [[arm_text]]
+		<text>Participant ID: [[subjid]]
+Study arm: [[arm_text]]
 
-			Thank you for your participation. Please remember to come back here for another HIV test in 3 to 6 months from now.That would be anytime between:
+Thank you for your participation. Please remember to come back here for another HIV test in 3 to 6 months from now.That would be anytime between:
 
-			[[next_appt_3m]] to [[next_appt_6m]]
+[[next_appt_3m]] to [[next_appt_6m]]
 
-			I will write that on an appointment card for you to take with you.
+I will write that on an appointment card for you to take with you.
 
-			When you return for your repeat HIV in 3 to 6 months, we will ask you if you have already participated in this study. In order to find you in our system, we may ask you for your name, your phone number, or your month of birth. Can you please share with us your month of birth now? (Month only)
+When you return for your repeat HIV in 3 to 6 months, we will ask you if you have already participated in this study. In order to find you in our system, we may ask you for your name, your phone number, or your month of birth. Can you please share with us your month of birth now? (Month only)
 
-			Do you have any final questions for me?
+Do you have any final questions for me?
 
-			(Counselor instructions: thank the participant for their time and write down 3-6 month window on appointment card)
-		</text>
+(Counselor instructions: thank the participant for their time and write down 3-6 month window on appointment card)</text>
 		<preskip>
 			<skip fieldname='arm' condition = '=' response='6' response_type='fixed' skiptofieldname ='information_screen1'></skip>
 		</preskip>
@@ -1074,20 +1121,18 @@
 
 
 	<question type = 'information' fieldname = 'information_screen1' fieldtype = 'n/a'>
-		<text>
-			Participant ID: [[subjid]]
-			Study arm: [[arm_text]]
+		<text>Participant ID: [[subjid]]
+Study arm: [[arm_text]]
 
-			Thank you for your participation. Please remember to come back here for another HIV test in 3 to 6 months from now. We have scheduled an appointment date for you on [[next_appt_3m]]. If that date doesn't work, you may return anytime between [[next_appt_3m]] to [[next_appt_6m]]. I will write that on an appointment card for you to take with you.
+Thank you for your participation. Please remember to come back here for another HIV test in 3 to 6 months from now. We have scheduled an appointment date for you on [[next_appt_3m]]. If that date doesn't work, you may return anytime between [[next_appt_3m]] to [[next_appt_6m]]. I will write that on an appointment card for you to take with you.
 
-			(Counselor instructions: If the default date does not work for the participant, they may choose a different date; write selected date on appointment card)
+(Counselor instructions: If the default date does not work for the participant, they may choose a different date; write selected date on appointment card)
 
-			When you return for your repeat HIV in 3 to 6 months, we will ask you if you have already participated in this study. In order to find you in our system, we may ask you for your name, your phone number, or your month of birth. Can you please share with us your month of birth now?
+When you return for your repeat HIV in 3 to 6 months, we will ask you if you have already participated in this study. In order to find you in our system, we may ask you for your name, your phone number, or your month of birth. Can you please share with us your month of birth now?
 
-			Do you have any final questions for me?
+Do you have any final questions for me?
 
-			(Counselor instructions: thank the participant for their time and write down both the scheduled appointment date and the 3-6 month window on appointment card)
-		</text>
+(Counselor instructions: thank the participant for their time and write down both the scheduled appointment date and the 3-6 month window on appointment card)</text>
 	</question>
 
 
@@ -1112,59 +1157,6 @@
 			<response value = '11'>November</response>
 			<response value = '12'>December</response>
 		</responses>
-	</question>
-
-
-	<question type = 'information' fieldname = 'whitelist_sms_en' fieldtype = 'n/a'>
-		<text>
-			IBIS Megastudy Enrollment Visit Provider Conclusion Script
-			Before we finish, I want to mention a quick detail about our study communication. We will be sending you two messages during the study, sometimes these messages are blocked by mobile networks if you have "promotional blocking" turned on and they may not arrive.
-			If you would like to receive them, you can unblock messages by dialing:
-			-	Safaricom: *456*9*5# and select option 5 to "activate all promo messages"
-			-	Airtel: *100# go to "my account", and choose the option to enable promotional messages.
-			This is entirely optional and won’t affect your participation.
-			Please let me know if you have any questions.
-		</text>
-		<preskip>
-			<skip fieldname='arm' condition = '=' response='11' response_type='fixed' skiptofieldname ='comments'></skip>
-			<skip fieldname='arm' condition = '=' response='12' response_type='fixed' skiptofieldname ='comments'></skip>
-			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='3' response_type='fixed' skiptofieldname ='whitelist_sms_swa'></skip>
-		</preskip>
-	</question>
-
-
-	<question type = 'information' fieldname = 'whitelist_sms_swa' fieldtype = 'n/a'>
-		<text>
-			HATI YA KUMALIZIA YA MTOA HUDUMA WA ZIARA YA USAJILI WA IBIS-MEGASTUDY
-			Kabla ya kumaliza, ningependa kutaja maelezo kidogo kuhusu mawasiliano yetu ya utafiti. Tutakutumia jumbe mbili wakati wa utafiti huu, lakini wakati mwingine jumbe hizi huzuiliwa na mitandao ya simu ikiwa umewasha huduma ya "kuzuia jumbe za matangazo" (promotional blocking) na huenda zisikufikie.
-			Ikiwa ungependa kuzipokea, unaweza kuruhusu ujumbe kwa:
-			-	Safaricom: Bonyeza *456*9*5# kisha uchague chaguo la tano(5) ili "kuwasha jumbe zote za matangazo"" (activate all promo messages).
-			-	Airtel: Bonyeza *100#, nenda kwenye "akaunti yangu" (my account), na uchague chaguo la kuruhusu ujumbe wa matangazo(enable promotional messages).
-			Hatua hii ni ya hiari kabisa na haitaathiri ushiriki wako kwa vyovyote. Tafadhali nijulishe ikiwa una maswali yoyote
-		</text>
-		<preskip>
-			<skip fieldname='arm' condition = '=' response='11' response_type='fixed' skiptofieldname ='comments'></skip>
-			<skip fieldname='arm' condition = '=' response='12' response_type='fixed' skiptofieldname ='comments'></skip>
-			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='whitelist_sms_luo'></skip>
-		</preskip>
-	</question>
-
-
-	<question type = 'information' fieldname = 'whitelist_sms_luo' fieldtype = 'n/a'>
-		<text>
-			Nonro maduong’ mar chenro manyasani mag paro, Ndiko mogik mar rwako jachiw e limbe mag nonro
-			Ka pok watieko, adwaro ni awach weche mapiyo kuom weche mar nonro wa ni. Wabiro oroni weche ariyo e kinde mag nonro, seche moko wechegi inyalo din gi mbui mar simu ka iseketo gima "dino ote mag lendo" to nyalo bedo ni ok gichopo.
-			Ka diher yudo gi, inyalo golo gima dino weche kuom goyo:
-			-	Safaricom: *456*9*5# kaeto iyiero 5 mondo "iket ote duto mag lendo"
-			-	Airtel: *100# dhi e "akaunt mara", mondo iyier keto thuolo mar yudo ote duto mag lendo.
-			Ma en duto kuom yiero mari kendo ok bi ketho bedo ni e nonro.
-			Akwayo ni inyisa ka in gi penjo moro a mora.
-		</text>
-		<preskip>
-			<skip fieldname='arm' condition = '=' response='11' response_type='fixed' skiptofieldname ='comments'></skip>
-			<skip fieldname='arm' condition = '=' response='12' response_type='fixed' skiptofieldname ='comments'></skip>
-			<skip fieldname='preferred_language_ke' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='comments'></skip>
-		</preskip>
 	</question>
 
 

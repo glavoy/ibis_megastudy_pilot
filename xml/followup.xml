@@ -92,6 +92,8 @@
 			<response value = '1'>OPD</response>
 			<response value = '2'>ANC/MCH</response>
 			<response value = '3'>DICE/Key Pops</response>
+			<response value = '4'>Outreach</response>
+			<response value = '5'>VCT</response>
 			<response value = '99'>Other</response>
 		</responses>
 	</question>
@@ -202,10 +204,8 @@
 
 
 	<question type = 'radio' fieldname = 'ready_for_hivtest' fieldtype = 'integer'>
-		<text>
-			How likely are you to go for an HIV test again sometime in the next 6 months?
-			[READ ALL ANSWER CHOICES]
-		</text>
+		<text>How likely are you to go for an HIV test again sometime in the next 6 months?
+[READ ALL ANSWER CHOICES]</text>
 		<responses>
 			<response value = '1'>Very Likely</response>
 			<response value = '2'>Somewhat Likely</response>
@@ -218,10 +218,8 @@
 
 
 	<question type = 'radio' fieldname = 'motivation' fieldtype = 'integer'>
-		<text>
-			ASK ONLY FOR THOSE WHO DON’T REPORT “VERY UNLIKELY”
-			What do you think your main motivation might be for getting another HIV test in the future?
-		</text>
+		<text>ASK ONLY FOR THOSE WHO DON’T REPORT “VERY UNLIKELY” 
+What do you think your main motivation might be for getting another HIV test in the future?</text>
 		<responses>
 			<response value = '1'>Staying Healthy/HIV-Negative</response>
 			<response value = '2'>Preventing my sexual partners from becoming HIV infected</response>
@@ -292,7 +290,7 @@
 
 
 	<question type = 'radio' fieldname = 'sti_history' fieldtype = 'integer'>
-		<text>Since your last HIV test, have you been diagnosed with, treated for, or had symptoms of a sexually transmitted infection?</text>
+		<text>Have you had more than one STI, or experienced STI symptoms since your last HIV test?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
@@ -301,7 +299,7 @@
 
 
 	<question type = 'radio' fieldname = 'sex_for_compensation' fieldtype = 'integer'>
-		<text>Have you received any compensation or gifts in exchange for sex since your last HIV test?</text>
+		<text>Have you received any money, goods, or services in exchange for sex since your last HIV test?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
@@ -347,7 +345,6 @@
 		</responses>
 		<preskip>
 			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='on_pep'></skip>
-			<skip fieldname='countrycode' condition = '=' response='2' response_type='fixed' skiptofieldname ='on_pep'></skip>
 		</preskip>
 	</question>
 
@@ -371,7 +368,7 @@
 
 
 	<question type = 'radio' fieldname = 'recent_hiv_exposure' fieldtype = 'integer'>
-		<text>Since your last HIV test, have you had a recent HIV exposure risk (for example, had a condom break, raped someone, been raped)?</text>
+		<text>Have you experienced sexual violence, either as a victim or perpetrator since your last HIV test?</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
@@ -521,13 +518,11 @@
 
 
 	<question type = 'information' fieldname = 'info_end_endpoint_en' fieldtype = 'n/a'>
-		<text>
-			Thank you for completing this visit.
-			This marks your final appointment for the IBIS study.
-			Your participation has been incredibly valuable to our research.
-			Although your time in the study is now complete, we encourage you to continue routine testing.
-			Please let me know if you have any questions.
-		</text>
+		<text>Thank you for completing this visit.
+This marks your final appointment for the IBIS study.
+Your participation has been incredibly valuable to our research.
+Although your time in the study is now complete, we encourage you to continue routine testing.
+Please let me know if you have any questions.</text>
 		<preskip>
 			<skip fieldname='primary_endpoint_visit' condition = '=' response='0' response_type='fixed' skiptofieldname ='info_noend_endpoint_en'></skip>
 			<skip fieldname='preferred_language' condition = '&lt;&gt;' response='3' response_type='fixed' skiptofieldname ='info_end_endpoint_sw'></skip>
@@ -536,29 +531,45 @@
 
 
 	<question type = 'information' fieldname = 'info_end_endpoint_sw' fieldtype = 'n/a'>
-		<text>
-			Asante kwa kukamilisha ziara hii.
-			Hii ni ziara yako ya mwisho kwa ajili ya utafiti wa IBIS.
-			Ushiriki wako umekuwa wa thamani kubwa sana katika utafiti wetu.
-			Ingawa muda wako kwenye utafiti huu umekamilika, tunakuhimiza uendelee kufanya vipimo.
-			Tafadhali nijulishe kama una maswali yoyote.
-		</text>
+		<text>Asante kwa kukamilisha ziara hii.
+Hii ni ziara yako ya mwisho kwa ajili ya utafiti wa IBIS.
+Ushiriki wako umekuwa wa thamani kubwa sana katika utafiti wetu.
+Ingawa muda wako kwenye utafiti huu umekamilika, tunakuhimiza uendelee kufanya vipimo.
+Tafadhali nijulishe kama una maswali yoyote.</text>
 		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='info_end_endpoint_nkole'></skip>
 			<skip fieldname='preferred_language' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='info_end_endpoint_luo'></skip>
 		</preskip>
 	</question>
 
 
 	<question type = 'information' fieldname = 'info_end_endpoint_luo' fieldtype = 'n/a'>
-		<text>
-			Ero kamano kuom tieko limbe gi
-			Mae en romo mogik mar nonro mar IBIS
-			Bedo ni e nonro ne en gima maduong ahinya ne nonro wa ni.
-			Kata obedo ni kinde gi mag bedo e nonro oserumo, wajiwi ni mondo idhi mbele gi pim mar kinde ka kinde.
-			Akwayo ni iwachna ka in gi penjo moro a mora.
-		</text>
+		<text>Ero kamano kuom tieko limbe gi
+Mae en romo mogik mar nonro mar IBIS
+Bedo ni e nonro ne en gima maduong ahinya ne nonro wa ni.
+Kata obedo ni kinde gi mag bedo e nonro oserumo, wajiwi ni mondo idhi mbele gi pim mar kinde ka kinde.
+Akwayo ni iwachna ka in gi penjo moro a mora.</text>
 		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='info_end_endpoint_nkole'></skip>
 			<skip fieldname='preferred_language' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='info_noend_endpoint_en'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'info_end_endpoint_nkole' fieldtype = 'n/a'>
+		<text>Webare ahabwokumaririza orutayayo oru. Egyi niyonkugyiro ze entayayo zo omushomo gwa IBIS. Okwejumbira kwawe kubaire okwo omuhendo omukucoondoza kwaitu. Nobu obwiire bwawe omumushomo hati gwahwa, nitukuhiiga kuguma noyekyeebeza. Kuorabe oine ebibuuzo byona nobaasa kubimbuuza.</text>
+		<preskip>
+			<skip fieldname='preferred_language' condition = '&lt;&gt;' response='4' response_type='fixed' skiptofieldname ='info_end_endpoint_luganda'></skip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='info_noend_endpoint_en'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'info_end_endpoint_luganda' fieldtype = 'n/a'>
+		<text>Webaale kumaliriza lukyalo luno.  Guno gwe mulundi gwo ogusembayo okujja mu musomo gwa IBIS.  Okwetaba kwo mu musomo guno kubadde kukulu nnyo mu kunoonyereza kwaffe.  Wadde obudde bw’omazze mu musomo guno kuwedde, tukukubiriza oyongere okwekebeza okwa bulijjo.  Nsaba ombulire bwoba olina ebibuuzo byona.</text>
+		<preskip>
+			<skip fieldname='preferred_language' condition = '&lt;&gt;' response='5' response_type='fixed' skiptofieldname ='info_noend_endpoint_en'></skip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='info_noend_endpoint_en'></skip>
 		</preskip>
 	</question>
 
@@ -575,6 +586,7 @@
 	<question type = 'information' fieldname = 'info_noend_endpoint_sw' fieldtype = 'n/a'>
 		<text>Asante kwa kukamilisha ziara hii. Tafadhali rudi kama ulivyopangiwa kwenye kadi kwa ajili ya ziara ya mwisho ya utafiti. Tafadhali nijulishe ikiwa una maswali yoyote.</text>
 		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='info_noend_endpoint_nkole'></skip>
 			<skip fieldname='preferred_language' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='info_noend_endpoint_luo'></skip>
 		</preskip>
 	</question>
@@ -583,7 +595,26 @@
 	<question type = 'information' fieldname = 'info_noend_endpoint_luo' fieldtype = 'n/a'>
 		<text>Ero kamano kuom tieko limbe ni. Wakwayi ni iduogi kaka ochan e kadi mar limbe e limbe ni mogik mar nonro. Akwayo ni iwach na ka in gi penjo moro a mora.</text>
 		<preskip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='info_noend_endpoint_nkole'></skip>
 			<skip fieldname='preferred_language' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='uniqueid'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'info_noend_endpoint_nkole' fieldtype = 'n/a'>
+		<text>Webare ahabwokumaririza orutayayo oru. Ninkushaba okugaruuka ahaizooba eriri aha kaadi yawe egyi eryokumarira orutayayo gwo omushomo ogu. Kuwakuba oine ebibuuzo byona nobaasa kubimbuuza.</text>
+		<preskip>
+			<skip fieldname='preferred_language' condition = '&lt;&gt;' response='4' response_type='fixed' skiptofieldname ='info_noend_endpoint_luganda'></skip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='uniqueid'></skip>
+		</preskip>
+	</question>
+
+
+	<question type = 'information' fieldname = 'info_noend_endpoint_luganda' fieldtype = 'n/a'>
+		<text>Webaale kumaliliza lukyalo luno.  Tusaba okomewo ku lukyalo lwo olw’enkomerero nga bwekiri ku kaadi yo ey’obulabirizi.  Nsaba ombulire bwoba olina ebibuuzo byona.</text>
+		<preskip>
+			<skip fieldname='preferred_language' condition = '&lt;&gt;' response='5' response_type='fixed' skiptofieldname ='uniqueid'></skip>
+			<skip fieldname='countrycode' condition = '&lt;&gt;' response='1' response_type='fixed' skiptofieldname ='uniqueid'></skip>
 		</preskip>
 	</question>
 
