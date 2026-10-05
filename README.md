@@ -26,3 +26,9 @@
 
 # ver2026.07.09
 # Trimmed any spaces on the phone number and national_id to avoid duplicates
+
+# ver2026.10.05
+# QC/Retesting entry before the 6-month date now shows a warning instead of blocking entry
+# Fixed QC duplicate-entry message wording
+# Baseline: added Uganda district list (district_rd), Luganda/Runyankore literacy wording, reworded eligibility questions
+# Followup: added Outreach and VCT entry points, reworded risk questions, added Runyankore and Luganda closing messages
