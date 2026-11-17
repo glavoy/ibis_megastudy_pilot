@@ -1358,6 +1358,31 @@ Public Class NewSurvey
             End If
 
 
+            ' QC source: Self Report (2) must be selected on its own, so the self-report questions
+            ' are the only path for it (the skips in retesting.xml rely on this)
+            If IsValidResponse = True Then
+                If QuestionInfoArray(CurrentQuestion).FieldName = "qc_source" Then
+                    Dim NumChecked As Integer = 0
+                    Dim SelfReportChecked As Boolean = False
+                    For Each aControl In Me.Controls
+                        If TypeName(aControl) = "GroupBox" Then
+                            For Each aGroupControl In CType(aControl, GroupBox).Controls
+                                If TypeOf aGroupControl Is CheckBox AndAlso CType(aGroupControl, CheckBox).Checked Then
+                                    NumChecked += 1
+                                    If aGroupControl.Tag.ToString = "2" Then SelfReportChecked = True
+                                End If
+                            Next
+                        End If
+                    Next
+
+                    If SelfReportChecked And NumChecked > 1 Then
+                        IsValidResponse = False
+                        MsgBox("Self Report must be selected on its own. Untick the other sources.", vbCritical, "Invalid Response")
+                    End If
+                End If
+            End If
+
+
             ' ensure correct health facility is selected
             If IsValidResponse = True Then
                 If QuestionInfoArray(CurrentQuestion).FieldName = "preferred_language_ke" Or QuestionInfoArray(CurrentQuestion).FieldName = "preferred_language_ug" Then

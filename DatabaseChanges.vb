@@ -73,7 +73,9 @@ Module DatabaseChanges
                 New ChangeSet("werick", "Add columns baseline_lookup", CreateAlterTableSQL("baseline_lookup", "dob DATETIME"), Guid.NewGuid().ToString(), "Add new column to the baseline_lookup table"),
                 New ChangeSet("werick", "Add columns baseline_lookup", CreateAlterTableSQL("baseline_lookup", "arm_text TEXT(80)"), Guid.NewGuid().ToString(), "Add new column to the baseline_lookup table"),
                 New ChangeSet("werick", "Add columns baseline", CreateAlterTableSQL("baseline", "county_rd Integer, subcounty_rd Integer, district_rd Integer, started_prep_pep Integer"), Guid.NewGuid().ToString(), "Add new column to the baseline crf"),
-                New ChangeSet("werick", "Add columns retesting", CreateAlterTableSQL("retesting", "qc_source Integer"), Guid.NewGuid().ToString(), "Add new column to the retesting crf")
+                New ChangeSet("werick", "Alter column retesting", CreateAlterColumnSQL("retesting", "qc_source TEXT(20)"), Guid.NewGuid().ToString(), "qc_source is a checkbox again: store comma-separated values as text"),
+                New ChangeSet("werick", "Add columns retesting", CreateAlterTableSQL("retesting", "selfreport_phonecall_reached Integer, selfreport_hadfu_visit Integer, selfreport_retest_date DATETIME, selfreport_retest_loc Integer,
+                                                                                    selfreport_oth_loc TEXT(80), selfreport_retest_results Integer, selfreport_sampled_qc Integer"), Guid.NewGuid().ToString(), "Add self-report phone QC columns to the retesting crf")
             }
 
             'phonenum_lab
