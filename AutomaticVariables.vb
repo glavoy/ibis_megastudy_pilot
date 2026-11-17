@@ -239,6 +239,14 @@ Module AutomaticVariables
                     End If
                     CurrentAutoValue = CInt(health_facility)
 
+                Case Is = "participants_name"
+                    ' Look the name up by the record's study ID: Edit can open a different participant
+                    ' than the one last selected on the main menu
+                    CurrentAutoValue = GetParticipantName(SUBJID)
+                    If CurrentAutoValue = "" Then
+                        CurrentAutoValue = ParticipantsName
+                    End If
+
                 Case Is = "next_appt_3m"
                     CurrentAutoValue = SetAppointmentDateByMonths(3)
 
@@ -277,6 +285,33 @@ Module AutomaticVariables
             MessageBox.Show(ex.Message)
         End Try
     End Sub
+
+
+
+    ' Returns the participant's name from baseline (or baseline_lookup for participants enrolled
+    ' on another tablet), or "" if the study ID is not found.
+    Public Function GetParticipantName(ByVal studyid As String) As String
+        GetParticipantName = ""
+        Try
+            Using Connection As OleDbConnection = GetDBConnection()
+                Connection.Open()
+                Dim strSQL As String = "SELECT participants_name FROM baseline WHERE subjid = ? " &
+                                       "UNION " &
+                                       "SELECT participants_name FROM baseline_lookup WHERE subjid = ?"
+                Using cmd As New OleDbCommand(strSQL, Connection)
+                    cmd.Parameters.AddWithValue("?", studyid)
+                    cmd.Parameters.AddWithValue("?", studyid)
+                    Using reader = cmd.ExecuteReader()
+                        If reader.Read() AndAlso Not IsDBNull(reader("participants_name")) Then
+                            GetParticipantName = reader("participants_name").ToString()
+                        End If
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error looking up the participant's name: " & ex.Message)
+        End Try
+    End Function
 
 
 

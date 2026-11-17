@@ -1242,6 +1242,11 @@ Public Class NewSurvey
             ' Ensure the correct appointment date is entered - dflt_appt_arm_schd_appt_date
             If IsValidResponse = True Then
                 If QuestionInfoArray(CurrentQuestion).FieldName = "dflt_appt_arm_schd_appt_date" Then
+                    If String.IsNullOrEmpty(CurrentDateSelected) Then
+                        MsgBox("Please select a date", vbCritical, "Missing Default Appointment Date")
+                        Return False
+                    End If
+
                     'Get the current value of selected date
                     Dim CurrentValueDate As Date = CurrentDateSelected
 
@@ -2507,7 +2512,11 @@ Public Class NewSurvey
                     newCalendar.MinDate = Now()
                 Case "dflt_appt_arm_schd_appt_date"
                     newCalendar.MaxDate = DateAdd(DateInterval.Day, 30 * 9, Now())
-                    newCalendar.MinDate = Now()
+                    ' When modifying, allow past dates so a previously saved date can be shown and corrected.
+                    ' IsValidResponse still restricts the date to the next_appt_3m..next_appt_6m window.
+                    If ModifyingSurvey = False Then
+                        newCalendar.MinDate = Now()
+                    End If
             End Select
 
 
@@ -2529,6 +2538,8 @@ Public Class NewSurvey
 
 
             ' check to see if we should disable the "Next" button
+            ' Disable first so a failed SetDate cannot leave Next enabled with no date selected.
+            Button_Next.Enabled = False
             If ShowPreviousResponse = True Then
                 newCalendar.SetDate(QuestionInfoArray(CurrentQuestion).Response.ToString)
                 CurrentDateSelected = QuestionInfoArray(CurrentQuestion).Response.ToString
