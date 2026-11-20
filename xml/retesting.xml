@@ -120,15 +120,20 @@
 	</question>
 
 
-	<question type = 'date' fieldname = 'selfreport_retest_date' fieldtype = 'datetime'>
+	<question type = 'text' fieldname = 'selfreport_retest_date' fieldtype = 'text'>
 		<text>What was the date of the test as reported by the Participant?</text>
+		<maxCharacters>30</maxCharacters>
 	</question>
 
 
 	<question type = 'radio' fieldname = 'selfreport_retest_loc' fieldtype = 'integer'>
 		<text>Where was the participant tested (Current Clinic/other Clinic)</text>
 		<responses>
-			<response value = '1'>Current Clinic</response>
+			<response value = '1'>Current Clinic - OPD</response>
+			<response value = '2'>Current Clinic - MCH</response>
+			<response value = '3'>Current Clinic - Outreach</response>
+			<response value = '4'>Current Clinic - CCC/VCT</response>
+			<response value = '5'>Current Clinic - Other</response>
 			<response value = '99'>Other Clinic</response>
 		</responses>
 	</question>
@@ -158,7 +163,6 @@
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
-			<response value = '3'>Pending</response>
 		</responses>
 		<preskip>
 			<skip fieldname='selfreport_phonecall_reached' condition = '&lt;&gt;' response='2' response_type='fixed' skiptofieldname ='hadfu_visit'></skip>
@@ -170,7 +174,7 @@
 
 
 	<question type = 'radio' fieldname = 'hadfu_visit' fieldtype = 'integer'>
-		<text>Did this participant return to clinic for HIV retesting? (Yes - retesting visit found; No- no retesting visit found) (Confirmed/found in EMR/Registers)</text>
+		<text>Did this participant return to clinic for HIV retesting within 3-6 months from baseline? (Confirmed/found in EMR/Registers)</text>
 		<responses>
 			<response value = '1'>Yes</response>
 			<response value = '2'>No</response>
