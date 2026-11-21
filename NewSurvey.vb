@@ -702,6 +702,14 @@ Public Class NewSurvey
     'Save the survey data to the table
     Private Sub SaveData(ByVal tablename As String)
         Try
+            ' QC: a self-reported "No" retest is recorded as "No" in hadfu_visit (primary outcome),
+            ' even though the form skips the records question for these participants
+            If tablename = "retesting" AndAlso GetValue("selfreport_hadfu_visit") = "2" Then
+                Dim q As Integer = GetQuestionNumber("hadfu_visit")
+                QuestionInfoArray(q).Value = "2"
+                QuestionInfoArray(q).Response = "2"
+            End If
+
             Dim ConnectionString As New OleDbConnection(ConfigurationManager.ConnectionStrings("ConnString").ConnectionString)
             Dim i As Integer
             Dim strSaveDataToText As String = ""
