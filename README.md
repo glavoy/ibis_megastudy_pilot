@@ -32,3 +32,9 @@
 # Fixed QC duplicate-entry message wording
 # Baseline: added Uganda district list (district_rd), Luganda/Runyankore literacy wording, reworded eligibility questions
 # Followup: added Outreach and VCT entry points, reworded risk questions, added Runyankore and Luganda closing messages
+
+# ver2026.11.22
+# Retesting QC CRF updated to the 2026-11-19 data dictionary (self-report phone QC; Self Report must be selected on its own)
+# Self-reported "No" retest saves hadfu_visit = No automatically
+# Followup and QC records save the participant name instead of the study ID
+# Baseline: editing allows a past default appointment date
